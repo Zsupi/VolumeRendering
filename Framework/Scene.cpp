@@ -17,7 +17,7 @@ void Scene::glutUpdate(float dt, float t) {
 
 	for (auto i : lights)
 		i.draw(camera);
-	//this->update();
+	this->update(dt, t);
 }
 
 void Scene::glutOnMouseMove(int pX, int pY) {

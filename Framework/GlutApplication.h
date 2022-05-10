@@ -17,7 +17,11 @@ public:
 	};
 
 private:
+
+
 	std::shared_ptr<GlutAppInterface> scene;
+	float timeAtFirstFrame;
+	float timeAtLastFrame;
 	GlutApplication();
 
 public:

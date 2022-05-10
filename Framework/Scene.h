@@ -22,7 +22,7 @@ public:
 	
 
 	virtual Scene& addMesh(const Mesh& mesh, std::string name) final;
-	virtual Scene& update() = 0;
+	virtual Scene& update(float dt, float t) = 0;
 
 	virtual Scene& onInitialization() = 0;
 	virtual Scene& onMouseMove(int pX, int pY) = 0;

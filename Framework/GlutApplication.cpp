@@ -1,3 +1,4 @@
+#include <chrono>
 #include "GlutApplication.h"
 #include "Scene.h"
 
@@ -8,6 +9,9 @@ void GlutApplication::onInitialization(std::shared_ptr<GlutAppInterface> scene) 
 	this->scene = scene;
 	scene->glutOnInitialization();
 
+	timeAtFirstFrame = glutGet(GLUT_ELAPSED_TIME);
+	timeAtLastFrame = timeAtFirstFrame;
+	
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_TEXTURE_3D);
@@ -20,8 +24,16 @@ void GlutApplication::onInitialization(std::shared_ptr<GlutAppInterface> scene) 
 void GlutApplication::onDisplay() {
 	glClearColor(0.13f, 0.20f, 0.29f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scene->glutUpdate(0.3f, 0.3f);
+
+	float timeAtThisFrame = glutGet(GLUT_ELAPSED_TIME);
+	float dt = (timeAtThisFrame - timeAtLastFrame) / 1000.0f;
+	float t = (timeAtThisFrame - timeAtFirstFrame) / 1000.0f;
+	timeAtLastFrame = timeAtThisFrame;
+
+	scene->glutUpdate(dt, t);
 	glutSwapBuffers();
+
+
 }
 
 void GlutApplication::onMouseMove(int pX, int pY) {
