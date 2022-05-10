@@ -7,7 +7,7 @@ VolumeScene::VolumeScene(std::shared_ptr<Camera> camera) : Scene(camera) {
 VolumeScene::VolumeScene() : Scene() {
 }
 
-Scene& VolumeScene::update() {
+Scene& VolumeScene::update(float dt, float t) {
     return *this;
 }
 
