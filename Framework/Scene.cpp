@@ -9,7 +9,7 @@
 #include "FullScreenQuad.h"
 
 void Scene::glutUpdate(float dt, float t) {
-	camera->Animate(0.01f);
+	camera->Animate(dt);
 	camera->Update();
 
 	for (auto i : meshes)

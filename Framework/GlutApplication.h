@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
+#include <chrono>
 
+typedef std::chrono::steady_clock::time_point ChronoTime;
 
 class GlutApplication{
 
@@ -20,8 +22,8 @@ private:
 
 
 	std::shared_ptr<GlutAppInterface> scene;
-	float timeAtFirstFrame;
-	float timeAtLastFrame;
+	ChronoTime timeAtFirstFrame;
+	ChronoTime timeAtLastFrame;
 	GlutApplication();
 
 public:

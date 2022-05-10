@@ -1,4 +1,3 @@
-#include <chrono>
 #include "GlutApplication.h"
 #include "Scene.h"
 
@@ -9,7 +8,7 @@ void GlutApplication::onInitialization(std::shared_ptr<GlutAppInterface> scene) 
 	this->scene = scene;
 	scene->glutOnInitialization();
 
-	timeAtFirstFrame = glutGet(GLUT_ELAPSED_TIME);
+	timeAtFirstFrame = std::chrono::steady_clock::now();
 	timeAtLastFrame = timeAtFirstFrame;
 	
 	glEnable(GL_DEPTH_TEST);
@@ -25,9 +24,10 @@ void GlutApplication::onDisplay() {
 	glClearColor(0.13f, 0.20f, 0.29f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	float timeAtThisFrame = glutGet(GLUT_ELAPSED_TIME);
-	float dt = (timeAtThisFrame - timeAtLastFrame) / 1000.0f;
-	float t = (timeAtThisFrame - timeAtFirstFrame) / 1000.0f;
+	ChronoTime timeAtThisFrame = std::chrono::steady_clock::now();
+
+	float dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeAtThisFrame - timeAtLastFrame).count();
+	float t = std::chrono::duration_cast<std::chrono::milliseconds>(timeAtThisFrame - timeAtFirstFrame).count();
 	timeAtLastFrame = timeAtThisFrame;
 
 	scene->glutUpdate(dt, t);
