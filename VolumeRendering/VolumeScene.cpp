@@ -1,3 +1,4 @@
+#include <Texture3D.h>
 #include "VolumeScene.h"
 #include "FullScreenQuad.h"
 
@@ -14,6 +15,7 @@ Scene& VolumeScene::update(float dt, float t) {
 Scene& VolumeScene::onInitialization() {
     std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raytraceVolumeFS.glsl");
     std::shared_ptr<Material> rayTraceVolumeMaterial = std::make_shared<Material>(rayTraceVolumeProgram);
+    rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("brain-at_4096.jpg"), "textureColor");
     std::shared_ptr<FullScreenQuad> fullScreenQuad = std::make_shared< FullScreenQuad>();
     Mesh rayTraceVolumeMesh = Mesh(rayTraceVolumeMaterial, fullScreenQuad);
 
