@@ -176,6 +176,7 @@
     <None Include="fullScreenVS.glsl" />
     <None Include="lightFS.glsl" />
     <None Include="lightVS.glsl" />
+    <None Include="raymarchMetaball.glsl" />
     <None Include="raytraceVolumeFS.glsl" />
     <None Include="solidColorFS.glsl" />
     <None Include="texturedFS.glsl" />

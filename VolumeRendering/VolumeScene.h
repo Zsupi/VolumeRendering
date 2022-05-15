@@ -1,7 +1,8 @@
 #pragma once
 #include <Scene.h>
 class VolumeScene : public Scene{
-
+	std::shared_ptr<Material> rayTraceVolumeMaterial;
+	float minStep = 0.04f;
 public:
 	VolumeScene(std::shared_ptr<Camera> camera);
 	VolumeScene();

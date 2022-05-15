@@ -24,3 +24,16 @@ public:
 
 };
 
+/*
+uvec3 dimension = uvec3(3, 3, 3);
+	for (int i = 0; i < dimension.x; i++){
+		for (int j = 0; j < dimension.y; j++){
+			for (int k = 0; k< dimension.z; k++){
+
+				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].radius = 0.5f;//(1 / dimension.x);
+				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].center = vec3(-i, -j, -k) / dimension;
+
+			}
+		}
+	}
+*/

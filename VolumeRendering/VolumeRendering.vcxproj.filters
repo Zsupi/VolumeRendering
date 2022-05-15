@@ -70,6 +70,9 @@
     <None Include="volumeCubeVS.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="raymarchMetaball.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VolumeMesh.h">

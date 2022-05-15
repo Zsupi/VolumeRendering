@@ -12,3 +12,4 @@ void main(){
 	rayDir = vertexPosition * rayDirMatrix;
 	gl_Position = vec4(vertexPosition.xy, 0.0f, 1.0f);
 }
+
