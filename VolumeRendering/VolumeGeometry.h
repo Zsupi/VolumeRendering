@@ -23,4 +23,3 @@ public:
 	glm::uvec3 getDimension() const override;
 
 };
-

@@ -26,6 +26,23 @@ namespace App {
 	void onIdle() {
 		GlutApplication::getInstance()->onIdle();
 	}
+
+	void onSpecialFunc(int key, int x, int y) {
+
+		if (key == GLUT_KEY_UP) {
+			GlutApplication::getInstance()->onKeyboardDown(GlutApplication::ARROW_UP_VALUE, x, y);
+		}
+		if (key == GLUT_KEY_DOWN) {
+			GlutApplication::getInstance()->onKeyboardDown(GlutApplication::ARROW_DOWN_VALUE, x, y);
+		}
+		if (key == GLUT_KEY_RIGHT) {
+			GlutApplication::getInstance()->onKeyboardDown(GlutApplication::ARROW_RIGHT_VALUE, x, y);
+		}
+		if (key == GLUT_KEY_LEFT) {
+			GlutApplication::getInstance()->onKeyboardDown(GlutApplication::ARROW_LEFT_VALUE, x, y);
+		}
+	}
+
 	void onInitialization(std::shared_ptr<Scene> scene, int argc, char* argv[]) {
 		
 		// Initialize GLUT, Glew and OpenGL 
@@ -66,6 +83,7 @@ namespace App {
 		glutKeyboardFunc(App::onKeyboardDown);
 		glutKeyboardUpFunc(App::onKeyboardUp);
 		glutMotionFunc(App::onMouseMove);
+		glutSpecialFunc(App::onSpecialFunc);
 		glutMainLoop();
 	}
 

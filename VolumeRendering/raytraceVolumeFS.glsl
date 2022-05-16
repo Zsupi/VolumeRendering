@@ -2,7 +2,7 @@
 
 precision highp float;
 
-struct Sphere{
+struct Metaball{
 	vec3 center;
 	float radius;
 };
@@ -27,8 +27,6 @@ struct Ray {
 
 uniform vec3 cameraPos;
 
-Sphere sphere;
-
 in vec4 rayDir;
 
 out vec4 fragmentColor;
@@ -47,25 +45,15 @@ float solveQuadratic(float a, float b, float c){
 	return (t1<0.0) ? t0 : (t0<0.0 ? t1 : min(t1, t0));;
 }
 
-float intersect(Sphere sphere, Ray ray){
+float intersect(Metaball metaball, Ray ray){
 	
-	vec4 L = ray.start - vec4(sphere.center, 1.0f);
+	vec4 L = ray.start - vec4(metaball.center, 1.0f);
 	
 	float a = dot(ray.dir, ray.dir);
 	float b = 2.0f * dot(L, ray.dir);
-	float c = dot(L, L) - pow(sphere.radius, 2.0f);
+	float c = dot(L, L) - pow(metaball.radius, 2.0f);
 	
 	float t = solveQuadratic(a, b, c);
-	return t;
-}
-
-float intersectClippedQuadric(Ray ray, mat4 coeff){
-	float a = dot(ray.dir* coeff, ray.dir);
-	float b = dot(ray.start * coeff, ray.dir) + dot(ray.dir* coeff, ray.start);
-	float c = dot(ray.start * coeff, ray.start);
-
-	float t0, t1;
-	float t  = solveQuadratic(a, b, c);
 	return t;
 }
 
@@ -75,36 +63,25 @@ vec3 shade(vec3 normal, vec3 color){
 }
 
 void main(){
-	mat4 sphereQuad = mat4
-	  (	1.0f, 0.0f, 0.0f, 0.0f,
-      0.0f, -1.0f, 0.0f, 0.0f,
-      0.0f, 0.0f, 1.0f, 0.0f,
-      1.0f, 0.0f, 0.0f, 0.0f );
-
+	Metaball metaball1;
+	Metaball metaball2;
 
 	Ray ray;
 	ray.dir = vec4(rayDir.xyz, 0.0f);
 	ray.start = vec4(cameraPos, 1.0f);
 
-	sphere.center = vec3(-5.0f, 0.0f, 0.0f);
-	sphere.radius = 0.5f;
+	metaball1.center = vec3(-5.0f, 0.0f, 0.0f);
+	metaball1.radius = 0.5f;
 
-	
-	vec3 color = vec3(0.0f, 1.0f, 0.0f);	
+	metaball2.center = vec3(-6.0f, 0.0f, 0.0f);
+	metaball2.radius = 0.5f;	
 
-	float t = intersect(sphere, ray);
+	float t = intersect(metaball1, ray);
 	if (t > 0.0f){
 		vec4 hit = ray.start + t * ray.dir;
-		vec3 normal = normalize((hit - vec4(sphere.center, 1.0f)).xyz);
+		vec3 normal = normalize((hit - vec4(metaball1.center, 1.0f)).xyz);
 		fragmentColor = vec4(normal.xyz, 1.0f);
 	}
-
-//	float t = intersectClippedQuadric(ray, sphereQuad);
-//	if (t > 0.0f){
-//		vec4 hit = ray.start + ray.dir * t;	
-//		vec3 normal = normalize( (hit * sphereQuad + sphereQuad * hit).xyz );
-//		fragmentColor = vec4(normal.xyz, 1.0f);
-//	}
 
 	else{
 		fragmentColor = vec4(0.0f, 0.0f, 0.0f, 1.0f);

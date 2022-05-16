@@ -13,6 +13,7 @@ void GlutApplication::onInitialization(std::shared_ptr<GlutAppInterface> scene) 
 	
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_DEBUG_OUTPUT);
+	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 	glEnable(GL_TEXTURE_3D);
 	glClearDepth(1.0f);
 

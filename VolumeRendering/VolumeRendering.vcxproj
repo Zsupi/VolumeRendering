@@ -168,14 +168,18 @@
     <ClCompile Include="VolumeScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="body-at_4096.jpg" />
     <Image Include="brain-at_4096.jpg" />
     <Image Include="dust.jpg" />
+    <Image Include="internals-at_4096.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="defaultVS.glsl" />
     <None Include="fullScreenVS.glsl" />
     <None Include="lightFS.glsl" />
     <None Include="lightVS.glsl" />
+    <None Include="raymarchBrain.glsl" />
+    <None Include="raymarchMetaball.glsl" />
     <None Include="raytraceVolumeFS.glsl" />
     <None Include="solidColorFS.glsl" />
     <None Include="texturedFS.glsl" />
