@@ -7,12 +7,6 @@ struct Metaball{
 	float radius;
 };
 
-struct Hit {
-	float t;
-	vec3 position;
-	vec3 normal;
-};
-
 struct Ray {
 	vec3 start;
 	vec3 dir;

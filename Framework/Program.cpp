@@ -75,6 +75,21 @@ unsigned int Program::compileShader(unsigned int type, const std::string& source
 	glShaderSource(id, 1, &src, nullptr);
 	glCompileShader(id);
 	//todo: Error handling: https://docs.gl/es3/glShaderSource
+	GLint isCompiled = 0;
+	glGetShaderiv(id, GL_COMPILE_STATUS, &isCompiled);
+
+	if (isCompiled == GL_FALSE) {
+		GLint maxLength = 0;
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);
+		std::vector<GLchar> infoLog(maxLength);
+		glGetShaderInfoLog(id, maxLength, &maxLength, &infoLog[0]);
+
+		for (auto i : infoLog) {
+			std::cout << i;
+		}
+		std::cout << std::endl;
+	}
+
 
 	return id;
 }
@@ -82,7 +97,7 @@ unsigned int Program::compileShader(unsigned int type, const std::string& source
 unsigned int Program::createShader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource) {
 	unsigned int program = glCreateProgram();
 	unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShaderSource);
-	unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource); 
+	unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
 
 	glAttachShader(program, vs);
 	glAttachShader(program, fs);
