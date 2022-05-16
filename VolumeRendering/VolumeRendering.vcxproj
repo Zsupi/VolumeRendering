@@ -168,8 +168,10 @@
     <ClCompile Include="VolumeScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="body-at_4096.jpg" />
     <Image Include="brain-at_4096.jpg" />
     <Image Include="dust.jpg" />
+    <Image Include="internals-at_4096.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="defaultVS.glsl" />

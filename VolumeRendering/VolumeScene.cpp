@@ -19,8 +19,12 @@ Scene& VolumeScene::onInitialization() {
     std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raymarchBrain.glsl");
     rayTraceVolumeMaterial = std::make_shared<Material>(rayTraceVolumeProgram);
     rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
-    rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
-    rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("brain-at_4096.jpg"), "brainTexture");
+    //rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
+    
+    //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("brain-at_4096.jpg"), "brainTexture");
+    rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("body-at_4096.jpg"), "brainTexture");
+    //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("internals-at_4096.jpg"), "brainTexture");
+    
     std::shared_ptr<FullScreenQuad> fullScreenQuad = std::make_shared< FullScreenQuad>();
     Mesh rayTraceVolumeMesh = Mesh(rayTraceVolumeMaterial, fullScreenQuad);
 
@@ -49,28 +53,32 @@ Scene& VolumeScene::onKeyboardDown(unsigned char key) {
         rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
     }
 
-    if (key == GLUT_KEY_UP) {
+    /*if (key == GlutApplication::ARROW_UP_VALUE) {
+        boundingCubePosition.z -= 0.1f;
+        rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
+    }
+    if (key == GlutApplication::ARROW_DOWN_VALUE) {
         boundingCubePosition.z += 0.1f;
         rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
     }
-    if (key == GLUT_KEY_DOWN) {
-        boundingCubePosition.z -= 0.1f;
-        rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
-       
-    }
-    if (key == GLUT_KEY_RIGHT) {
+    if (key == GlutApplication::ARROW_RIGHT_VALUE) {
         boundingCubePosition.x += 0.1f;
         rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
-       
     }
-    std::cout << key;
-    if (key == GLUT_KEY_LEFT) {
+    if (key == GlutApplication::ARROW_LEFT_VALUE) {
         boundingCubePosition.x -= 0.1f;
         rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
-       
     }
-    // // O: insert return statement here
-    return *this;
+    if (key == 'r') {
+        boundingCubePosition.y += 0.1f;
+        rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
+    }
+    if (key == 't') {
+        boundingCubePosition.y -= 0.1f;
+        rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
+    }
+    std::cout << boundingCubePosition.x << " " << boundingCubePosition.y << " " << boundingCubePosition.z << std::endl;
+    */return *this;
 }
 
 Scene& VolumeScene::onKeyboardUp(unsigned char key) {

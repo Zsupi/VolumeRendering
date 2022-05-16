@@ -13,9 +13,7 @@ struct Cube{
 
 uniform vec3 cameraPos;
 uniform sampler3D brainTexture;
-
-//todo delete
-uniform vec3 cubePosition;
+uniform float minStep;
 
 in vec4 rayDir;
 
@@ -47,31 +45,32 @@ void main(){
 
 	//setup cube
 	Cube cube;
-	cube.position = cubePosition;
-	cube.size = vec3(0.25f, 0.25f, 0.25f);
+	cube.position = vec3(0.5f, 0.5f, 0.5f);
+	cube.size = vec3(0.45f, 0.45f, 0.45f);
 
 	//setup raymarch
 	float t1 = (5.0 - cameraPos.z) / ray.dir.z;
 	float t2 = (-5.0 - cameraPos.z) / ray.dir.z;
 	float tStart = max(min(t1, t2), 0.0f);
 	float tEnd = max(max(t1, t2), 0.0f);
-	int nSteps = 300;
+	int nSteps = 580;
 
 	vec3 p = ray.start + ray.dir * tStart;
 	bool found = false;
 	float h = 1.0f;
 	vec4 color;
 
-	vec3 step = ray.dir * min((tEnd-tStart)/float(nSteps), 0.05f);
+	vec3 step = ray.dir * min((tEnd-tStart)/float(nSteps), minStep);
 	for (int i = 0; i < nSteps; i++){
 
 		if (raymarchCube(p, cube) < 0.1f){
 			h = texture(brainTexture, p).r;
-			if (h > 0.1f){
+			if (h > 0.3f){
 				found = true;
-				color = vec4(h, h, h, 1.0f);
+				color += vec4(h, h, h, 0.9f);
 				break;
 			}
+			found = true;
 		}
 		p = p + step;
 	}

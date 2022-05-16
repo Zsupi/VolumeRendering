@@ -18,6 +18,11 @@ public:
 		virtual void glutOnInitialization() = 0;
 	};
 
+	static const char ARROW_UP_VALUE = '@';
+	static const char ARROW_DOWN_VALUE = '#';
+	static const char ARROW_RIGHT_VALUE = '~';
+	static const char ARROW_LEFT_VALUE = '%';
+
 private:
 
 
