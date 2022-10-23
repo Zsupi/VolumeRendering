@@ -54,5 +54,3 @@ const std::vector<int> Cube::cubeIndices() {
 
     return indices;
 }
-
-//todo nem kell ennyi csucspont

@@ -24,12 +24,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VolumeMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VolumeGeometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VolumeScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,15 +78,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="VolumeMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VolumeGeometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VolumeGeometryInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VolumeScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>

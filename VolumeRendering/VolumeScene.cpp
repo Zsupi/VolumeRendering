@@ -16,13 +16,14 @@ Scene& VolumeScene::update(float dt, float t) {
 
 Scene& VolumeScene::onInitialization() {
     //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raytraceVolumeFS.glsl");
-    std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raymarchBrain.glsl");
+    //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raymarchBrain.glsl");
+    std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raymarchMetaball.glsl");
     rayTraceVolumeMaterial = std::make_shared<Material>(rayTraceVolumeProgram);
     rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
     //rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
     
-    //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("brain-at_4096.jpg"), "brainTexture");
-    rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("body-at_4096.jpg"), "brainTexture");
+    rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("brain-at_4096.jpg"), "brainTexture");
+    //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("body-at_4096.jpg"), "brainTexture");
     //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("internals-at_4096.jpg"), "brainTexture");
     
     std::shared_ptr<FullScreenQuad> fullScreenQuad = std::make_shared< FullScreenQuad>();
