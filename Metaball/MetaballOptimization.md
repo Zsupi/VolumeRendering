@@ -47,3 +47,11 @@
 ### Description
 
 * placeholder
+
+## Metaballs-based physical modeling and deformation of organs for virtual surgery
+
+> [link](https://www3.cs.stonybrook.edu/~qin/research/2015-tvc-metaballs-modeling.pdf)
+
+### Description
+
+* Provides a method to convert polygonal mesh to metaballs and introduces an approach for deformation simulation.
