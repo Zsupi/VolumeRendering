@@ -163,8 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="VolumeGeometry.cpp" />
-    <ClCompile Include="VolumeMesh.cpp" />
     <ClCompile Include="VolumeScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,9 +185,6 @@
     <None Include="volumeCubeVS.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="VolumeGeometryInterface.h" />
-    <ClInclude Include="VolumeGeometry.h" />
-    <ClInclude Include="VolumeMesh.h" />
     <ClInclude Include="VolumeScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

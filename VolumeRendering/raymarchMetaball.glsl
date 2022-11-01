@@ -1,10 +1,11 @@
 #version 330
-#define MAX_METABALL 64
+#define MAX_METABALL 216
 precision highp float;
 
 struct Metaball{
 	vec3 center;
 	float radius;
+	vec3 color;
 };
 
 struct Ray {
@@ -49,16 +50,18 @@ float blinnMetaball(float r){
 	return 1.0f/(r * r);
 }
 
-float rayMarchMetaballScene(vec3 p, Metaball metaballs[MAX_METABALL]){
+float rayMarchMetaballScene(vec3 p, Metaball metaballs[MAX_METABALL], out vec3 color){
 	float fSum = 0.0f;
 	for (int i = 0; i < metaballs.length(); i++){
 		float r = length(p - metaballs[i].center) / metaballs[i].radius;
 		//Blinn metaball
-		fSum += blinnMetaball(r);
+		float f = blinnMetaball(r);
+		color += f * metaballs[i].color;
+		fSum += f;
 	}
 
 	const float A = 20.0f;
-
+	color = color / fSum;
 	return -A + fSum;
 }
 
@@ -85,32 +88,34 @@ void main(){
 	Metaball metaballs[MAX_METABALL];
 
 	//IF THE DIMENSION CHANGES THEN UPDATE THE MAX_METABALL MACRO
-	uvec3 dimension = uvec3(4, 4, 4);
+	ivec3 dimension = ivec3(6, 6, 6);
 	for (int i = 0; i < dimension.x; i++){
 		for (int j = 0; j < dimension.y; j++){
 			for (int k = 0; k< dimension.z; k++){
 
 				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].radius = (1.0f / dimension.x);
-				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].center = vec3(-i, -j, -k) / dimension;
+				vec3 position = vec3(-i, -j, -k) / dimension;
+				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].center = position;
+				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].color = abs(position);
 
 			}
 		}
 	}
 
 	//setup raymarch
-	float t1 = (10.0f - cameraPos.y) / ray.dir.y;
-	float t2 = (-10.0f - cameraPos.y) / ray.dir.y;
+	float t1 = (10.0f - cameraPos.z) / ray.dir.z;
+	float t2 = (-10.0f - cameraPos.z) / ray.dir.z;
 	float tStart = max(min(t1, t2), 0.0);
 	float tEnd = max(max(t1, t2), 0.0);
 	int nSteps = 100;
 
 	vec3 p = ray.start + ray.dir * tStart;
 	bool found = false;
-
+	vec3 color;
 	vec3 step = ray.dir * min((tEnd-tStart)/float(nSteps), minStep);
 	for (int i = 0; i < nSteps; i++){
 
-		if (rayMarchMetaballScene(p, metaballs) > 0.0f){
+		if (rayMarchMetaballScene(p, metaballs, color) > 0.0f){
 			found = true;
 			break;
 		}
@@ -119,7 +124,8 @@ void main(){
 
 	if (found){
 		fragmentColor = vec4(0.0f, 0.97f, 0.97f, 1.0f);
-		fragmentColor = vec4(fGrad(p, metaballs[0]), 1.0f);
+		//fragmentColor = vec4(fGrad(p, metaballs[0]), 1.0f);
+		fragmentColor = vec4(color, 1.0f);
 	}
 	else{
 		fragmentColor = vec4(0.0f, 0.0f, 0.0f, 1.0f);

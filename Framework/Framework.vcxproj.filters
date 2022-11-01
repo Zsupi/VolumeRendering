@@ -216,4 +216,7 @@
       <Filter>Header Files\Uniform</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>

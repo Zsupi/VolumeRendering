@@ -26,6 +26,7 @@ struct Ray {
 }volumeData;*/
 
 uniform vec3 cameraPos;
+uniform sampler3D brainTexture;
 
 in vec4 rayDir;
 
