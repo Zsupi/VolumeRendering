@@ -79,4 +79,3 @@ void Light::draw(std::shared_ptr<Camera> camera) {
 	}
 }
 
-
