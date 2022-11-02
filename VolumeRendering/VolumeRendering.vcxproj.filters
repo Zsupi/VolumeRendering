@@ -33,6 +33,9 @@
     <ClCompile Include="VolumeScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DebugScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="brain-at_4096.jpg">
@@ -82,6 +85,15 @@
     <None Include="raymarchBrain.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="PreCS.comp">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="PostCS.comp">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="ConstraintCS.comp">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VolumeMesh.h">
@@ -94,6 +106,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VolumeScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,0 +1,239 @@
+#version 430
+#extension GL_ARB_compute_shader : enable
+#extension GL_ARB_shader_storage_buffer_object : enable
+
+layout(std430, binding = 0) buffer positionBuffer
+{
+	vec4 position[];
+};
+
+layout(std430, binding = 1) buffer projectedPositionBuffer
+{
+	vec4 projectedPosition[];
+};
+
+layout(std430, binding = 2) buffer relaxedPositionBuffer
+{
+	vec4 relaxedPosition[];
+};
+
+layout(std430, binding = 3) buffer velocityBuffer
+{
+	vec4 velocity[];
+};
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+const float dt = 0.01;
+
+uint size = gl_NumWorkGroups.x;
+
+uint toArrayIndex(uint x, uint y, uint z) {
+	return  x + size * y + size * size * z;
+}
+
+uniform int caseID;
+
+
+struct PDeltas2{
+	vec3 d[2];
+};
+
+PDeltas2 getDistanceDeltas(uint a, uint b){
+	PDeltas2 res;
+	
+	vec3 pa = projectedPosition[a].xyz;
+	vec3 pb = projectedPosition[b].xyz;
+	vec3 ra = relaxedPosition[a].xyz;
+	vec3 rb = relaxedPosition[b].xyz;
+
+	res.d[0] = -0.1f * (distance(pa, pb) - distance(ra, rb)) * normalize(pa - pb);
+	res.d[1] = 0.1f * (distance(pa, pb) - distance(ra, rb)) * normalize(pa - pb);
+
+	return res;
+}
+
+
+void executeConstraints(uvec4 pIdx){
+	
+
+	//distance constraints:
+	float k = 0.05f;
+
+	for (uint i = 0; i < 3; ++i){
+		for (uint j = i + 1; j < 4; ++j){
+			PDeltas2 pd = getDistanceDeltas(pIdx[i], pIdx[j]);
+			projectedPosition[pIdx[i]].xyz += pd.d[0] * k;
+			projectedPosition[pIdx[j]].xyz += pd.d[1] * k;
+		}
+	}
+	
+	//collision with ground
+	for (uint i = 0; i < 4; ++i){
+		vec3 ppos = projectedPosition[pIdx[i]].xyz;
+		if (ppos.y < 0.0f){
+			vec3 pos = position[pIdx[i]].xyz;
+			vec3 dir = normalize(ppos - pos);
+			
+			float t = -pos.y / dir.y;
+
+			ppos = pos + dir * t;
+		}
+		projectedPosition[pIdx[i]].xyz = ppos;
+	}
+
+	return;
+}
+
+
+uint toArrayIndex(uint x, uint y, uint z, uint w) {
+	return  x + size * y + size * size * z + w * size * size * size;
+}
+
+void main()
+{
+	uint gid = toArrayIndex(gl_GlobalInvocationID.x, gl_GlobalInvocationID.y, gl_GlobalInvocationID.z);
+	uint x = gl_GlobalInvocationID.x;
+	uint y = gl_GlobalInvocationID.y;
+	uint z = gl_GlobalInvocationID.z;
+	
+	switch(caseID){
+		case 0:
+			if (x < size - 1 && y > 0 && (x + y) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x + 1, y, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y-1, z, 1)));
+			}
+			break;
+		case 1:
+			if (x < size - 1 && y > 0 && (x + y) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x + 1, y, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y-1, z, 1)));
+			}
+			break;
+		case 2: 
+			if (z < size - 1 && x < size - 1 && y > 0 && (x + y) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y, z + 1, 0), toArrayIndex(x + 1, y, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y-1, z, 1)));
+			}
+			break;
+		case 3:
+			if (z < size - 1 && x < size - 1 && y > 0 && (x + y) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y, z + 1, 0), toArrayIndex(x + 1, y, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y-1, z, 1)));
+			}
+			break;
+		case 4: 
+			if (z < size - 1 && y > 0 && (z + y) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x, y, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y-1, z, 1)));
+			}
+			break;
+		case 5:
+			if (z < size - 1 && y > 0 && (z + y) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x, y, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y-1, z, 1)));
+			}
+			break;
+		case 6: 
+			if (x < size - 1 && z < size - 1 && y > 0 && (z + y) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x + 1, y, z, 0), toArrayIndex(x + 1, y, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y-1, z, 1)));
+			}
+			break;
+		case 7:
+			if (x < size - 1 && z < size - 1 && y > 0 && (z + y) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x + 1, y, z, 0), toArrayIndex(x + 1, y, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y-1, z, 1)));
+			}
+			break;
+
+
+		case 8: 
+			if (y < size - 1 && x > 0 && (y + x) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x, y + 1, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x - 1, y, z, 1)));
+			}
+			break;
+		case 9:
+			if (y < size - 1 && x > 0 && (y + x) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x, y + 1, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x - 1, y, z, 1)));
+			}
+			break;
+		case 10: 
+			if (z < size - 1 && y < size - 1 && x > 0 && (y + x) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y, z + 1, 0), toArrayIndex(x, y + 1, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x - 1, y, z, 1)));
+			}
+			break;
+		case 11:
+			if (z < size - 1 && y < size - 1 && x > 0 && (y + x) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y, z + 1, 0), toArrayIndex(x, y + 1, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x - 1, y, z, 1)));
+			}
+			break;
+		case 12: 
+			if (z < size - 1 && x > 0 && (z + x) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x, y, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x - 1, y, z, 1)));
+			}
+			break;
+		case 13:
+			if (z < size - 1 && x > 0 && (z + x) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x, y, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x - 1, y, z, 1)));
+			}
+			break;
+		case 14: 
+			if (y < size - 1 && z < size - 1 && x > 0 && (z + x) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y + 1, z, 0), toArrayIndex(x, y + 1, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x - 1, y, z, 1)));
+
+			}
+			break;
+		case 15:
+			if (y < size - 1 && z < size - 1 && x > 0 && (z + x) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y + 1, z, 0), toArrayIndex(x, y + 1, z + 1, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x - 1, y, z, 1)));
+
+			}
+			break;
+
+
+		case 16: 
+			if (x < size - 1 && z > 0 && (x + z) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x + 1, y, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y, z - 1, 1)));
+
+			}
+			break;
+		case 17:
+			if (x < size - 1 && z > 0 && (x + z) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x + 1, y, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y, z - 1, 1)));
+
+			}
+			break;
+		case 18: 
+			if (y < size - 1 && x < size - 1 && z > 0 && (x + z) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y + 1, z, 0), toArrayIndex(x + 1, y + 1, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y, z - 1, 1)));
+
+			}
+			break;
+		case 19:
+			if (y < size - 1 && x < size - 1 && z > 0 && (x + z) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y + 1, z, 0), toArrayIndex(x + 1, y + 1, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y, z - 1, 1)));
+
+			}
+			break;
+		case 20: 
+			if (y < size - 1 && z > 0 && (y + z) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x, y + 1, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y, z - 1, 1)));
+
+			}
+			break;
+		case 21:
+			if (y < size - 1 && z > 0 && (y + z) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x, y, z, 0), toArrayIndex(x, y + 1, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y, z - 1, 1)));
+
+			}
+			break;
+		case 22: 
+			if (x < size - 1 && y < size - 1 && z > 0 && (y + z) % 2 == 0){
+				executeConstraints(uvec4(toArrayIndex(x + 1, y, z, 0), toArrayIndex(x + 1, y + 1, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y, z - 1, 1)));
+
+			}
+			break;
+		case 23:
+			if (x < size - 1 && y < size - 1 && z > 0 && (y + z) % 2 == 1){
+				executeConstraints(uvec4(toArrayIndex(x + 1, y, z, 0), toArrayIndex(x + 1, y + 1, z, 0), toArrayIndex(x, y, z, 1), toArrayIndex(x, y, z - 1, 1)));
+
+			}
+			break;
+
+	}
+
+}
+

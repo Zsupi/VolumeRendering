@@ -1,0 +1,54 @@
+#version 430
+#extension GL_ARB_compute_shader : enable
+#extension GL_ARB_shader_storage_buffer_object : enable
+
+layout(std430, binding = 0) buffer positionBuffer
+{
+	vec4 position[];
+};
+
+layout(std430, binding = 1) buffer projectedPositionBuffer
+{
+	vec4 projectedPosition[];
+};
+
+
+layout(std430, binding = 3) buffer velocityBuffer
+{
+	vec4 velocity[];
+};
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+const float dt = 0.01;
+const vec3 g = vec3(0.0f, -1.0f, 0.0f);
+
+const uint size = gl_NumWorkGroups.x;
+
+uint toArrayIndex(uint x, uint y, uint z, uint w) {
+	return  x + size * y + size * size * z + w * size * size * size;
+}
+
+void main()
+{
+	uint gid0 = toArrayIndex(gl_GlobalInvocationID.x, gl_GlobalInvocationID.y, gl_GlobalInvocationID.z, 0);
+	uint gid1 = toArrayIndex(gl_GlobalInvocationID.x, gl_GlobalInvocationID.y, gl_GlobalInvocationID.z, 1);
+
+	//calculating velocities
+	vec3 v0 = velocity[gid0].xyz;
+	v0 += g * dt;
+
+	vec3 v1 = velocity[gid1].xyz;
+	v1 += g * dt;
+
+	//damp
+
+	//projected positions
+	vec3 p0 = position[gid0].xyz;
+	vec3 ppos0 = p0 + v0 * dt;
+	projectedPosition[gid0].xyz = ppos0;
+
+	vec3 p1 = position[gid1].xyz;
+	vec3 ppos1 = p1 + v1 * dt;
+	projectedPosition[gid1].xyz = ppos1;
+}
