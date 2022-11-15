@@ -2,17 +2,19 @@
 #include <GL/glew.h>
 #include <vector>
 #include "stb_image.h"
+#include <iostream>
 
-Texture3D::Texture3D(const std::string& filePath, int width, int height, int depth): Texture(filePath), 
+Texture3D::Texture3D(const std::string& filePath, int width, int height, int depth, int treshold): Texture(filePath), 
 width(width), height(height), depth(depth), bpp(0) {
 	int widthPicture, heightPicture = 0;
 	localBuffer = stbi_load(getFilePath().c_str(), &widthPicture, &heightPicture, &bpp, 4);
-	std::vector<uint8_t> data3d(256*256*256);
+	std::vector<uint8_t> data3d(width*height*depth);
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			for (int k = 0; k < depth; k++) {
-				char v = localBuffer[(int)(i + 4096 * j + 256 * (k % 16) + 4096 * 256 * floor(float(k) / 16.0f)) * 4];
-				data3d[i + 256 * (j + 256 * k)] = v;
+				char v = localBuffer[(int)(i + height * treshold * j + depth * (k % treshold) + height * treshold * depth * floor(float(k) / float(treshold))) * 4];
+
+				data3d[i + height * (j + depth * k)] = v;
 			}
 		}
 	}
@@ -22,8 +24,13 @@ width(width), height(height), depth(depth), bpp(0) {
 
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, width, height, depth, 0, GL_RED, GL_UNSIGNED_BYTE, data3d.data());
+	try {
+		glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, width, height, depth, 0, GL_RED, GL_UNSIGNED_BYTE, data3d.data());
+		
+	}
+	catch (const std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+	}
 	glBindTexture(GL_TEXTURE_3D, 0);
 }
 

@@ -6,7 +6,7 @@ private:
 	int width, height, depth, bpp;
 	unsigned char* localBuffer;
 public:
-	Texture3D(const std::string& filePath, int width = 256, int height = 256, int depth = 256);
+	Texture3D(const std::string& filePath, int width = 256, int height = 256, int depth = 256, int treshold = 16);
 	Texture3D(const std::string& filePath, int nPicX, int nPicY);
 
 	void bind(unsigned int slot = 0) const override;
@@ -15,4 +15,3 @@ public:
 
 	~Texture3D();
 };
-
