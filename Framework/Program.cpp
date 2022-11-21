@@ -3,12 +3,23 @@
 #include <GL/glew.h>
 #include <gtc/type_ptr.hpp>
 
+
+Program::Program()
+	: ID(0) {
+	ID = glCreateProgram();
+}
+
 Program::Program(const std::string& vertexShaderPath, const std::string& fragmentShaderPath)
 	: ID(0) {
+	ID = glCreateProgram();
 
-	std::string vertexShader = File::readFile(vertexShaderPath.c_str());
-	std::string fragmentShader = File::readFile(fragmentShaderPath.c_str());
-	ID = createShader(vertexShader, fragmentShader);
+	unsigned int vertexId = CreateShader(GL_VERTEX_SHADER, vertexShaderPath);
+	unsigned int fragmentId = CreateShader(GL_FRAGMENT_SHADER, fragmentShaderPath);
+
+	Program::attachShader(vertexId);
+	Program::attachShader(fragmentId);
+
+	Program::linkProgram();
 
 }
 
@@ -69,47 +80,22 @@ bool Program::setUniform(int i, const std::string& name) {
 	return location >= 0;
 }
 
-unsigned int Program::compileShader(unsigned int type, const std::string& source) {
-	unsigned int id = glCreateShader(type);
-	const char* src = source.c_str();
-	glShaderSource(id, 1, &src, nullptr);
-	glCompileShader(id);
-	//todo: Error handling: https://docs.gl/es3/glShaderSource
-	GLint isCompiled = 0;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &isCompiled);
-
-	if (isCompiled == GL_FALSE) {
-		GLint maxLength = 0;
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);
-		std::vector<GLchar> infoLog(maxLength);
-		glGetShaderInfoLog(id, maxLength, &maxLength, &infoLog[0]);
-
-		for (auto i : infoLog) {
-			std::cout << i;
-		}
-		std::cout << std::endl;
-	}
-
-
-	return id;
+void Program::attachShader(const unsigned int shaderID)
+{
+	shaders.push_back(shaderID);
 }
 
-unsigned int Program::createShader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource) {
-	unsigned int program = glCreateProgram();
-	unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShaderSource);
-	unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+void Program::linkProgram() {
 
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
+	for (unsigned int shaderID : shaders) {
+		glAttachShader(ID, shaderID);
+		glDeleteShader(shaderID);
+	}
 
-	glLinkProgram(program);
-	glValidateProgram(program);
+	shaders.clear();
 
-	glDeleteShader(vs);
-	glDeleteShader(fs);
-
-
-	return program;
+	glLinkProgram(ID);
+	glValidateProgram(ID);
 }
 
 int Program::getUniformLocation(const std::string& name){
