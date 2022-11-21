@@ -9,6 +9,7 @@
 #include "FullScreenQuad.h"
 
 void Scene::glutUpdate(float dt, float t) {
+	this->update(dt, t);
 	camera->Animate(dt);
 	camera->Update();
 
@@ -17,7 +18,6 @@ void Scene::glutUpdate(float dt, float t) {
 
 	for (auto i : lights)
 		i.draw(camera);
-	this->update(dt, t);
 }
 
 void Scene::glutOnMouseMove(int pX, int pY) {
