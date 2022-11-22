@@ -1,0 +1,84 @@
+body {background-color: #ffffff; font-family: Arial, Verdana; margin-left: 60px; margin-right: 60px;}
+h1 {color: #00008f;}
+h2 {color: #00008f; margin-left: -20px; margin-top: 45px;}
+h3 {color: black;}
+h4 {color: black; font-style: italic;}
+td {text-align: justify;}
+td.center {text-align: center;}
+a#PermanentLink {text-decoration: none;}
+a:link {color: #0000ff;}
+a:visited {color: #0066ff;}
+a:hover {color: #f29b08; background: #f4ed8b;}
+quote {text-align: justify;}
+p {text-align: justify; max-width: 94%;}
+p.center {text-align: center;}
+p.left {text-align: left;}
+p.right {text-align: right;}
+p.SlyCitation {text-align: justify; max-width:90%; margin-left: 5%; margin-right:5%;}
+li {text-align: justify; max-width: 90%; margin-left: 5%; margin-bottom: 6px;}
+pre {color: #222222; background-color: #eeeeee; border-color: #ddd; border-style: dashed; padding-top: 10px; padding-bottom: 10px; padding-left: 50px; padding-right: 50px;}
+div.newsbox{padding: 2px;margin:0 auto; margin-top: 0px; margin-bottom: 5px;
+    background:#f2f2f2; color:#000; font-size: 0.7em;}
+div.newsbox ul{padding: 2px; margin:0 auto; margin-top: 0px; margin-bottom: 0px;font-size: 1.20em;}
+li.newsbox {text-align: justify; max-width: 90%; margin-left: 5%; margin-bottom: 6px; font-size: 1.00em; list-style-type: none;}
+div#smallpunchright {float: right; width: 70px; text-align: center;
+	border: solid black 1px; border-width: 0 0 1px 1px;margin: 0 0 0.2em 0.5em;}
+div#smallpunch {float: left; width: 70px;
+	text-align: center; padding: 0.1em 0.1em 0;
+	color: white; border: solid #e8e8ff 1px; 
+	border-width: 0.2em 0.2em 0.2em 0.2em; margin: 0 0.5em 0.2em 0;}
+div#punch {float: left; width: 100px;
+	text-align: center; padding: 0.1em 0.1em 0;
+	color: white; border: solid #e8e8ff 1px; 
+	border-width: 0.2em 0.2em 0.2em 0.2em; margin: 0 0.5em 0.2em 0;}
+div#punchright {float: right; width: 100px;
+	text-align: center; padding: 0.1em 0.1em 0;
+	color: white; border: solid #e8e8ff 1px; 
+	border-width: 0.2em 0.2em 0.2em 0.2em; margin: 0 0.5em 0.2em 0;}
+dt {font-weight: bold; margin-top: 10px;}
+dd {text-align: justify;}
+
+.buttonscontainer {width: 120px;}
+
+.buttons a {color: #FFFFFF;
+border: 1px hidden;
+color: blue;
+padding: 2px;
+padding-left: 3px;
+font: 10px Verdana, Arial, Helvetica, sans-serif;
+font-weight: bold;
+text-decoration: none;
+display: block;
+margin: 0px;
+width: 100%;
+text-align: center;}
+
+.buttons a:hover {border: 1px solid;
+padding-left: 4px;
+padding-top: 3px;
+padding-bottom: 1px;
+padding-right: 1px;
+background-color: #44658A;
+border-color: #234A76 #869CB4 #869CB4 #234A76;
+color: #FFFFFF;
+text-decoration: none;}
+
+#menuDiv {float: left; width: 280px; height: 160px; margin: 0px 15px 10px; vertical-align: top; text-align: left;}
+#floatDiv {float: left; margin: 0px 15px 10px; vertical-align: top; text-align: left;}
+#floatMainDiv {background-color:white; margin: 7px; padding: 0px; float: left; vertical-align: top; text-align: left; min-width: 280px; max-width: 280px; min-height: 280px;}
+#floatMainDivCenter {background-color:white; margin: 7px; padding: 0px; float: left; vertical-align: center; text-align: center; min-width: 280px; max-width: 280px; min-height: 280px;}
+#screenshotDiv {float: left; width: 140px; height: 200px; margin: 0px 15px 10px; vertical-align: bottom; font-size: 1.2em; font-weight: bold;}
+#separationDiv {width: 300px;}
+
+canvas {
+  position: absolute;
+  width:100vw;
+  height:100vh;
+  filter: blur(10px);
+}
+canvas.fullscreen {
+  position: absolute;
+  width:100vw;
+  height:100vh;
+  filter: blur(10px);
+}

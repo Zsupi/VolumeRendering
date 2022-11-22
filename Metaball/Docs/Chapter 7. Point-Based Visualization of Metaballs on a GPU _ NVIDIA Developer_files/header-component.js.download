@@ -1,0 +1,26 @@
+function mountHeader(componentSettings) {
+  try {
+    new NVDeveloperHeader({
+      target: document.getElementById('header'),
+      props: componentSettings
+    });
+  }
+  catch (e) {
+
+  }
+}
+var menuSettingsDefaults = {
+  baseURL: 'http://developer.nvidia.com',
+  signedIn: false,
+  joinPath: '/login',
+  locale: 'en-US',
+  developerMode: false
+};
+
+try {
+  var headerMenuSettings = jQuery.extend({}, menuSettingsDefaults, Drupal.settings.nvDeveloperHeader);
+  mountHeader(headerMenuSettings);
+}
+catch (e) {
+
+}

@@ -1,0 +1,21 @@
+function mountFooter(componentSettings) {
+        try {
+          new NVDeveloperFooter({
+            target: document.getElementById('footer'),
+            props: componentSettings
+          });
+        }
+        catch (e) {
+        }
+      }
+
+try {
+  var searchParams = new URLSearchParams(location.search);
+  if (!searchParams.has('reader')) {
+    var footerSettings = jQuery.extend({}, Drupal.settings.nvDeveloperFooter);
+    mountFooter(footerSettings);
+  }
+}
+catch (e) {
+
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0047)http://tfpsly.free.fr/videos/FastMetaballs.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style data-merge-styles="true"></style>
+
+<title>Fast Metaballs</title>
+<link rel="stylesheet" href="./Fast Metaballs_files/lightbox.css" type="text/css" media="screen">
+<script type="text/javascript" src="./Fast Metaballs_files/prototype.lite.js.download"></script>
+<script type="text/javascript" src="./Fast Metaballs_files/moo.fx.js.download"></script>
+<script type="text/javascript" src="./Fast Metaballs_files/litebox-1.0.js.download"></script>
+<style type="text/css">
+<!--
+div.video {
+  width: 100px;
+  height: 100px;
+  float: left;
+  } 
+-->
+</style>		
+<link rel="stylesheet" type="text/css" href="./Fast Metaballs_files/csssly.css"></head>
+
+<body bgcolor="#e8e8ff" onload="initLightbox();">
+<br>
+
+<center>
+<h1>2009 - Fast Metaballs</h1>
+</center>
+A new Metaball algorithm I invented in 2009. It's much much faster than the Marching Cube, and the results are quite comparable. MC still looks a bit nicer as I'm working on improving lighting in my algorithm.<p>
+I found out on February the 13<sup>th</sup> that <a href="http://http.developer.nvidia.com/GPUGems3/gpugems3_ch07.html">GPU Gems 3</a> describes a slightly similar technique. Still their algorithm requires more passes and some more computations for the rendering, so mine will be quite faster: I need only one prepass to prepare my work buffer; meaning particles are only displayed twice, against once per layer plus once in the final rendering in GPUGem3's algorithm.
+</p><p>
+
+Used in CAE Healthcare's LapVR Appendoctomy simulator:<br>
+</p><center>
+	<a rel="lightbox[CAE]" title="CAE Healthcare" href="http://tfpsly.free.fr/games/Cae_LapAppy/blood.jpg"><img src="./Fast Metaballs_files/blood_s.jpg" width="128" height="55"></a>
+	<a rel="lightbox[CAE]" title="CAE Healthcare" href="http://tfpsly.free.fr/games/Cae_LapAppy/BloodThroughWater.jpg"><img src="./Fast Metaballs_files/BloodThroughWater_s.jpg" width="128" height="67"></a>
+</center><p>
+
+</p><h3> Video demonstrations</h3>
+<center>
+<iframe width="640" height="480" src="./Fast Metaballs_files/hxJiu-pzIag.html" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<iframe width="640" height="480" src="./Fast Metaballs_files/JYe3xFdLiQk.html" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+
+<iframe width="640" height="480" src="./Fast Metaballs_files/pedNI7MjYLs.html" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+</center>
+
+<hr>
+Integration of this method in Edouard Poutot's <i>Fluid Dynamic</i> framework (usual Metaball technique implementation, particle physic and help on the procedural sand shader by Edouard):
+<center>
+<iframe width="640" height="480" src="./Fast Metaballs_files/pICKrCUcuAk.html" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+&nbsp;
+<iframe width="640" height="480" src="./Fast Metaballs_files/3SZC6y9zDas.html" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>
+</center>
+
+<h3>How it works</h3>
+
+Firstly the particles are created twice the size of a lonely drop. The expended area won't be displayed, unless a neighbor particle is so close that their periphery overlap. The alpha of the particle ranges from 1 in the middle to 0.5 at the edge of a lonely particle and to 0 on the edge of the expended periphery.
+<p>
+In a prepass, a RGBA buffer is rendered to build three depth layers of the particles in the RGB channels, and an acculation buffer in A. To do so, the RGB channels are rendered with a D3DBLENDOP_MIN/GL_MIN blending, and the alpha channel with a D3DBLENDOP_ADD/GL_BLEND_ADD blending. Each of RGB contains a different, but partial, depth layer. To do so in a single pass, RGB contains the particle surface depth, plus a 2D distance test from he center that clip the current particle at different distances from the center:
+</p><pre>color.rgb = float3(scaledDepth, scaledDepth + step(centerInvDistance, 0.35), scaledDepth + step(centerInvDistance, 0.45));
+color.w = texture(metaballAlphaMap, uv);</pre>
+The default texture contains a distance from the center of the image. It can be replaced with a texture containing several sub-particles to replace each particle with several smaller drops.
+<p>
+In the final pass, we render again the particle. We recompute the same particle surface depth, and we read the RGB depths of neighbors pixels. Of these 3 depth layers, we pick the one closer to the current particle depth. If none is close enough, we don't display the current particle, not to blend it with a particle that is too far on the depth axis.
+<br>
+Then we use the depth differences to generate a normal, and UVs for a surface material texture.
+</p><p>
+Pseudo-code:
+</p><pre>float NeighborDepth(float3 depths, float z)
+{
+	if (fabsf(depths.x - z) &lt; MaxDiff) return depths.x;
+	if (fabsf(depths.y - z) &lt; MaxDiff) return depths.y;
+	if (fabsf(depths.y - z) &gt; MaxDiff) return depths.y;
+	return depths.z;
+}
+
+float WaterFresnel(in float3 I, in float3 N)
+{
+	// R0 = pow(1.0 - 1.133, 2.0)/pow(1.0+1.133, 2.0);
+	const float R0 = 0.0204;
+	return saturate(R0 + (1.0 - R0)*pow(2.0*(1.0 + dot(I, N)), 5.0));
+}
+
+float z = ...;
+// The 4 neighbor UVs can be more than one pixel away, resulting in blurrier/smoother normals.
+float zLeft = NeighborDepth(texture(prepass, uvLeft).rgb, z);
+float zRight = NeighborDepth(texture(prepass, uvRight).rgb, z);
+float zUp = NeighborDepth(texture(prepass, uvUp).rgb, z);
+float zDown = NeighborDepth(texture(prepass, uvDown).rgb, z);
+
+// If in the periphery outside of the particle core, and too far from neighbors, clip current pixel.
+if (centerInvDistance &lt; 0.5 &amp;&amp; (z too different from all neighbor)) discard();
+
+// Generate a normal.
+screenSpaceNormal.x = (zRight - zLeft);
+screenSpaceNormal.y = (zDown - zUp);
+screenSpaceNormal.z = ScreenNormalDefaultZ;
+screenSpaceNormal = normalize(screenSpaceNormal);
+
+// Generate an albedo color.
+float4 albedoXY = tex2D( textureSampler, uvDistorsion + worldCoordinates.xy*MbDiffuseTiling);
+float4 albedoYZ = tex2D( textureSampler, uvDistorsion + worldCoordinates.yz*MbDiffuseTiling);
+float4 albedoXZ = tex2D( textureSampler, uvDistorsion + worldCoordinates.xz*MbDiffuseTiling);
+float4 albedoColor =	worldNormal.x * worldNormal.x * albedoYZ +
+			worldNormal.y * worldNormal.y * albedoXZ +
+			worldNormal.z * worldNormal.z * albedoXY;
+
+float3 worldNormal = screenToWorldMatrix * screenSpaceNormal;
+float4 refractionColor = texCUBE(refractionMap, worldNormal);
+
+// Apply a basic water-like lighting.
+float fresnel = WaterFresnel(-incident, worldNormal);
+outcolor.rgb = lerp(color.rgb, envmapColor.rgb, 0.1 + fresnel * ReflectionOpacity);
+float mbWaterSpecular = 4.0*pow(saturate(dot(0.5*(incident-fakedLightDir), worldNormal)), 64.0);
+outcolor.rgb += fresnel*mbWaterSpecular;
+</pre>
+
+By reversing the last depth layer in the prepass, a <a href="http://tfpsly.free.fr/games/Cae_LapAppy/BloodThroughWater.jpg">second metaball effect can be seen through a first one, as visible in this image:<br>
+<center><img src="./Fast Metaballs_files/BloodThroughWater_s.jpg" width="128" height="67"></center></a>
+
+<hr>
+<table width="100%" border="0"><tbody><tr>
+<td align="left"><a href="http://tfpsly.free.fr/" target="_top"><i>Main page</i></a></td>
+<td align="right"><p class="right"><i>email : <a href="mailto:tfpsly%20[SYMBOL]%20free.fr">Sly</a></i></p></td>
+</tr></tbody></table>
+
+<script language="Javascript" type="text/javascript">
+<!--
+referrer = parent.document.referrer;
+if( referrer == "" )
+    referrer = document.referrer;
+if( referrer == "" )
+	referrer = document.location;
+referrer = new String( referrer );
+referrer = referrer.replace( /&/g, "*_AND_*" );
+
+document.write( "<iframe src=\"../../statsframe.php?ref=" );
+document.write( referrer );
+document.write( "\" width=0 height=0 frameborder=0><\/iframe>" );
+-->
+</script><iframe src="./Fast Metaballs_files/statsframe.html" width="0" height="0" frameborder="0"></iframe>
+
+<div id="overlay" style="visibility: hidden; opacity: 0;"></div><div id="lightbox" style="display: none;"><div id="outerImageContainer"><div id="imageContainer"><img id="lightboxImage" style="visibility: hidden; opacity: 0;"><div id="hoverNav" style="visibility: hidden; opacity: 0;"><a id="prevLink" href="http://tfpsly.free.fr/videos/FastMetaballs.html#"></a><a id="nextLink" href="http://tfpsly.free.fr/videos/FastMetaballs.html#"></a></div><div id="loading"><a id="loadingLink" href="http://tfpsly.free.fr/videos/FastMetaballs.html#"><img src="./Fast Metaballs_files/loading.gif"></a></div></div></div><div id="imageDataContainer" class="clearfix" style="visibility: hidden; opacity: 0;"><div id="imageData"><div id="imageDetails"><span id="caption"></span><span id="numberDisplay"></span></div><div id="bottomNav"><a id="bottomNavClose" href="http://tfpsly.free.fr/videos/FastMetaballs.html#"><img src="./Fast Metaballs_files/closelabel.gif"></a></div></div></div></div></body><editor-card style="position:absolute;top:0px;left:0px;z-index:auto;display: block !important"><div dir="ltr" style="all: initial;"><div style="color: initial; font: initial; font-feature-settings: initial; font-kerning: initial; font-optical-sizing: initial; font-palette: initial; font-synthesis: initial; font-variation-settings: initial; forced-color-adjust: initial; text-orientation: initial; text-rendering: initial; -webkit-font-smoothing: initial; -webkit-locale: initial; -webkit-text-orientation: initial; -webkit-writing-mode: initial; writing-mode: initial; zoom: initial; accent-color: initial; place-content: initial; place-items: initial; place-self: initial; alignment-baseline: initial; animation: initial; app-region: initial; appearance: initial; aspect-ratio: initial; backdrop-filter: initial; backface-visibility: initial; background: initial; background-blend-mode: initial; baseline-shift: initial; block-size: initial; border-block: initial; border: initial; border-radius: initial; border-collapse: initial; border-end-end-radius: initial; border-end-start-radius: initial; border-inline: initial; border-start-end-radius: initial; border-start-start-radius: initial; bottom: 0px; box-shadow: initial; box-sizing: initial; break-after: initial; break-before: initial; break-inside: initial; buffered-rendering: initial; caption-side: initial; caret-color: initial; clear: initial; clip: initial; clip-path: initial; clip-rule: initial; color-interpolation: initial; color-interpolation-filters: initial; color-rendering: initial; color-scheme: initial; columns: initial; column-fill: initial; gap: initial; column-rule: initial; column-span: initial; contain: initial; contain-intrinsic-block-size: initial; contain-intrinsic-size: initial; contain-intrinsic-inline-size: initial; container: initial; content: initial; content-visibility: initial; counter-increment: initial; counter-reset: initial; counter-set: initial; cursor: initial; cx: initial; cy: initial; d: initial; display: flex; dominant-baseline: initial; empty-cells: initial; fill: initial; fill-opacity: initial; fill-rule: initial; filter: initial; flex: initial; flex-flow: column-reverse; float: initial; flood-color: initial; flood-opacity: initial; grid: initial; grid-area: initial; height: initial; hyphenate-character: initial; hyphens: initial; image-orientation: initial; image-rendering: initial; inline-size: initial; inset-block: initial; inset-inline: initial; isolation: initial; left: initial; letter-spacing: initial; lighting-color: initial; line-break: initial; list-style: initial; margin-block: initial; margin: 1em; margin-inline: initial; marker: initial; mask: initial; mask-type: initial; max-block-size: initial; max-height: initial; max-inline-size: initial; max-width: initial; min-block-size: initial; min-height: initial; min-inline-size: initial; min-width: initial; mix-blend-mode: initial; object-fit: initial; object-position: initial; object-view-box: initial; offset: initial; opacity: initial; order: initial; origin-trial-test-property: initial; orphans: initial; outline: initial; outline-offset: initial; overflow-anchor: initial; overflow-clip-margin: initial; overflow-wrap: initial; overflow: initial; overscroll-behavior-block: initial; overscroll-behavior-inline: initial; overscroll-behavior: initial; padding-block: initial; padding: initial; padding-inline: initial; page: initial; page-orientation: initial; paint-order: initial; perspective: initial; perspective-origin: initial; pointer-events: initial; position: fixed; quotes: initial; r: initial; resize: initial; right: 0px; rotate: initial; ruby-position: initial; rx: initial; ry: initial; scale: initial; scroll-behavior: initial; scroll-margin-block: initial; scroll-margin: initial; scroll-margin-inline: initial; scroll-padding-block: initial; scroll-padding: initial; scroll-padding-inline: initial; scroll-snap-align: initial; scroll-snap-stop: initial; scroll-snap-type: initial; scrollbar-gutter: initial; shape-image-threshold: initial; shape-margin: initial; shape-outside: initial; shape-rendering: initial; size: initial; speak: initial; stop-color: initial; stop-opacity: initial; stroke: initial; stroke-dasharray: initial; stroke-dashoffset: initial; stroke-linecap: initial; stroke-linejoin: initial; stroke-miterlimit: initial; stroke-opacity: initial; stroke-width: initial; tab-size: initial; table-layout: initial; text-align: initial; text-align-last: initial; text-anchor: initial; text-combine-upright: initial; text-decoration: initial; text-decoration-skip-ink: initial; text-emphasis: initial; text-emphasis-position: initial; text-indent: initial; text-overflow: initial; text-shadow: initial; text-size-adjust: initial; text-transform: initial; text-underline-offset: initial; text-underline-position: initial; top: initial; touch-action: initial; transform: initial; transform-box: initial; transform-origin: initial; transform-style: initial; transition: initial; translate: initial; user-select: initial; vector-effect: initial; vertical-align: initial; visibility: initial; border-spacing: initial; -webkit-box-align: initial; -webkit-box-decoration-break: initial; -webkit-box-direction: initial; -webkit-box-flex: initial; -webkit-box-ordinal-group: initial; -webkit-box-orient: initial; -webkit-box-pack: initial; -webkit-box-reflect: initial; -webkit-highlight: initial; -webkit-line-break: initial; -webkit-line-clamp: initial; -webkit-mask-box-image: initial; -webkit-mask: initial; -webkit-mask-composite: initial; -webkit-print-color-adjust: initial; -webkit-rtl-ordering: initial; -webkit-ruby-position: initial; -webkit-tap-highlight-color: initial; -webkit-text-combine: initial; -webkit-text-decorations-in-effect: initial; -webkit-text-fill-color: initial; -webkit-text-security: initial; -webkit-text-stroke: initial; -webkit-user-drag: initial; -webkit-user-modify: initial; white-space: initial; widows: initial; width: initial; will-change: initial; word-break: initial; word-spacing: initial; x: initial; y: initial; z-index: 2147483647;"></div><div style="color: initial; font: initial; font-feature-settings: initial; font-kerning: initial; font-optical-sizing: initial; font-palette: initial; font-synthesis: initial; font-variation-settings: initial; forced-color-adjust: initial; text-orientation: initial; text-rendering: initial; -webkit-font-smoothing: initial; -webkit-locale: initial; -webkit-text-orientation: initial; -webkit-writing-mode: initial; writing-mode: initial; zoom: initial; accent-color: initial; place-content: initial; place-items: initial; place-self: initial; alignment-baseline: initial; animation: initial; app-region: initial; appearance: initial; aspect-ratio: initial; backdrop-filter: initial; backface-visibility: initial; background: initial; background-blend-mode: initial; baseline-shift: initial; block-size: initial; border-block: initial; border: initial; border-radius: initial; border-collapse: initial; border-end-end-radius: initial; border-end-start-radius: initial; border-inline: initial; border-start-end-radius: initial; border-start-start-radius: initial; inset: initial; box-shadow: initial; box-sizing: initial; break-after: initial; break-before: initial; break-inside: initial; buffered-rendering: initial; caption-side: initial; caret-color: initial; clear: initial; clip: initial; clip-path: initial; clip-rule: initial; color-interpolation: initial; color-interpolation-filters: initial; color-rendering: initial; color-scheme: initial; columns: initial; column-fill: initial; gap: initial; column-rule: initial; column-span: initial; contain: initial; contain-intrinsic-block-size: initial; contain-intrinsic-size: initial; contain-intrinsic-inline-size: initial; container: initial; content: initial; content-visibility: initial; counter-increment: initial; counter-reset: initial; counter-set: initial; cursor: initial; cx: initial; cy: initial; d: initial; display: initial; dominant-baseline: initial; empty-cells: initial; fill: initial; fill-opacity: initial; fill-rule: initial; filter: initial; flex: initial; flex-flow: initial; float: initial; flood-color: initial; flood-opacity: initial; grid: initial; grid-area: initial; height: initial; hyphenate-character: initial; hyphens: initial; image-orientation: initial; image-rendering: initial; inline-size: initial; inset-block: initial; inset-inline: initial; isolation: initial; letter-spacing: initial; lighting-color: initial; line-break: initial; list-style: initial; margin-block: initial; margin: initial; margin-inline: initial; marker: initial; mask: initial; mask-type: initial; max-block-size: initial; max-height: initial; max-inline-size: initial; max-width: initial; min-block-size: initial; min-height: initial; min-inline-size: initial; min-width: initial; mix-blend-mode: initial; object-fit: initial; object-position: initial; object-view-box: initial; offset: initial; opacity: initial; order: initial; origin-trial-test-property: initial; orphans: initial; outline: initial; outline-offset: initial; overflow-anchor: initial; overflow-clip-margin: initial; overflow-wrap: initial; overflow: initial; overscroll-behavior-block: initial; overscroll-behavior-inline: initial; overscroll-behavior: initial; padding-block: initial; padding: initial; padding-inline: initial; page: initial; page-orientation: initial; paint-order: initial; perspective: initial; perspective-origin: initial; pointer-events: initial; position: absolute; quotes: initial; r: initial; resize: initial; rotate: initial; ruby-position: initial; rx: initial; ry: initial; scale: initial; scroll-behavior: initial; scroll-margin-block: initial; scroll-margin: initial; scroll-margin-inline: initial; scroll-padding-block: initial; scroll-padding: initial; scroll-padding-inline: initial; scroll-snap-align: initial; scroll-snap-stop: initial; scroll-snap-type: initial; scrollbar-gutter: initial; shape-image-threshold: initial; shape-margin: initial; shape-outside: initial; shape-rendering: initial; size: initial; speak: initial; stop-color: initial; stop-opacity: initial; stroke: initial; stroke-dasharray: initial; stroke-dashoffset: initial; stroke-linecap: initial; stroke-linejoin: initial; stroke-miterlimit: initial; stroke-opacity: initial; stroke-width: initial; tab-size: initial; table-layout: initial; text-align: initial; text-align-last: initial; text-anchor: initial; text-combine-upright: initial; text-decoration: initial; text-decoration-skip-ink: initial; text-emphasis: initial; text-emphasis-position: initial; text-indent: initial; text-overflow: initial; text-shadow: initial; text-size-adjust: initial; text-transform: initial; text-underline-offset: initial; text-underline-position: initial; touch-action: initial; transform: initial; transform-box: initial; transform-origin: initial; transform-style: initial; transition: initial; translate: initial; user-select: initial; vector-effect: initial; vertical-align: initial; visibility: initial; border-spacing: initial; -webkit-box-align: initial; -webkit-box-decoration-break: initial; -webkit-box-direction: initial; -webkit-box-flex: initial; -webkit-box-ordinal-group: initial; -webkit-box-orient: initial; -webkit-box-pack: initial; -webkit-box-reflect: initial; -webkit-highlight: initial; -webkit-line-break: initial; -webkit-line-clamp: initial; -webkit-mask-box-image: initial; -webkit-mask: initial; -webkit-mask-composite: initial; -webkit-print-color-adjust: initial; -webkit-rtl-ordering: initial; -webkit-ruby-position: initial; -webkit-tap-highlight-color: initial; -webkit-text-combine: initial; -webkit-text-decorations-in-effect: initial; -webkit-text-fill-color: initial; -webkit-text-security: initial; -webkit-text-stroke: initial; -webkit-user-drag: initial; -webkit-user-modify: initial; white-space: initial; widows: initial; width: initial; will-change: initial; word-break: initial; word-spacing: initial; x: initial; y: initial; z-index: 2147483647;"><link rel="stylesheet" href="chrome-extension://hokifickgkhplphjiodbggjmoafhignh/fonts/fabric-icons.css"><div style="all: initial;"></div></div></div></editor-card></html>

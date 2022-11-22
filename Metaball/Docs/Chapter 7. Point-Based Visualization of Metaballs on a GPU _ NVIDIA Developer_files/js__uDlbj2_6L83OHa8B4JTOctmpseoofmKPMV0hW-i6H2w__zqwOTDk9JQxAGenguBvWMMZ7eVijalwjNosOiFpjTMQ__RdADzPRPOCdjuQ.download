@@ -1,0 +1,564 @@
+/*!
+	Colorbox 1.6.1
+	license: MIT
+	http://www.jacklmoore.com/colorbox
+*/
+(function(t,e,i){function n(i,n,o){var r=e.createElement(i);return n&&(r.id=Z+n),o&&(r.style.cssText=o),t(r)}function o(){return i.innerHeight?i.innerHeight:t(i).height()}function r(e,i){i!==Object(i)&&(i={}),this.cache={},this.el=e,this.value=function(e){var n;return void 0===this.cache[e]&&(n=t(this.el).attr("data-cbox-"+e),void 0!==n?this.cache[e]=n:void 0!==i[e]?this.cache[e]=i[e]:void 0!==X[e]&&(this.cache[e]=X[e])),this.cache[e]},this.get=function(e){var i=this.value(e);return t.isFunction(i)?i.call(this.el,this):i}}function h(t){var e=W.length,i=(A+t)%e;return 0>i?e+i:i}function a(t,e){return Math.round((/%/.test(t)?("x"===e?E.width():o())/100:1)*parseInt(t,10))}function s(t,e){return t.get("photo")||t.get("photoRegex").test(e)}function l(t,e){return t.get("retinaUrl")&&i.devicePixelRatio>1?e.replace(t.get("photoRegex"),t.get("retinaSuffix")):e}function d(t){"contains"in y[0]&&!y[0].contains(t.target)&&t.target!==v[0]&&(t.stopPropagation(),y.focus())}function c(t){c.str!==t&&(y.add(v).removeClass(c.str).addClass(t),c.str=t)}function g(e){A=0,e&&e!==!1&&"nofollow"!==e?(W=t("."+te).filter(function(){var i=t.data(this,Y),n=new r(this,i);return n.get("rel")===e}),A=W.index(_.el),-1===A&&(W=W.add(_.el),A=W.length-1)):W=t(_.el)}function u(i){t(e).trigger(i),ae.triggerHandler(i)}function f(i){var o;if(!G){if(o=t(i).data(Y),_=new r(i,o),g(_.get("rel")),!$){$=q=!0,c(_.get("className")),y.css({visibility:"hidden",display:"block",opacity:""}),I=n(se,"LoadedContent","width:0; height:0; overflow:hidden; visibility:hidden"),b.css({width:"",height:""}).append(I),j=T.height()+k.height()+b.outerHeight(!0)-b.height(),D=C.width()+H.width()+b.outerWidth(!0)-b.width(),N=I.outerHeight(!0),z=I.outerWidth(!0);var h=a(_.get("initialWidth"),"x"),s=a(_.get("initialHeight"),"y"),l=_.get("maxWidth"),f=_.get("maxHeight");_.w=(l!==!1?Math.min(h,a(l,"x")):h)-z-D,_.h=(f!==!1?Math.min(s,a(f,"y")):s)-N-j,I.css({width:"",height:_.h}),J.position(),u(ee),_.get("onOpen"),O.add(S).hide(),y.focus(),_.get("trapFocus")&&e.addEventListener&&(e.addEventListener("focus",d,!0),ae.one(re,function(){e.removeEventListener("focus",d,!0)})),_.get("returnFocus")&&ae.one(re,function(){t(_.el).focus()})}var p=parseFloat(_.get("opacity"));v.css({opacity:p===p?p:"",cursor:_.get("overlayClose")?"pointer":"",visibility:"visible"}).show(),_.get("closeButton")?B.html(_.get("close")).appendTo(b):B.appendTo("<div/>"),w()}}function p(){y||(V=!1,E=t(i),y=n(se).attr({id:Y,"class":t.support.opacity===!1?Z+"IE":"",role:"dialog",tabindex:"-1"}).hide(),v=n(se,"Overlay").hide(),M=t([n(se,"LoadingOverlay")[0],n(se,"LoadingGraphic")[0]]),x=n(se,"Wrapper"),b=n(se,"Content").append(S=n(se,"Title"),F=n(se,"Current"),P=t('<button type="button"/>').attr({id:Z+"Previous"}),K=t('<button type="button"/>').attr({id:Z+"Next"}),R=n("button","Slideshow"),M),B=t('<button type="button"/>').attr({id:Z+"Close"}),x.append(n(se).append(n(se,"TopLeft"),T=n(se,"TopCenter"),n(se,"TopRight")),n(se,!1,"clear:left").append(C=n(se,"MiddleLeft"),b,H=n(se,"MiddleRight")),n(se,!1,"clear:left").append(n(se,"BottomLeft"),k=n(se,"BottomCenter"),n(se,"BottomRight"))).find("div div").css({"float":"left"}),L=n(se,!1,"position:absolute; width:9999px; visibility:hidden; display:none; max-width:none;"),O=K.add(P).add(F).add(R)),e.body&&!y.parent().length&&t(e.body).append(v,y.append(x,L))}function m(){function i(t){t.which>1||t.shiftKey||t.altKey||t.metaKey||t.ctrlKey||(t.preventDefault(),f(this))}return y?(V||(V=!0,K.click(function(){J.next()}),P.click(function(){J.prev()}),B.click(function(){J.close()}),v.click(function(){_.get("overlayClose")&&J.close()}),t(e).bind("keydown."+Z,function(t){var e=t.keyCode;$&&_.get("escKey")&&27===e&&(t.preventDefault(),J.close()),$&&_.get("arrowKey")&&W[1]&&!t.altKey&&(37===e?(t.preventDefault(),P.click()):39===e&&(t.preventDefault(),K.click()))}),t.isFunction(t.fn.on)?t(e).on("click."+Z,"."+te,i):t("."+te).live("click."+Z,i)),!0):!1}function w(){var e,o,r,h=J.prep,d=++le;if(q=!0,U=!1,u(he),u(ie),_.get("onLoad"),_.h=_.get("height")?a(_.get("height"),"y")-N-j:_.get("innerHeight")&&a(_.get("innerHeight"),"y"),_.w=_.get("width")?a(_.get("width"),"x")-z-D:_.get("innerWidth")&&a(_.get("innerWidth"),"x"),_.mw=_.w,_.mh=_.h,_.get("maxWidth")&&(_.mw=a(_.get("maxWidth"),"x")-z-D,_.mw=_.w&&_.w<_.mw?_.w:_.mw),_.get("maxHeight")&&(_.mh=a(_.get("maxHeight"),"y")-N-j,_.mh=_.h&&_.h<_.mh?_.h:_.mh),e=_.get("href"),Q=setTimeout(function(){M.show()},100),_.get("inline")){var c=t(e);r=t("<div>").hide().insertBefore(c),ae.one(he,function(){r.replaceWith(c)}),h(c)}else _.get("iframe")?h(" "):_.get("html")?h(_.get("html")):s(_,e)?(e=l(_,e),U=_.get("createImg"),t(U).addClass(Z+"Photo").bind("error."+Z,function(){h(n(se,"Error").html(_.get("imgError")))}).one("load",function(){d===le&&setTimeout(function(){var e;_.get("retinaImage")&&i.devicePixelRatio>1&&(U.height=U.height/i.devicePixelRatio,U.width=U.width/i.devicePixelRatio),_.get("scalePhotos")&&(o=function(){U.height-=U.height*e,U.width-=U.width*e},_.mw&&U.width>_.mw&&(e=(U.width-_.mw)/U.width,o()),_.mh&&U.height>_.mh&&(e=(U.height-_.mh)/U.height,o())),_.h&&(U.style.marginTop=Math.max(_.mh-U.height,0)/2+"px"),W[1]&&(_.get("loop")||W[A+1])&&(U.style.cursor="pointer",t(U).bind("click."+Z,function(){J.next()})),U.style.width=U.width+"px",U.style.height=U.height+"px",h(U)},1)}),U.src=e):e&&L.load(e,_.get("data"),function(e,i){d===le&&h("error"===i?n(se,"Error").html(_.get("xhrError")):t(this).contents())})}var v,y,x,b,T,C,H,k,W,E,I,L,M,S,F,R,K,P,B,O,_,j,D,N,z,A,U,$,q,G,Q,J,V,X={html:!1,photo:!1,iframe:!1,inline:!1,transition:"elastic",speed:300,fadeOut:300,width:!1,initialWidth:"600",innerWidth:!1,maxWidth:!1,height:!1,initialHeight:"450",innerHeight:!1,maxHeight:!1,scalePhotos:!0,scrolling:!0,opacity:.9,preloading:!0,className:!1,overlayClose:!0,escKey:!0,arrowKey:!0,top:!1,bottom:!1,left:!1,right:!1,fixed:!1,data:void 0,closeButton:!0,fastIframe:!0,open:!1,reposition:!0,loop:!0,slideshow:!1,slideshowAuto:!0,slideshowSpeed:2500,slideshowStart:"start slideshow",slideshowStop:"stop slideshow",photoRegex:/\.(gif|png|jp(e|g|eg)|bmp|ico|webp|jxr|svg)((#|\?).*)?$/i,retinaImage:!1,retinaUrl:!1,retinaSuffix:"@2x.$1",current:"image {current} of {total}",previous:"previous",next:"next",close:"close",xhrError:"This content failed to load.",imgError:"This image failed to load.",returnFocus:!0,trapFocus:!0,onOpen:!1,onLoad:!1,onComplete:!1,onCleanup:!1,onClosed:!1,rel:function(){return this.rel},href:function(){return t(this).attr("href")},title:function(){return this.title},createImg:function(){var e=new Image,i=t(this).data("cbox-img-attrs");return"object"==typeof i&&t.each(i,function(t,i){e[t]=i}),e},createIframe:function(){var i=e.createElement("iframe"),n=t(this).data("cbox-iframe-attrs");return"object"==typeof n&&t.each(n,function(t,e){i[t]=e}),"frameBorder"in i&&(i.frameBorder=0),"allowTransparency"in i&&(i.allowTransparency="true"),i.name=(new Date).getTime(),i.allowFullScreen=!0,i}},Y="colorbox",Z="cbox",te=Z+"Element",ee=Z+"_open",ie=Z+"_load",ne=Z+"_complete",oe=Z+"_cleanup",re=Z+"_closed",he=Z+"_purge",ae=t("<a/>"),se="div",le=0,de={},ce=function(){function t(){clearTimeout(h)}function e(){(_.get("loop")||W[A+1])&&(t(),h=setTimeout(J.next,_.get("slideshowSpeed")))}function i(){R.html(_.get("slideshowStop")).unbind(s).one(s,n),ae.bind(ne,e).bind(ie,t),y.removeClass(a+"off").addClass(a+"on")}function n(){t(),ae.unbind(ne,e).unbind(ie,t),R.html(_.get("slideshowStart")).unbind(s).one(s,function(){J.next(),i()}),y.removeClass(a+"on").addClass(a+"off")}function o(){r=!1,R.hide(),t(),ae.unbind(ne,e).unbind(ie,t),y.removeClass(a+"off "+a+"on")}var r,h,a=Z+"Slideshow_",s="click."+Z;return function(){r?_.get("slideshow")||(ae.unbind(oe,o),o()):_.get("slideshow")&&W[1]&&(r=!0,ae.one(oe,o),_.get("slideshowAuto")?i():n(),R.show())}}();t[Y]||(t(p),J=t.fn[Y]=t[Y]=function(e,i){var n,o=this;return e=e||{},t.isFunction(o)&&(o=t("<a/>"),e.open=!0),o[0]?(p(),m()&&(i&&(e.onComplete=i),o.each(function(){var i=t.data(this,Y)||{};t.data(this,Y,t.extend(i,e))}).addClass(te),n=new r(o[0],e),n.get("open")&&f(o[0])),o):o},J.position=function(e,i){function n(){T[0].style.width=k[0].style.width=b[0].style.width=parseInt(y[0].style.width,10)-D+"px",b[0].style.height=C[0].style.height=H[0].style.height=parseInt(y[0].style.height,10)-j+"px"}var r,h,s,l=0,d=0,c=y.offset();if(E.unbind("resize."+Z),y.css({top:-9e4,left:-9e4}),h=E.scrollTop(),s=E.scrollLeft(),_.get("fixed")?(c.top-=h,c.left-=s,y.css({position:"fixed"})):(l=h,d=s,y.css({position:"absolute"})),d+=_.get("right")!==!1?Math.max(E.width()-_.w-z-D-a(_.get("right"),"x"),0):_.get("left")!==!1?a(_.get("left"),"x"):Math.round(Math.max(E.width()-_.w-z-D,0)/2),l+=_.get("bottom")!==!1?Math.max(o()-_.h-N-j-a(_.get("bottom"),"y"),0):_.get("top")!==!1?a(_.get("top"),"y"):Math.round(Math.max(o()-_.h-N-j,0)/2),y.css({top:c.top,left:c.left,visibility:"visible"}),x[0].style.width=x[0].style.height="9999px",r={width:_.w+z+D,height:_.h+N+j,top:l,left:d},e){var g=0;t.each(r,function(t){return r[t]!==de[t]?(g=e,void 0):void 0}),e=g}de=r,e||y.css(r),y.dequeue().animate(r,{duration:e||0,complete:function(){n(),q=!1,x[0].style.width=_.w+z+D+"px",x[0].style.height=_.h+N+j+"px",_.get("reposition")&&setTimeout(function(){E.bind("resize."+Z,J.position)},1),t.isFunction(i)&&i()},step:n})},J.resize=function(t){var e;$&&(t=t||{},t.width&&(_.w=a(t.width,"x")-z-D),t.innerWidth&&(_.w=a(t.innerWidth,"x")),I.css({width:_.w}),t.height&&(_.h=a(t.height,"y")-N-j),t.innerHeight&&(_.h=a(t.innerHeight,"y")),t.innerHeight||t.height||(e=I.scrollTop(),I.css({height:"auto"}),_.h=I.height()),I.css({height:_.h}),e&&I.scrollTop(e),J.position("none"===_.get("transition")?0:_.get("speed")))},J.prep=function(i){function o(){return _.w=_.w||I.width(),_.w=_.mw&&_.mw<_.w?_.mw:_.w,_.w}function a(){return _.h=_.h||I.height(),_.h=_.mh&&_.mh<_.h?_.mh:_.h,_.h}if($){var d,g="none"===_.get("transition")?0:_.get("speed");I.remove(),I=n(se,"LoadedContent").append(i),I.hide().appendTo(L.show()).css({width:o(),overflow:_.get("scrolling")?"auto":"hidden"}).css({height:a()}).prependTo(b),L.hide(),t(U).css({"float":"none"}),c(_.get("className")),d=function(){function i(){t.support.opacity===!1&&y[0].style.removeAttribute("filter")}var n,o,a=W.length;$&&(o=function(){clearTimeout(Q),M.hide(),u(ne),_.get("onComplete")},S.html(_.get("title")).show(),I.show(),a>1?("string"==typeof _.get("current")&&F.html(_.get("current").replace("{current}",A+1).replace("{total}",a)).show(),K[_.get("loop")||a-1>A?"show":"hide"]().html(_.get("next")),P[_.get("loop")||A?"show":"hide"]().html(_.get("previous")),ce(),_.get("preloading")&&t.each([h(-1),h(1)],function(){var i,n=W[this],o=new r(n,t.data(n,Y)),h=o.get("href");h&&s(o,h)&&(h=l(o,h),i=e.createElement("img"),i.src=h)})):O.hide(),_.get("iframe")?(n=_.get("createIframe"),_.get("scrolling")||(n.scrolling="no"),t(n).attr({src:_.get("href"),"class":Z+"Iframe"}).one("load",o).appendTo(I),ae.one(he,function(){n.src="//about:blank"}),_.get("fastIframe")&&t(n).trigger("load")):o(),"fade"===_.get("transition")?y.fadeTo(g,1,i):i())},"fade"===_.get("transition")?y.fadeTo(g,0,function(){J.position(0,d)}):J.position(g,d)}},J.next=function(){!q&&W[1]&&(_.get("loop")||W[A+1])&&(A=h(1),f(W[A]))},J.prev=function(){!q&&W[1]&&(_.get("loop")||A)&&(A=h(-1),f(W[A]))},J.close=function(){$&&!G&&(G=!0,$=!1,u(oe),_.get("onCleanup"),E.unbind("."+Z),v.fadeTo(_.get("fadeOut")||0,0),y.stop().fadeTo(_.get("fadeOut")||0,0,function(){y.hide(),v.hide(),u(he),I.remove(),setTimeout(function(){G=!1,u(re),_.get("onClosed")},1)}))},J.remove=function(){y&&(y.stop(),t[Y].close(),y.stop(!1,!0).remove(),v.remove(),G=!1,y=null,t("."+te).removeData(Y).removeClass(te),t(e).unbind("click."+Z).unbind("keydown."+Z))},J.element=function(){return t(_.el)},J.settings=X)})(jQuery,document,window);
+;/*})'"*/
+;/*})'"*/
+/**
+ * @file
+ * Colorbox module init js.
+ */
+
+(function ($) {
+
+Drupal.behaviors.initColorbox = {
+  attach: function (context, settings) {
+    if (!$.isFunction($('a, area, input', context).colorbox) || typeof settings.colorbox === 'undefined') {
+      return;
+    }
+
+    if (settings.colorbox.mobiledetect && window.matchMedia) {
+      // Disable Colorbox for small screens.
+      var mq = window.matchMedia("(max-device-width: " + settings.colorbox.mobiledevicewidth + ")");
+      if (mq.matches) {
+        return;
+      }
+    }
+
+    // Use "data-colorbox-gallery" if set otherwise use "rel".
+    settings.colorbox.rel = function () {
+      if ($(this).data('colorbox-gallery')) {
+        return $(this).data('colorbox-gallery');
+      }
+      else {
+        return $(this).attr('rel');
+      }
+    };
+
+    $('.colorbox', context)
+      .once('init-colorbox').each(function(){
+        // Only images are supported for the "colorbox" class.
+        // The "photo" setting forces the href attribute to be treated as an image.
+        var extendParams = {
+          photo: true
+        };
+        // If a title attribute is supplied, sanitize it.
+        var title = $(this).attr('title');
+        if (title) {
+          extendParams.title = Drupal.colorbox.sanitizeMarkup(title);
+        }
+        $(this).colorbox($.extend({}, settings.colorbox, extendParams));
+      });
+
+    $(context).bind('cbox_complete', function () {
+      Drupal.attachBehaviors('#cboxLoadedContent');
+    });
+  }
+};
+
+// Create colorbox namespace if it doesn't exist.
+if (!Drupal.hasOwnProperty('colorbox')) {
+  Drupal.colorbox = {};
+}
+
+/**
+ * Global function to allow sanitizing captions and control strings.
+ *
+ * @param markup
+ *   String containing potential markup.
+ * @return @string
+ *  Sanitized string with potentially dangerous markup removed.
+ */
+Drupal.colorbox.sanitizeMarkup = function(markup) {
+  // If DOMPurify installed, allow some HTML. Otherwise, treat as plain text.
+  if (typeof DOMPurify !== 'undefined') {
+    var purifyConfig = {
+      ALLOWED_TAGS: [
+        'a',
+        'b',
+        'strong',
+        'i',
+        'em',
+        'u',
+        'cite',
+        'code',
+        'br'
+      ],
+      ALLOWED_ATTR: [
+        'href',
+        'hreflang',
+        'title',
+        'target'
+      ]
+    }
+    if (Drupal.settings.hasOwnProperty('dompurify_custom_config')) {
+      purifyConfig = Drupal.settings.dompurify_custom_config;
+    }
+    return DOMPurify.sanitize(markup, purifyConfig);
+  }
+  else {
+    return Drupal.checkPlain(markup);
+  }
+}
+
+})(jQuery);
+
+
+(function ($, Drupal, window, document, undefined) {
+  //Configure colorbox call back to resize with custom dimensions
+  $.colorbox.settings.onLoad = function() {
+    colorboxResize();
+  }
+
+  //Customize colorbox dimensions
+  var colorboxResize = function(resize) {
+    var width = "90%";
+    var height = "90%";
+
+    if($(window).width() > 1200) { width = "1080" }
+    else if($(window).width() > 960) { width = "860" }
+
+    if($(window).height() > 875) { height = "787" }
+    else if($(window).height() > 700) { height = "630" }
+
+    $.colorbox.settings.height = height;
+    $.colorbox.settings.width = width;
+
+    //if window is resized while lightbox open
+    if(resize) {
+      $.colorbox.resize({
+        'height': height,
+        'width': width
+      });
+    }
+  }
+
+  //In case of window being resized
+  $(window).resize(function() {
+    colorboxResize(true);
+  });
+
+})(jQuery, Drupal, this, this.document);
+
+;/*})'"*/
+;/*})'"*/
+/**
+ * @file
+ * Colorbox module style js.
+ */
+
+(function ($) {
+
+Drupal.behaviors.initColorboxDefaultStyle = {
+  attach: function (context, settings) {
+    $(context).bind('cbox_complete', function () {
+      // Only run if there is a title.
+      if ($('#cboxTitle:empty', context).length == false) {
+        $('#cboxLoadedContent img', context).bind('mouseover', function () {
+          $('#cboxTitle', context).slideDown();
+        });
+        $('#cboxOverlay', context).bind('mouseover', function () {
+          $('#cboxTitle', context).slideUp();
+        });
+      }
+      else {
+        $('#cboxTitle', context).hide();
+      }
+    });
+  }
+};
+
+})(jQuery);
+
+;/*})'"*/
+;/*})'"*/
+/**
+ * @file
+ * Colorbox module load js.
+ */
+(function ($) {
+
+Drupal.behaviors.initColorboxLoad = {
+  attach: function (context, settings) {
+    if (!$.isFunction($.colorbox) || typeof settings.colorbox === 'undefined') {
+      return;
+    }
+
+    if (settings.colorbox.mobiledetect && window.matchMedia) {
+      // Disable Colorbox for small screens.
+      var mq = window.matchMedia("(max-device-width: " + settings.colorbox.mobiledevicewidth + ")");
+      if (mq.matches) {
+        return;
+      }
+    }
+
+    $.urlParams = function (url) {
+      var p = {},
+          e,
+          a = /\+/g,  // Regex for replacing addition symbol with a space.
+          r = /([^&=]+)=?([^&]*)/g,
+          d = function (s) { return decodeURIComponent(s.replace(a, ' ')); },
+          q = url.split('?');
+      while (e = r.exec(q[1])) {
+        e[1] = d(e[1]);
+        e[2] = d(e[2]);
+        switch (e[2].toLowerCase()) {
+          case 'true':
+          case 'yes':
+            e[2] = true;
+            break;
+          case 'false':
+          case 'no':
+            e[2] = false;
+            break;
+        }
+        if (e[1] == 'width') { e[1] = 'innerWidth'; }
+        if (e[1] == 'height') { e[1] = 'innerHeight'; }
+        if (e[2]) {
+          e[2] = Drupal.checkPlain(e[2]);
+        }
+        p[e[1]] = e[2];
+      }
+      return p;
+    };
+
+    $('.colorbox-load', context)
+      .once('init-colorbox-load', function () {
+        var href = $(this).attr('href');
+
+        var params = $.urlParams(href);
+
+        // Always load in an iframe.
+        params.iframe = true;
+
+        // Set inner width and height if not already specified.
+        if (!params.hasOwnProperty('innerWidth')) {
+          params.innerWidth = $(window).width() * .8;
+        }
+        if (!params.hasOwnProperty('innerHeight')) {
+          params.innerHeight = $(window).height() * .8;
+        }
+
+        if (!params.hasOwnProperty('title')) {
+          // If a title attribute is supplied, sanitize it.
+          var title = $(this).attr('title');
+          if (title) {
+            params.title = Drupal.colorbox.sanitizeMarkup(title);
+          }
+        }
+        $(this).colorbox($.extend({}, settings.colorbox, params));
+      });
+  }
+};
+
+})(jQuery);
+
+;/*})'"*/
+;/*})'"*/
+// $Id: hint.js,v 1.4 2009/12/20 02:05:12 quicksketch Exp $
+(function ($) {
+
+/**
+ * The Drupal behavior to add the $.hint() behavior to elements.
+ */
+Drupal.behaviors.hint = {};
+Drupal.behaviors.hint.attach = function(content) {
+  // Even though it's unlikely that another class name would be used, we ensure
+  // that the behavior uses the default class names used in the module.
+  jQuery('input.hint-enabled:not(input.hint)', content).hint({
+    hintClass: 'hint',
+    triggerClass: 'hint-enabled'
+  });
+};
+
+/**
+ * The jQuery method $.hint().
+ *
+ * This method can be used on any text field or password element and is not
+ * Drupal-specific. Any elements using hint must have a "title" attribute,
+ * which will be used as the hint.
+ */
+jQuery.fn.hint = function(options) {
+  var opts = jQuery.extend(false, jQuery.fn.hint.defaults, options);
+
+  $(this).find('input').andSelf().filter('[type=text], [type=password]').each(function() {
+    if (this.title) {
+      var attributes = opts.keepAttributes;
+      var $element = $(this);
+      var $placeholder = $('<input type="textfield" value="" />');
+
+      // Set the attributes on our placeholder.
+      for (var key in attributes) {
+        var attribute = attributes[key];
+        $placeholder.attr(attribute, $element.get(0)[attribute]);
+      }
+      $placeholder.val($element.get(0).title);
+      $placeholder.get(0).autocomplete = false;
+      $placeholder.removeClass(opts.triggerClass).addClass(opts.hintClass);
+      $element.after($placeholder);
+      if ($element.val() == '') {
+        $element.hide();
+      }
+      else {
+        $placeholder.hide();
+      }
+
+      $placeholder.focus(function() {
+        $placeholder.hide();
+        $element.show().get(0).focus();
+      });
+      $element.blur(function() {
+        if (this.value == '') {
+          $element.hide();
+          $placeholder.show();
+        }
+      });
+    }
+  });
+};
+
+jQuery.fn.hint.defaults = {
+  // The class given the textfield containing the hint.
+  hintClass: 'hint',
+
+  // A class that will trigger the hint if $.hint() is used on multiple
+  // elements or the entire page.
+  triggerClass: 'hint-enabled',
+
+  // A list of attributes that will be copied to the placeholder element.
+  // Usually this list will be sufficient, but a special list may be specified
+  // if needing to keep custom or obscure attributes.
+  keepAttributes: ['style', 'className', 'title', 'size']
+};
+
+})(jQuery);
+
+;/*})'"*/
+;/*})'"*/
+/*! js-cookie v2.2.1 | MIT */
+
+!function(a){var b;if("function"==typeof define&&define.amd&&(define(a),b=!0),"object"==typeof exports&&(module.exports=a(),b=!0),!b){var c=window.Cookies,d=window.Cookies=a();d.noConflict=function(){return window.Cookies=c,d}}}(function(){function a(){for(var a=0,b={};a<arguments.length;a++){var c=arguments[a];for(var d in c)b[d]=c[d]}return b}function b(a){return a.replace(/(%[0-9A-Z]{2})+/g,decodeURIComponent)}function c(d){function e(){}function f(b,c,f){if("undefined"!=typeof document){f=a({path:"/"},e.defaults,f),"number"==typeof f.expires&&(f.expires=new Date(1*new Date+864e5*f.expires)),f.expires=f.expires?f.expires.toUTCString():"";try{var g=JSON.stringify(c);/^[\{\[]/.test(g)&&(c=g)}catch(j){}c=d.write?d.write(c,b):encodeURIComponent(c+"").replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),b=encodeURIComponent(b+"").replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent).replace(/[\(\)]/g,escape);var h="";for(var i in f)f[i]&&(h+="; "+i,!0!==f[i]&&(h+="="+f[i].split(";")[0]));return document.cookie=b+"="+c+h}}function g(a,c){if("undefined"!=typeof document){for(var e={},f=document.cookie?document.cookie.split("; "):[],g=0;g<f.length;g++){var h=f[g].split("="),i=h.slice(1).join("=");c||'"'!==i.charAt(0)||(i=i.slice(1,-1));try{var j=b(h[0]);if(i=(d.read||d)(i,j)||b(i),c)try{i=JSON.parse(i)}catch(k){}if(e[j]=i,a===j)break}catch(k){}}return a?e[a]:e}}return e.set=f,e.get=function(a){return g(a,!1)},e.getJSON=function(a){return g(a,!0)},e.remove=function(b,c){f(b,"",a(c,{expires:-1}))},e.defaults={},e.withConverter=c,e}return c(function(){})});
+;/*})'"*/
+;/*})'"*/
+(function() {
+  var didInit = false;
+  function initMunchkin() {
+    if(didInit === false) {
+      didInit = true;
+      Munchkin.init('156-OFN-742');
+    }
+  }
+  var s = document.createElement('script');
+  s.type = 'text/javascript';
+  s.async = true;
+  s.src = '//munchkin.marketo.net/munchkin.js';
+  s.onreadystatechange = function() {
+    if (this.readyState == 'complete' || this.readyState == 'loaded') {
+      initMunchkin();
+    }
+  };
+  s.onload = initMunchkin;
+  document.getElementsByTagName('head')[0].appendChild(s);
+})();
+
+;/*})'"*/
+;/*})'"*/
+document.addEventListener("DOMContentLoaded", function() {
+  function getQueryVariable(variable){
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
+  }
+
+  function getReferrerQueryVariable(variable){
+    var referrer = document.referrer;
+    var query = referrer.split('?')[1] || '';
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
+  }
+
+  var lsCookieName = "SESSls";
+  var lsdCookieName = "SESSlsd";
+  var ncidCookieName = "SESSncid";
+
+  var lsQueryParamName = "ls";
+  var lsdQueryParamName = "lsd";
+  var ncidQueryParamName = "ncid";
+
+  // Form the domain string to be used when creating the "ls" cookie.
+  var domainArray = document.domain ? document.domain.split(".") : []; // Split domain string into an array.
+  var domainString = "." + domainArray.slice(-2).join("."); // Concatenate the last two items in the array to form something like "mellanox.com" essentially chopping off the "www".
+  var documentReferrer = document.referrer ? document.referrer : "";
+
+  // Set up some variables for passing as cookie parameters.
+  var cookieString = ""; // Set the cookie value.
+  var path = ";path=/";
+  var age = ";max-age=" + (60 * 60 * 24 * 90); // Set the duration of the cookie in seconds.
+  var domain = ";domain=" + domainString; // Set the domain of the cookie.
+
+  // Set the "ncid" cookie to the value of the "ncid" parameter.
+  ncid = getQueryVariable(ncidQueryParamName) ? getQueryVariable(ncidQueryParamName) : undefined;
+
+  // If "ncid" param is not available, default to the sc_cmp cookie which is set by nv.com, etc.
+  if (typeof ncid === 'undefined') {
+    var ncid = Cookies.get('sc_cmp'); // most recent ncid
+  }
+
+  if (ncid !== undefined) {
+    var str = ncidCookieName + '=' + ncid;
+    document.cookie = str + path + domain + age;
+  }
+
+  // Set "ls" cookie to the value of the "ls" parameter in the URL if it exists.
+  var lsValue = getQueryVariable(lsQueryParamName) ? getQueryVariable(lsQueryParamName) : "";
+  if (lsValue !== "") {
+    cookieString = lsCookieName + "=" + encodeURIComponent(lsValue); // Set the cookie value.
+    document.cookie = cookieString + path + domain + age; // Form the string input in the expected format and set the cookie.
+    // If the user is coming from a search engine organically,
+    // then set the "ls" cookie accordingly.
+  } else if (documentReferrer !== "") {
+    var lsdValueSEO = window.location.href;
+    // Check to see if the referrer domain belongs to Google, Bing, Yahoo or Ask.
+    // Since Google is using ccTLDs but Yahoo, Ask and Bing do not, there is a difference in how they are tested.
+    if (documentReferrer.search("www.google.") != -1) {
+      cookieString = lsCookieName + "=gseo"; // Set the cookie value.
+    } else if (documentReferrer.search("bing.com") != -1) {
+      cookieString = lsCookieName + "=bseo"; // Set the cookie value.
+    } else if (documentReferrer.search("ask.com") != -1) {
+      cookieString = lsCookieName + "=aseo"; // Set the cookie value.
+    } else if (documentReferrer.search("yahoo.com") != -1) {
+      cookieString = lsCookieName + "=yseo"; // Set the cookie value.
+    } else {
+      var lsCookieValue = Cookies.get(lsCookieName);
+      if (typeof lsCookieValue === 'undefined') {
+        if (documentReferrer.search("developer.nvidia.com") != -1) {
+          cookieString = lsCookieName + "=website"; // Set the cookie value.
+          lsdValueSEO = documentReferrer;
+        } else {
+          cookieString = lsCookieName + "=ref";
+          lsdValueSEO = 'REF-'+documentReferrer;
+        }
+      }
+    }
+    if (cookieString !== "") {
+      document.cookie = cookieString + path + domain + age; // Form the string input in the expected format and set the cookie.
+      cookieString = lsdCookieName + '=' + encodeURIComponent(lsdValueSEO.replace("https://", ""));
+      document.cookie = cookieString + path + domain + age;
+    }
+  } else {
+    var lsCookie = Cookies.get(lsCookieName);
+    if (typeof lsCookie === 'undefined') {
+      cookieString = lsCookieName + "=website";
+      document.cookie = cookieString + path + domain + age;
+      var lsdCookie = Cookies.get(lsdCookieName);
+      if (typeof lsdCookie === 'undefined') {
+        var lsdValueWeb = window.location.href;
+        cookieString = lsdCookieName + '=' + encodeURIComponent(lsdValueWeb.replace("https://", ""));
+        document.cookie = cookieString + path + domain + age;
+      }
+    }
+  }
+
+  // Always set the "lsd" cookie with any ppc value provided in the URL parameter if available.
+  var lsdValue = getQueryVariable(lsdQueryParamName) ? getQueryVariable(lsdQueryParamName) : "";
+  if (lsdValue !== "") {
+    cookieString = lsdCookieName + "=" + encodeURIComponent(lsdValue); // Set the cookie value.
+    document.cookie = cookieString + path + domain + age; // Form the string input in the expected format and set the cookie.
+
+    // Else if no "lsd" parameter is passed in the URL, then set the "lsd" cookie value to
+    // the search query string found in the referrer URL parameters.
+    // If no search query string is found, then store the entire referrer URL.
+  } else if (documentReferrer !== "") {
+    // Now determine if the referrer is coming from a search engine.
+    // Then look for a search query string in the URL (Parameter "q" for Google, Bing, Ask; Parameter "p" for Yahoo).
+    // First we'll look for Google.
+    if (documentReferrer.search("google") != -1 && getReferrerQueryVariable("q")) {
+      cookieString = lsdCookieName + "=" + encodeURIComponent(getReferrerQueryVariable("q")); // Set the cookie value.
+      document.cookie = cookieString + path + domain + age; // Form the string input in the expected format and set the cookie.
+
+      // Now let's look for Bing.
+    } else if (documentReferrer.search("bing.com") != -1 && getReferrerQueryVariable("q")) {
+      cookieString = lsdCookieName + "=" + encodeURIComponent(getReferrerQueryVariable("q")); // Set the cookie value.
+      document.cookie = cookieString + path + domain + age; // Form the string input in the expected format and set the cookie.
+
+      // Now let's look for Yahoo.
+    } else if (documentReferrer.search("yahoo.com") != -1 && getReferrerQueryVariable("p")) {
+      cookieString = lsdCookieName + "=" + encodeURIComponent(getReferrerQueryVariable("p")); // Set the cookie value.
+      document.cookie = cookieString + path + domain + age; // Form the string input in the expected format and set the cookie.
+
+      // Now let's look for Ask.
+    } else if (documentReferrer.search("ask.com") != -1 && getReferrerQueryVariable("q")) {
+      cookieString = lsdCookieName + "=" + encodeURIComponent(getReferrerQueryVariable("q")); // Set the cookie value.
+      document.cookie = cookieString + path + domain + age; // Form the string input in the expected format and set the cookie.
+
+      // If no query string is found but referrer URL is still coming from search engine, then set cookie to entire referrer URL.
+    } else if (documentReferrer.search("google") != -1 || documentReferrer.search("bing.com") != -1 || documentReferrer.search("yahoo.com") != -1 || documentReferrer.search("ask.com") != -1) {
+      cookieString = lsdCookieName + "=" + encodeURIComponent(documentReferrer); // Set the cookie value.
+      document.cookie = cookieString + path + domain + age; // Form the string input in the expected format and set the cookie.
+    }
+  }
+});
+
+;/*})'"*/
+;/*})'"*/
+(() => {
+  const replaceTag = (id) => {
+    const that = document.getElementById(id)
+    if (!that) {
+      console.debug(`Skip element replacement ${id}`, )
+      return
+    }
+    const p = document.createElement('p')
+
+    p.setAttribute('id', that.getAttribute('id'))
+
+    while (that.firstChild) {
+      p.appendChild(that.firstChild)
+    }
+
+    that.parentNode.replaceChild(p, that)
+  }
+
+  const alterOneTrustDom = () => {
+    const ids = [
+      'pc-title',
+      'manage-cookies-text',
+      'ot-header-id-C0001',
+      'ot-header-id-C0002',
+      'ot-header-id-C0003',
+      'vendors-list-title'
+    ]
+
+    setTimeout(() => ids.forEach((i) => replaceTag(i)), 2000)
+  }
+
+  document.addEventListener('DOMContentLoaded', alterOneTrustDom)
+})()
+
+
+
+;/*})'"*/
+;/*})'"*/
+(function ($) {
+  Drupal.behaviors.NvUsersCookie = {
+    attach: function (context, settings) {
+      const originalNcidCooke = $.cookie('sc_cmp');
+      $.cookie('STYXKEY_sc_cmp', originalNcidCooke, {
+        path: settings.basePath,
+      });
+    }
+  };
+})(jQuery);
+
+;/*})'"*/
+;/*})'"*/
