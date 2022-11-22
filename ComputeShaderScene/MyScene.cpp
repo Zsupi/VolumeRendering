@@ -7,33 +7,32 @@ MyScene::MyScene() : Scene() {}
 Scene& MyScene::update(float dt, float t) {
 
 	//draw as glpoints.
-	basicProgram->bind();
+	particleProgram->bind();
 	glm::mat4 V;
 	glm::mat4 P;
 	glm::mat4 M;
 	camera->GetMatricies(V, P, M);
-	basicProgram->setUniform(V * P, "viewProjMatrix");
+	particleProgram->setUniform(V * P, "viewProjMatrix");
 
 	glBindVertexArray(vaoPosition);
 	//positionBuffer->Bind();
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, positionBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, positionBuffer->ID);
 	glPointSize(5.0f);
-	glDrawArrays(GL_POINTS, 0, 256);
-
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, positionBufferID);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, velocityBufferID);
-	//positionBuffer->Bind(0);
-	//velocityBuffer->Bind(1);
+	glDrawArrays(GL_POINTS, 0, size*size);
+	
+	positionBuffer->Bind(0);
+	velocityBuffer->Bind(1);
 
 	bounceComputeProgram->bind();
-	int location = bounceComputeProgram->setUniform(dt / 1000.0f, "dt");
-	glDispatchCompute(256, 1, 1);
+	//unifrom setting in compute shader
+	bounceComputeProgram->setUniform(dt / 1000.0f, "dt");
+	glDispatchCompute(size*size, 1, 1);
 	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT | GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 	return *this;
 }
 
 Scene& MyScene::onInitialization() {
-	basicProgram = std::make_shared<Program>();
+	std::shared_ptr<Program> basicProgram = std::make_shared<Program>();
 	
 	//Create shaders explicitly
 	unsigned int vertexShader = CreateShader(GL_VERTEX_SHADER, "basicVS.glsl");
@@ -52,6 +51,7 @@ Scene& MyScene::onInitialization() {
 	std::shared_ptr<Material> basicMaterial = std::make_shared<Material>(basicProgram);
 	std::shared_ptr<Cube> cubeGeometry = std::make_shared<Cube>();
 	Mesh cubeMesh = Mesh(basicMaterial, cubeGeometry);
+	cubeMesh.setPosition(glm::vec3(-5, -5, -5));
 	addMesh(cubeMesh, "TestCube");
 
 
@@ -64,35 +64,41 @@ Scene& MyScene::onInitialization() {
 	bounceComputeProgram->linkProgram();
 
 	//Create vector with position data
-	std::vector<glm::vec4> positions = std::vector<glm::vec4>(256);
-	for (int i = 0; i < 256; i++) {
-		int x = i % 16;
-		int z = i / 16;
+	std::vector<glm::vec4> positions = std::vector<glm::vec4>(size*size);
+	for (int i = 0; i < size*size; i++) {
+		int x = i % size * 2;
+		int z = i / size * 2;
 		int y = x + z;
 		y += 1;
 		positions[i] = glm::vec4(x, y, z, 1);
 	}
 
 	//Create buffer for positions
-	SSBO positionBuffer = SSBO();
-	//positionBuffer = std::make_shared<SSBO>();
-	positionBuffer.LoadData(positions, positions.size() * sizeof(glm::vec4));
-	positionBufferID = positionBuffer.ID;
+	positionBuffer = std::make_shared<SSBO>();
+	positionBuffer->LoadData(positions, positions.size() * sizeof(glm::vec4));
 
 	//Create buffer for velocities
-	//velocityBuffer = std::make_shared<SSBO>();
-	SSBO velocityBuffer = SSBO();
-	velocityBuffer.LoadZeros(positions.size() * sizeof(glm::vec4));
-	velocityBufferID = velocityBuffer.ID;
+	velocityBuffer = std::make_shared<SSBO>();
+	velocityBuffer->LoadZeros(positions.size() * sizeof(glm::vec4));
 
 	//Create vao for drawing
 	glGenVertexArrays(1, &vaoPosition);
 	glBindVertexArray(vaoPosition);
 
 	glEnableVertexAttribArray(0);
-	//positionBuffer->Bind();
-	glBindBuffer(GL_ARRAY_BUFFER, positionBufferID);
+	//Cannot use positionBuffer->Bind() here, the target is not the same.
+	glBindBuffer(GL_ARRAY_BUFFER, positionBuffer->ID);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+	particleProgram = std::make_shared<Program>();
+	unsigned int particleVs = CreateShader(GL_VERTEX_SHADER, "particleVS.glsl");
+	unsigned int particleGs = CreateShader(GL_GEOMETRY_SHADER, "particleGS.glsl");
+	unsigned int particleFs = CreateShader(GL_FRAGMENT_SHADER, "particleFS.glsl");
+	particleProgram->attachShader(particleVs);
+	particleProgram->attachShader(particleGs);
+	particleProgram->attachShader(particleFs);
+	particleProgram->linkProgram();
+
 
 	return *this;
 }

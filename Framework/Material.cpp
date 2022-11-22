@@ -37,8 +37,8 @@ Material& Material::setSolidColor(glm::vec3 color) {
 	return *this;
 }
 
-Material& Material::setModellMatrix(glm::mat4 modellMatrix, std::string name) {
-	program->setUniform(modellMatrix, name.empty() ? "modellMatrix" : name);
+Material& Material::setModelMatrix(glm::mat4 modelMatrix, std::string name) {
+	program->setUniform(modelMatrix, name.empty() ? "modelMatrix" : name);
 	return *this;
 }
 

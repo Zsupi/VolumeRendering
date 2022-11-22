@@ -60,16 +60,16 @@ void Light::draw(std::shared_ptr<Camera> camera) {
 	if (visible) {
 		material->bindProgram();
 
-		glm::mat4 modellMatrix;
+		glm::mat4 modelMatrix;
 		glm::mat4 V;
 		glm::mat4 P;
 
 
-		camera->GetMatricies(P, V, modellMatrix);
+		camera->GetMatricies(P, V, modelMatrix);
 		glm::mat4 viewProjMatrix = P * V;
 		
-		modellMatrix = glm::translate(this->getPosition()) * glm::scale(this->getScale());
-		material->setModellMatrix(modellMatrix).setViewProjMatrix(viewProjMatrix);
+		modelMatrix = glm::translate(this->getPosition()) * glm::scale(this->getScale());
+		material->setModelMatrix(modelMatrix).setViewProjMatrix(viewProjMatrix);
 
 
 		material->draw();

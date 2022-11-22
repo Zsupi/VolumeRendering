@@ -6,13 +6,13 @@ class MyScene : public Scene
 {
 	unsigned int vaoPosition;
 
-	//std::shared_ptr<SSBO> positionBuffer;
-	//std::shared_ptr<SSBO> velocityBuffer;
-	unsigned int positionBufferID;
-	unsigned int velocityBufferID;
+	std::shared_ptr<SSBO> positionBuffer;
+	std::shared_ptr<SSBO> velocityBuffer;
 
-	std::shared_ptr<Program> basicProgram;
+	std::shared_ptr<Program> particleProgram;
 	std::shared_ptr<Program> bounceComputeProgram;
+
+	const unsigned int size = 100;
 
 public:
 	MyScene();

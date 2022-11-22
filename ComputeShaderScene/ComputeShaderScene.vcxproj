@@ -159,6 +159,9 @@
     <None Include="basicFS.glsl" />
     <None Include="basicVS.glsl" />
     <None Include="bounceCS.glsl" />
+    <None Include="particleFS.glsl" />
+    <None Include="particleGS.glsl" />
+    <None Include="particleVs.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,7 +5,6 @@ Mesh::Mesh(std::shared_ptr<Material> material, std::shared_ptr<Geometry> geometr
 	position = glm::vec3(0.0f, 0.0f, 0.0f);
 	roll = 0.0f;
 	scale = glm::vec3(1.0f, 1.0f, 1.0f);
-	
 }
 
 Mesh::Mesh(const Mesh& mesh)
@@ -58,17 +57,17 @@ Mesh& Mesh::rotate(float rotation) {
 void Mesh::draw(std::shared_ptr<Camera> camera) {
 	material->bindProgram();
 	
-	glm::mat4 modellMatrix;
+	glm::mat4 modelMatrix;
 	glm::mat4 V;
 	glm::mat4 P;
 	glm::mat4 Ray;
 
-	camera->GetMatricies(P, V, modellMatrix);
+	camera->GetMatricies(P, V, modelMatrix);
 	camera->GetRayDir(Ray);
 	glm::mat4 viewProjMatrix = P * V;
 
-	modellMatrix =  glm::translate(position) * glm::scale(scale);
-	material->setModellMatrix(modellMatrix).setViewProjMatrix(viewProjMatrix).setRayDirMatrix(Ray);
+	modelMatrix =  glm::translate(position) * glm::scale(scale);
+	material->setModelMatrix(modelMatrix).setViewProjMatrix(viewProjMatrix).setRayDirMatrix(Ray);
 	material->setRayDirMatrix(Ray);
 	material->addUniform(std::make_shared<Vec3Uniform>(camera->camera_position, "cameraPos"));
 
