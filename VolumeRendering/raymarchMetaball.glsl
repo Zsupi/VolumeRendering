@@ -35,22 +35,14 @@ float rayMarchScene(vec3 p, Metaball metaballs[MAX_METABALL]){
 	return minDistance;
 }
 
-float wyvillMetaball(float distance, float radius){
-	if (distance > radius){
-		return 0.001f;
-	}
 
-	float fi = 1.0f - 3 * pow(distance / radius, 2) + 3 * pow(distance / radius, 4) - pow(distance / radius, 6);
-	return fi;
-}
-
+//Blinn metaball
 float blinnMetaball(float r){
 	if (r == 0.0f)
 		r = 0.001;
 	return 1.0f/(r * r);
 }
 
-//Blinn metaball
 float blinnMetaballScene(vec3 p, Metaball metaballs[MAX_METABALL], out vec3 color){
 	float fSum = 0.0f;
 	for (int i = 0; i < metaballs.length(); i++){
@@ -66,12 +58,20 @@ float blinnMetaballScene(vec3 p, Metaball metaballs[MAX_METABALL], out vec3 colo
 }
 
 //Wyvill Metaball
+float wyvillMetaball(float distance, float radius){
+	if (distance > pow(radius, 2)){
+		return 0.0f;
+	}
+
+	float fi = 1.0f - 3 * distance / pow(radius, 2) + 3 * pow(distance, 2) / pow(radius, 4) - pow(distance, 3) / pow(radius, 6);
+	return fi;
+}
+
 float wyvillMetaballScene(vec3 p, Metaball metaballs[MAX_METABALL], out vec3 color){
 	float fSum = 0.0f;
 	for (int i = 0; i < metaballs.length(); i++){
-		float euclidesDistance = (pow(p.x - metaballs[i].center.x, 2) + pow(p.y - metaballs[i].center.y, 2)) / pow(metaballs[i].radius, 4);
-		//float r = length(p - metaballs[i].center) / metaballs[i].radius;
-		float f = wyvillMetaball(euclidesDistance, metaballs[i].radius);
+		float mannhattanistance = dot(p - metaballs[i].center, p - metaballs[i].center);
+		float f = wyvillMetaball(mannhattanistance, metaballs[i].radius);
 		color += f * metaballs[i].color * 0.1f;
 		fSum += f;
 	}
@@ -93,6 +93,7 @@ vec3 fGrad(vec3 p, Metaball metaball){
   return normalize(normal);
 }
 
+
 void main(){
 	//setup ray
 	Ray ray;
@@ -108,7 +109,7 @@ void main(){
 		for (int j = 0; j < dimension.y; j++){
 			for (int k = 0; k< dimension.z; k++){
 
-				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].radius = 0.6f;
+				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].radius = 0.25f;
 				vec3 position = vec3(-i, -j, -k) / dimension;
 				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].center = position;
 				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].color = abs(position);
@@ -147,6 +148,6 @@ void main(){
 		fragmentColor = vec4(color, 1.0f);
 	}
 	else{
-		fragmentColor = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		fragmentColor = vec4(0.1f, 0.1f, 0.1f, 1.0f);
 	}
 }
