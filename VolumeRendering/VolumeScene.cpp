@@ -16,8 +16,8 @@ Scene& VolumeScene::update(float dt, float t) {
 
 Scene& VolumeScene::onInitialization() {
     //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raytraceVolumeFS.glsl");
-    //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raymarchBrain.glsl");
-    std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raymarchMetaball.glsl");
+    std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raymarchBrain.glsl");
+    //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.glsl", "raymarchMetaball.glsl");
     rayTraceVolumeMaterial = std::make_shared<Material>(rayTraceVolumeProgram);
     rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
     //rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));

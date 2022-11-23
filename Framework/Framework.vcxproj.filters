@@ -25,9 +25,6 @@
     <Filter Include="Header Files\Modell">
       <UniqueIdentifier>{271755a6-8f47-4a0b-b839-db5a3d7e1fbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Modell">
-      <UniqueIdentifier>{cf4b3a56-fad5-4e42-8220-e4f1c35fcd63}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Application">
       <UniqueIdentifier>{35b61dfd-a064-402e-b359-08ced42a5167}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,9 @@
     </Filter>
     <Filter Include="Header Files\Geometry">
       <UniqueIdentifier>{19299048-5aa6-41dd-a4cd-1b5812112498}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{cf4b3a56-fad5-4e42-8220-e4f1c35fcd63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,10 +70,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
-      <Filter>Source Files\Modell</Filter>
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files\Modell</Filter>
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
@@ -82,7 +82,7 @@
       <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
-      <Filter>Source Files\Modell</Filter>
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="stb_image.cpp">
       <Filter>stb_image</Filter>
@@ -116,6 +116,12 @@
     </ClCompile>
     <ClCompile Include="FullScreenQuad.cpp">
       <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SSBO.cpp">
+      <Filter>Source Files\Buffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="Vec3ArrayUniform.h">
       <Filter>Header Files\Uniform</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SSBO.h">
+      <Filter>Header Files\Buffers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

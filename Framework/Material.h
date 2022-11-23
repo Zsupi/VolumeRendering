@@ -28,7 +28,7 @@ public:
 	Material& setIllumination(Illumination illumination);
 	Material& setSolidColor(glm::vec3 color);
 
-	Material& setModellMatrix(glm::mat4 modellMatrix, std::string name = "");
+	Material& setModelMatrix(glm::mat4 modelMatrix, std::string name = "");
 	Material& setViewProjMatrix(glm::mat4 viewProjMatrix, std::string name = "");
 	Material& setRayDirMatrix(glm::mat4 rayDirMatrix, std::string name = "");
 

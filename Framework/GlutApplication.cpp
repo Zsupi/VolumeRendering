@@ -27,8 +27,8 @@ void GlutApplication::onDisplay() {
 
 	ChronoTime timeAtThisFrame = std::chrono::steady_clock::now();
 
-	float dt = std::chrono::duration_cast<std::chrono::milliseconds>(timeAtThisFrame - timeAtLastFrame).count();
-	float t = std::chrono::duration_cast<std::chrono::milliseconds>(timeAtThisFrame - timeAtFirstFrame).count();
+	float dt = std::chrono::duration<float, std::milli>(timeAtThisFrame - timeAtLastFrame).count();
+	float t = std::chrono::duration<float, std::milli>(timeAtThisFrame - timeAtLastFrame).count();
 	timeAtLastFrame = timeAtThisFrame;
 
 	scene->glutUpdate(dt, t);

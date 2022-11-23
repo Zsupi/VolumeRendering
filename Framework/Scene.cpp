@@ -9,6 +9,8 @@
 #include "FullScreenQuad.h"
 
 void Scene::glutUpdate(float dt, float t) {
+
+	this->update(dt, t);
 	camera->Animate(dt);
 	camera->Update();
 
@@ -17,7 +19,6 @@ void Scene::glutUpdate(float dt, float t) {
 
 	for (auto i : lights)
 		i.draw(camera);
-	this->update(dt, t);
 }
 
 void Scene::glutOnMouseMove(int pX, int pY) {
@@ -56,7 +57,7 @@ Scene::Scene(std::shared_ptr<Camera> camera):camera(camera) {
 Scene::Scene() {
 	camera = std::make_shared<Camera>();
 	camera->SetViewport(0, 0, GlutApplication::windowWidth, GlutApplication::windowHeight);
-	camera->SetPosition(glm::vec3(0.5, 0, 0));
+	camera->SetPosition(glm::vec3(50, 0, 0));
 	camera->SetLookAt(glm::vec3(0, 0, 0));
 	camera->SetClipping(.1, 1000);
 	camera->SetFOV(45);

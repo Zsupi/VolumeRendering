@@ -5,7 +5,6 @@
 
 class Scene : public GlutApplication::GlutAppInterface{
 	std::unordered_map<std::string, std::shared_ptr<Mesh>> meshes;
-	std::shared_ptr<Camera> camera;
 	std::vector<Light> lights;
 
 	virtual void glutUpdate(float dt, float t) override final;
@@ -15,6 +14,8 @@ class Scene : public GlutApplication::GlutAppInterface{
 	virtual void glutOnKeyboardUp(unsigned char key) override final;
 	virtual void glutOnInitialization() override final;
 
+protected:
+	std::shared_ptr<Camera> camera;
 public:
 
 	Scene(std::shared_ptr<Camera> camera);
