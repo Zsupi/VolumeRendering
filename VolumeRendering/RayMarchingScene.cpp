@@ -1,7 +1,7 @@
 #include <Texture3D.h>
 #include <FloatUniform.h>
 #include <FullScreenQuad.h>
-#include "VolumeScene.h"
+#include "RayMarchingScene.h"
 #include <Vec3Uniform.h>
 
 RayMarchingScene::RayMarchingScene(std::shared_ptr<Camera> camera) : Scene(camera) {
@@ -16,8 +16,8 @@ Scene& RayMarchingScene::update(float dt, float t) {
 
 Scene& RayMarchingScene::onInitialization() {
     //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raytraceVolumeFS.frag");
-    std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raymarchBrain.frag");
-    //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raymarchMetaball.frag");
+    //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raymarchBrain.frag");
+    std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raymarchMetaball.frag");
     rayTraceVolumeMaterial = std::make_shared<Material>(rayTraceVolumeProgram);
     rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
     //rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
