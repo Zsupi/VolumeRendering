@@ -24,29 +24,6 @@ float distanceFromMetaball(vec3 p, Metaball metaball){
 	return length(p - metaball.center) - metaball.radius;
 }
 
-float rayMarchScene(vec3 p, Metaball metaballs[MAX_METABALL]){
-	float minDistance = distanceFromMetaball(p, metaballs[0]);
-
-	for (int i = 1; i < metaballs.length(); i++){
-		float currentDistance = distanceFromMetaball(p, metaballs[i]);
-		minDistance = currentDistance < minDistance ? currentDistance : minDistance;
-	}
-
-	return minDistance;
-}
-
-<<<<<<< HEAD
-=======
-float wyvillMetaball(float distance, float radius){
-	if (distance > radius){
-		return 0.001f;
-	}
-
-	float fi = 1.0f - 3 * pow(distance / radius, 2) + 3 * pow(distance / radius, 4) - pow(distance / radius, 6);
-	return fi;
-}
->>>>>>> 38e907443ed00f592f9e2ad47cd1a6e725962280
-
 //Blinn metaball
 float blinnMetaball(float r){
 	if (r == 0.0f)
@@ -54,10 +31,7 @@ float blinnMetaball(float r){
 	return 1.0f/(r * r);
 }
 
-<<<<<<< HEAD
-=======
 //Blinn metaball
->>>>>>> 38e907443ed00f592f9e2ad47cd1a6e725962280
 float blinnMetaballScene(vec3 p, Metaball metaballs[MAX_METABALL], out vec3 color){
 	float fSum = 0.0f;
 	for (int i = 0; i < metaballs.length(); i++){
@@ -73,7 +47,6 @@ float blinnMetaballScene(vec3 p, Metaball metaballs[MAX_METABALL], out vec3 colo
 }
 
 //Wyvill Metaball
-<<<<<<< HEAD
 float wyvillMetaball(float distance, float radius){
 	if (distance > pow(radius, 2)){
 		return 0.0f;
@@ -88,14 +61,6 @@ float wyvillMetaballScene(vec3 p, Metaball metaballs[MAX_METABALL], out vec3 col
 	for (int i = 0; i < metaballs.length(); i++){
 		float mannhattanistance = dot(p - metaballs[i].center, p - metaballs[i].center);
 		float f = wyvillMetaball(mannhattanistance, metaballs[i].radius);
-=======
-float wyvillMetaballScene(vec3 p, Metaball metaballs[MAX_METABALL], out vec3 color){
-	float fSum = 0.0f;
-	for (int i = 0; i < metaballs.length(); i++){
-		float euclidesDistance = (pow(p.x - metaballs[i].center.x, 2) + pow(p.y - metaballs[i].center.y, 2)) / pow(metaballs[i].radius, 4);
-		//float r = length(p - metaballs[i].center) / metaballs[i].radius;
-		float f = wyvillMetaball(euclidesDistance, metaballs[i].radius);
->>>>>>> 38e907443ed00f592f9e2ad47cd1a6e725962280
 		color += f * metaballs[i].color * 0.1f;
 		fSum += f;
 	}
@@ -133,11 +98,7 @@ void main(){
 		for (int j = 0; j < dimension.y; j++){
 			for (int k = 0; k< dimension.z; k++){
 
-<<<<<<< HEAD
 				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].radius = 0.25f;
-=======
-				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].radius = 0.6f;
->>>>>>> 38e907443ed00f592f9e2ad47cd1a6e725962280
 				vec3 position = vec3(-i, -j, -k) / dimension;
 				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].center = position;
 				metaballs[i*dimension.y*dimension.z + j * dimension.z + k].color = abs(position);

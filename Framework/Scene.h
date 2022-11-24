@@ -20,6 +20,7 @@ public:
 
 	Scene(std::shared_ptr<Camera> camera);
 	Scene();
+	Scene(glm::vec3 cameraPosition, glm::vec3 lookatPoint);
 	
 
 	virtual Scene& addMesh(const Mesh& mesh, std::string name) final;

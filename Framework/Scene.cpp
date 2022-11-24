@@ -57,8 +57,18 @@ Scene::Scene(std::shared_ptr<Camera> camera):camera(camera) {
 Scene::Scene() {
 	camera = std::make_shared<Camera>();
 	camera->SetViewport(0, 0, GlutApplication::windowWidth, GlutApplication::windowHeight);
-	camera->SetPosition(glm::vec3(50, 0, 0));
+	camera->SetPosition(glm::vec3(0.5, 0, 0));
 	camera->SetLookAt(glm::vec3(0, 0, 0));
+	camera->SetClipping(.1, 1000);
+	camera->SetFOV(45);
+	camera->Update();
+}
+
+Scene::Scene(glm::vec3 cameraPosition, glm::vec3 lookatPosition) {
+	camera = std::make_shared<Camera>();
+	camera->SetViewport(0, 0, GlutApplication::windowWidth, GlutApplication::windowHeight);
+	camera->SetPosition(cameraPosition);
+	camera->SetLookAt(lookatPosition);
 	camera->SetClipping(.1, 1000);
 	camera->SetFOV(45);
 	camera->Update();
