@@ -80,12 +80,13 @@ bool Program::setUniform(int i, const std::string& name) {
 	return location >= 0;
 }
 
-void Program::attachShader(const unsigned int shaderID)
+Program& Program::attachShader(const unsigned int shaderID)
 {
 	shaders.push_back(shaderID);
+	return *this;
 }
 
-void Program::linkProgram() {
+Program& Program::linkProgram() {
 
 	for (unsigned int shaderID : shaders) {
 		glAttachShader(ID, shaderID);
@@ -96,6 +97,7 @@ void Program::linkProgram() {
 
 	glLinkProgram(ID);
 	glValidateProgram(ID);
+	return *this;
 }
 
 int Program::getUniformLocation(const std::string& name){

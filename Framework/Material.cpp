@@ -47,6 +47,20 @@ Material& Material::setViewProjMatrix(glm::mat4 viewProjMatrix, std::string name
 	return *this;
 }
 
+Material& Material::setViewMatrix(glm::mat4 viewMatrix, std::string name) {
+	if (!name.empty()) {
+		program->setUniform(viewMatrix, name.empty() ? "viewMatrix" : name);
+	}
+	return *this;
+}
+
+Material& Material::setProjMatrix(glm::mat4 projMatrix, std::string name) {
+	if (!name.empty()) {
+		program->setUniform(projMatrix, name.empty() ? "projMatrix" : name);
+	}
+	return *this;
+}
+
 Material& Material::setRayDirMatrix(glm::mat4 rayDirMatrix, std::string name) {
 	program->setUniform(rayDirMatrix, name.empty() ? "rayDirMatrix" : name);
 	return *this;

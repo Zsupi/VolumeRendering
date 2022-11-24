@@ -20,8 +20,8 @@ public:
 	void bind() const;
 	void unbind() const;
 
-	void attachShader(const unsigned int shaderID);
-	void linkProgram();
+	Program& attachShader(const unsigned int shaderID);
+	Program& linkProgram();
 
 	bool setUniform(float f, const std::string& name);
 	bool setUniform(int i, const std::string& name);

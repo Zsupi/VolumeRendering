@@ -163,6 +163,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MetaballGeometry.cpp" />
+    <ClCompile Include="MetaballMaterial.cpp" />
+    <ClCompile Include="MetaballScene.cpp" />
     <ClCompile Include="RayMarchingScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +175,9 @@
     <Image Include="internals-at_4096.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Abuffer.frag" />
+    <None Include="Abuffer.geom" />
+    <None Include="Abuffer.vert" />
     <None Include="defaultVS.vert" />
     <None Include="fullScreenVS.vert" />
     <None Include="lightFS.frag" />
@@ -185,6 +191,9 @@
     <None Include="volumeCubeVS.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MetaballGeometry.h" />
+    <ClInclude Include="MetaballMaterial.h" />
+    <ClInclude Include="MetaballScene.h" />
     <ClInclude Include="RayMarchingScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

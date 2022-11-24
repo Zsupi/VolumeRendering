@@ -21,6 +21,12 @@ VBO::VBO(std::vector<glm::vec3> texCoord) {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * texCoord.size(), texCoord.data(), GL_STATIC_DRAW);
 }
 
+VBO::VBO(std::vector<unsigned int> indices) {
+	glGenBuffers(1, &ID);
+	glBindBuffer(GL_ARRAY_BUFFER, ID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
+}
+
 // Binds the VBO
 void VBO::Bind()
 {

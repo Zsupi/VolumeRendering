@@ -13,6 +13,7 @@ struct Illumination {
 
 
 class Material {
+protected:
 	std::shared_ptr<Program> program;
 
 	std::unordered_map<std::string, std::shared_ptr<Texture>> textures;
@@ -30,6 +31,8 @@ public:
 
 	Material& setModelMatrix(glm::mat4 modelMatrix, std::string name = "");
 	Material& setViewProjMatrix(glm::mat4 viewProjMatrix, std::string name = "");
+	Material& setViewMatrix(glm::mat4 viewMatrix, std::string name = "");
+	Material& setProjMatrix(glm::mat4 projMatrix, std::string name = "");
 	Material& setRayDirMatrix(glm::mat4 rayDirMatrix, std::string name = "");
 
 	void bindProgram() const;
@@ -38,7 +41,7 @@ public:
 	std::shared_ptr<Uniform> operator[](const std::string name);
 	Material& operator=(const Material& material);
 
-	void draw();
+	virtual void draw();
 	
 
 };

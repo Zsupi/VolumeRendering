@@ -20,6 +20,7 @@ public:
 	VBO(std::vector<Vertex> vertices);
 	VBO(std::vector<glm::vec2> texCoord);
 	VBO(std::vector<glm::vec3> texCoord);
+	VBO(std::vector<unsigned int> indices);
 	// Binds the VBO
 	void Bind();
 	// Unbinds the VBO

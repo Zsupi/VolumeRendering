@@ -22,6 +22,10 @@ void SSBO::Unbind()
 
 //Different functions for different kind of buffers(vec4, vec3 etc.)
 
+/*
+
+*/
+
 void SSBO::LoadData(std::vector<glm::vec4> data, GLsizeiptr size)
 {
 	Bind();
