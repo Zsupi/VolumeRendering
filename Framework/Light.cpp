@@ -23,7 +23,7 @@ std::shared_ptr<Uniform> Light::createUniform(const float value, const std::stri
 
 Light::Light(LightData lightData)
 	:Mesh(
-		std::make_shared<Material>(std::make_shared<Program>("lightVS.glsl", "lightFS.glsl")),
+		std::make_shared<Material>(std::make_shared<Program>("lightVS.vert", "lightFS.frag")),
 		std::make_shared<Cube>()
 	), data(lightData) {
 	setPosition(data.position);

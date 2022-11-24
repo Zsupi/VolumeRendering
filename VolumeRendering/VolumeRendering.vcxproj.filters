@@ -24,7 +24,7 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VolumeScene.cpp">
+    <ClCompile Include="RayMarchingScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -43,42 +43,42 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="defaultVS.glsl">
+    <None Include="fullScreenVS.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="fullScreenVS.glsl">
+    <None Include="defaultVS.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="lightFS.glsl">
+    <None Include="lightFS.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="lightVS.glsl">
+    <None Include="lightVS.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="raytraceVolumeFS.glsl">
+    <None Include="raymarchBrain.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="solidColorFS.glsl">
+    <None Include="raymarchMetaball.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="texturedFS.glsl">
+    <None Include="raytraceVolumeFS.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="volumeCubeFS.glsl">
+    <None Include="solidColorFS.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="volumeCubeVS.glsl">
+    <None Include="texturedFS.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="raymarchMetaball.glsl">
+    <None Include="volumeCubeFS.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="raymarchBrain.glsl">
+    <None Include="volumeCubeVS.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="VolumeScene.h">
+    <ClInclude Include="RayMarchingScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
