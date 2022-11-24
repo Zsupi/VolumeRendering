@@ -7,7 +7,7 @@
 VolumeScene::VolumeScene(std::shared_ptr<Camera> camera) : Scene(camera) {
 }
 
-VolumeScene::VolumeScene() : Scene() {
+VolumeScene::VolumeScene() : Scene(glm::vec3(glm::vec3(0.5, 0, 0)), glm::vec3(0, 0, 0)) {
 }
 
 Scene& VolumeScene::update(float dt, float t) {
@@ -22,8 +22,8 @@ Scene& VolumeScene::onInitialization() {
     rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
     //rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
     
-    rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("brain-at_4096.jpg"), "brainTexture");
-    //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("body-at_4096.jpg"), "brainTexture");
+    //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("brain-at_4096.jpg"), "brainTexture");
+    rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("body-at_4096.jpg"), "brainTexture");
     //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("internals-at_4096.jpg"), "brainTexture");
     
     std::shared_ptr<FullScreenQuad> fullScreenQuad = std::make_shared< FullScreenQuad>();

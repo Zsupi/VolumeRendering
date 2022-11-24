@@ -2,7 +2,7 @@
 #include <Cube.h>
 #include <SSBO.h>
 
-MyScene::MyScene() : Scene() {}
+MyScene::MyScene() : Scene(glm::vec3(glm::vec3(50, 0, 0)), glm::vec3(0, 0, 0)) {}
 
 Scene& MyScene::update(float dt, float t) {
 
