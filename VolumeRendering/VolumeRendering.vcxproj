@@ -172,17 +172,17 @@
     <Image Include="internals-at_4096.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="defaultVS.glsl" />
-    <None Include="fullScreenVS.glsl" />
-    <None Include="lightFS.glsl" />
-    <None Include="lightVS.glsl" />
-    <None Include="raymarchBrain.glsl" />
-    <None Include="raymarchMetaball.glsl" />
-    <None Include="raytraceVolumeFS.glsl" />
-    <None Include="solidColorFS.glsl" />
-    <None Include="texturedFS.glsl" />
-    <None Include="volumeCubeFS.glsl" />
-    <None Include="volumeCubeVS.glsl" />
+    <None Include="defaultVS.vert" />
+    <None Include="fullScreenVS.vert" />
+    <None Include="lightFS.frag" />
+    <None Include="lightVS.vert" />
+    <None Include="raymarchBrain.frag" />
+    <None Include="raymarchMetaball.frag" />
+    <None Include="raytraceVolumeFS.frag" />
+    <None Include="solidColorFS.frag" />
+    <None Include="texturedFS.frag" />
+    <None Include="volumeCubeFS.frag" />
+    <None Include="volumeCubeVS.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VolumeScene.h" />
