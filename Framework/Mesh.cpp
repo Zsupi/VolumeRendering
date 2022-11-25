@@ -67,8 +67,9 @@ void Mesh::draw(std::shared_ptr<Camera> camera) {
 	glm::mat4 viewProjMatrix = P * V;
 
 	modelMatrix =  glm::translate(position) * glm::scale(scale);
-	material->setModelMatrix(modelMatrix).setViewProjMatrix(viewProjMatrix).setRayDirMatrix(Ray);
-	material->setRayDirMatrix(Ray);
+	material->setModelMatrix(modelMatrix)
+		.setViewProjMatrix(viewProjMatrix)
+		.setRayDirMatrix(Ray);
 	material->addUniform(std::make_shared<Vec3Uniform>(camera->camera_position, "cameraPos"));
 
 	material->draw();

@@ -1,4 +1,4 @@
-#include "SSBO.h"
+﻿#include "SSBO.h"
 
 SSBO::SSBO()
 {
@@ -20,7 +20,16 @@ void SSBO::Unbind()
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
-//Different functions for different kind of buffers(vec4, vec3 etc.)
+/*
+	In case you using std430 or std140:
+
+	Among the most important is the fact that arrays of types are not necessarily tightly packed. 
+	An array of float​s in such a block will not be the equivalent to an array of floats​ in C/C++. 
+	The array stride (the bytes between array elements) is always rounded up to the size of a vec4​ (ie: 16-bytes).
+	So arrays will only match their C/C++ definitions if the type is a multiple of 16 bytes.
+
+	OpenGL specification (OpenGL 4.5, Section 7.6.2.2, page 137)
+*/
 
 void SSBO::LoadData(std::vector<glm::vec4> data, GLsizeiptr size)
 {

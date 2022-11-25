@@ -35,7 +35,6 @@ Scene& RayMarchingScene::onInitialization() {
 }
 
 Scene& RayMarchingScene::onMouseMove(int px, int py) {
-    // // O: insert return statement here
     return *this;
 }
 
@@ -83,6 +82,5 @@ Scene& RayMarchingScene::onKeyboardDown(unsigned char key) {
 }
 
 Scene& RayMarchingScene::onKeyboardUp(unsigned char key) {
-    // // O: insert return statement here
     return *this;
 }

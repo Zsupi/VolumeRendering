@@ -14,6 +14,7 @@ protected:
 	Geometry(std::vector<glm::vec4> vertieces, std::vector<glm::vec3> normals, std::vector<int> indices);
 	Geometry(std::vector<Vertex> vertices, std::vector<int> indices);
 	Geometry(const Geometry& geometry);
+	Geometry();
 
 public:
 	Geometry& operator=(const Geometry& geometry);

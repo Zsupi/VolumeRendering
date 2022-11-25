@@ -29,3 +29,6 @@ Geometry& Geometry::operator=(const Geometry& geometry) {
 Geometry::Geometry(const Geometry& geometry)
 	: vao(geometry.vao), vertexData(geometry.vertexData) {
 }
+
+Geometry::Geometry() {
+}

@@ -9,7 +9,6 @@ public:
 	Textured3DGeometry(std::vector<Vertex> vertices, std::vector<glm::vec3> textureCoord, std::vector<int> indices);
 
 	Textured3DGeometry& operator=(const Textured3DGeometry& geometry);
-	//todo assimpre is kene operator=
 
 	virtual void draw() override;
 };

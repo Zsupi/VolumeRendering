@@ -49,7 +49,7 @@ namespace App {
 		glutInit(&argc, argv);
 
 		// OpenGL major and minor versions
-		int majorVersion = 3, minorVersion = 3;
+		int majorVersion = 4, minorVersion = 3;
 #if !defined(__APPLE__)
 		glutInitContextVersion(majorVersion, minorVersion);
 #endif

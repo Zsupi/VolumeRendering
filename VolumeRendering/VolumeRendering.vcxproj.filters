@@ -27,6 +27,15 @@
     <ClCompile Include="RayMarchingScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MetaballGeometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaballMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaballScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="brain-at_4096.jpg">
@@ -76,9 +85,27 @@
     <None Include="volumeCubeVS.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="Abuffer.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Abuffer.geom">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Abuffer.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RayMarchingScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaballGeometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaballMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaballScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

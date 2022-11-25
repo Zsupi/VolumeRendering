@@ -33,7 +33,7 @@ private:
 
 public:
 
-	static const unsigned int windowWidth = 800, windowHeight = 800;
+	static const unsigned int windowWidth = 600, windowHeight = 600;
 
 	static std::shared_ptr<GlutApplication> getInstance() {
 		static std::shared_ptr<GlutApplication> instance(new GlutApplication);
