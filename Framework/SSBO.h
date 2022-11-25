@@ -15,7 +15,6 @@ public:
 	void Bind(int index);
 	void Unbind();
 	void LoadData(std::vector<glm::vec4> data, GLsizeiptr size);
-	void LoadData(std::vector<glm::vec3> data, GLsizeiptr size);
 	void LoadZeros(GLsizeiptr size);
 	void Delete();
 };

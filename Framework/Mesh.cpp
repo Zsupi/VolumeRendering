@@ -70,7 +70,6 @@ void Mesh::draw(std::shared_ptr<Camera> camera) {
 	material->setModelMatrix(modelMatrix)
 		.setViewProjMatrix(viewProjMatrix)
 		.setRayDirMatrix(Ray);
-	material->setRayDirMatrix(Ray);
 	material->addUniform(std::make_shared<Vec3Uniform>(camera->camera_position, "cameraPos"));
 
 	material->draw();
