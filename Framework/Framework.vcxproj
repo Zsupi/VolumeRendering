@@ -169,6 +169,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ACB.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Common.h" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Vec4Uniform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ACB.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="EBO.cpp" />

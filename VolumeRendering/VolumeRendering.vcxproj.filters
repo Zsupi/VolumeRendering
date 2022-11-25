@@ -30,9 +30,6 @@
     <ClCompile Include="MetaballGeometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MetaballMaterial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MetaballScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -100,9 +97,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MetaballGeometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MetaballMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MetaballScene.h">
