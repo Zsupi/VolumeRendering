@@ -33,6 +33,9 @@
     <ClCompile Include="MetaballScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ABuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="brain-at_4096.jpg">
@@ -100,6 +103,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MetaballScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ABuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

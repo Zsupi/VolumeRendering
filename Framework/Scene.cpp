@@ -14,8 +14,10 @@ void Scene::glutUpdate(float dt, float t) {
 	camera->Animate(dt);
 	camera->Update();
 
-	for (auto i : meshes)
-		i.second->draw(camera);
+	if (draw) {
+		for (auto i : meshes)
+			i.second->draw(camera);
+	}
 
 	for (auto i : lights)
 		i.draw(camera);
@@ -74,6 +76,11 @@ Scene::Scene(glm::vec3 cameraPosition, glm::vec3 lookatPosition) {
 	camera->Update();
 }
 
+Scene& Scene::drawMesh(bool draw) {
+	this->draw = draw;
+	return *this;
+}
+
 Scene& Scene::addMesh(const Mesh& mesh, std::string name) {
 	if (meshes.find(name) != meshes.end()) {
 		std::cout << "[Error][Scene] '" << name << "' mesh already exist." << std::endl;
@@ -82,6 +89,11 @@ Scene& Scene::addMesh(const Mesh& mesh, std::string name) {
 
 	meshes[name] = std::make_shared<Mesh>(mesh);
 	return *this;
+}
+
+std::shared_ptr<Mesh> Scene::getMesh(const std::string name) {
+	if (meshes.find(name) != meshes.end())
+		return meshes[name];
 }
 
 Scene& Scene::addLight(LightData lightData) {

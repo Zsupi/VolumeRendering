@@ -1,32 +1,68 @@
 #include "MetaballScene.h"
 #include "MetaballGeometry.h"
+#include <FloatUniform.h>
+#include <FullScreenQuad.h>
 
 MetaballScene::MetaballScene() {
+    drawMesh(false);
 }
 
 Scene& MetaballScene::update(float dt, float t) {
-    //todo turn off the depth buffer
-    metaballProgram->bind();
-    bindSSBOs();
-    metaballProgram->unbind();
+    glDepthFunc(GL_ALWAYS);
+    aBuffer->resetCounter();
+    aBuffer->bind();
+    getMesh("abuffer")->draw(camera);
+    glDepthFunc(GL_LESS);
+
+    aBuffer->changeProgram();
+    aBuffer->bind();
+    getMesh("rayMarch")->draw(camera);
+
     return *this;
 }
 
 Scene& MetaballScene::onInitialization() {
-    metaballProgram = std::make_shared<Program>();
-    metaballProgram->attachShader(CreateShader(GL_VERTEX_SHADER, "Abuffer.vert"))
+    std::vector<glm::vec4> metaballs = generateMetaballs(glm::vec3(6, 6, 6));
+
+#pragma region A-Buffer Program
+    std::shared_ptr<Program> aBufferProgram = std::make_shared<Program>();
+    aBufferProgram->attachShader(CreateShader(GL_VERTEX_SHADER, "Abuffer.vert"))
         .attachShader(CreateShader(GL_GEOMETRY_SHADER, "Abuffer.geom"))
         .attachShader(CreateShader(GL_FRAGMENT_SHADER, "Abuffer.frag"))
         .linkProgram();
 
-    std::shared_ptr<Material> metaballMaterial = std::make_shared<Material>(metaballProgram);
-    std::shared_ptr<MetaballGeometry> metaballGeometry = std::make_shared<MetaballGeometry>(generateMetaballs(glm::vec3(6, 6, 6)));
+    std::shared_ptr<Material> aBufferMaterial = std::make_shared<Material>(aBufferProgram);
+    std::shared_ptr<MetaballGeometry> aBufferGeometry = std::make_shared<MetaballGeometry>(metaballs.size());
     
-    Mesh aBufferMetaball = Mesh(metaballMaterial, metaballGeometry);
+    Mesh aBufferMetaball = Mesh(aBufferMaterial, aBufferGeometry);
     addMesh(aBufferMetaball, "abuffer");
 
-    generateSSBOs();
+#pragma endregion
 
+#pragma region RayMarching Program
+    std::shared_ptr<Program> rayMarchingProgram = std::make_shared<Program>();
+    rayMarchingProgram->attachShader(CreateShader(GL_VERTEX_SHADER, "fullScreenVS.vert"))
+        .attachShader(CreateShader(GL_FRAGMENT_SHADER, "raymarchMetaball.frag"))
+        .linkProgram();
+
+    std::shared_ptr<Material> rayMarchingMaterial = std::make_shared<Material>(rayMarchingProgram);
+    rayMarchingMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
+    std::shared_ptr<FullScreenQuad> fullScreenQuad = std::make_shared< FullScreenQuad>();
+    
+    Mesh rayTraceVolumeMesh = Mesh(rayMarchingMaterial, fullScreenQuad);
+    addMesh(rayTraceVolumeMesh, "rayMarch");
+#pragma endregion
+
+#pragma region A-Buffer 
+    aBuffer = ABufferBuilder()
+        .setCreationProgram(aBufferProgram)
+        .setDrawProgram(rayMarchingProgram)
+        .setMetaballData(metaballs)
+        .setListSize(MetaballScene::metaballNumber * MetaballScene::pixelPerMetaball)
+        .setPixelNumber(GlutApplication::windowHeight * GlutApplication::windowWidth)
+        .build();
+#pragma endregion
+    
     return *this;
 }
 
@@ -44,23 +80,6 @@ Scene& MetaballScene::onKeyboardDown(unsigned char key) {
 
 Scene& MetaballScene::onKeyboardUp(unsigned char key) {
     return *this;
-}
-
-void MetaballScene::generateSSBOs() {
-    screenBuffer = std::make_shared<SSBO>();
-    linkedListBuffer = std::make_shared<SSBO>();
-    atomicCounterBuffer = std::make_shared<ACB>();
-
-    //todo change it to loadData
-    screenBuffer->LoadZeros(GlutApplication::windowHeight * GlutApplication::windowWidth * sizeof(ScreenBuffer));
-    linkedListBuffer->LoadZeros(MetaballScene::metaballNumber * MetaballScene::pixelPerMetaball * sizeof(LinkedListBuffer));
-    atomicCounterBuffer->Create();
-}
-
-void MetaballScene::bindSSBOs() {
-    screenBuffer->Bind(2);
-    linkedListBuffer->Bind(3);
-    atomicCounterBuffer->Bind(0);
 }
 
 std::vector<glm::vec4> MetaballScene::generateMetaballs(glm::vec3 dimension) {

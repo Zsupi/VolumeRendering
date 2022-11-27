@@ -56,6 +56,3 @@ public:
 	
 
 };
-
-//todo virtualis destruktort csinalni majdnem minden osztalynak
-//todo finalnak jelolni par osztalyt

@@ -1,13 +1,10 @@
 #include "MetaballGeometry.h"
 
-MetaballGeometry::MetaballGeometry(std::vector<glm::vec4> metaballPositions) : Geometry(), positions(metaballPositions) {
+MetaballGeometry::MetaballGeometry(unsigned int nMetaballs) : Geometry(), nMetaballs(nMetaballs) {
     vao.Bind();
     
-    auto metaballIndices = getIndices(metaballPositions.size());
+    auto metaballIndices = getIndices(nMetaballs);
     VBO metaballIndicesVbo(metaballIndices);
-    
-    positionBuffer = std::make_shared<SSBO>();
-    positionBuffer->LoadData(positions, positions.size() * sizeof(glm::vec4));
 
     vao.LinkAttrib(metaballIndicesVbo, 0, 1, GL_UNSIGNED_INT, 0, NULL);
 
@@ -16,7 +13,7 @@ MetaballGeometry::MetaballGeometry(std::vector<glm::vec4> metaballPositions) : G
 }
 
 MetaballGeometry::MetaballGeometry(const MetaballGeometry& geometry) 
-    : Geometry(geometry), positions(geometry.positions) {}
+    : Geometry(geometry), nMetaballs(geometry.nMetaballs) {}
 
 std::vector<unsigned int> MetaballGeometry::getIndices(unsigned int size) const {
     std::vector<unsigned int> metaballIndices;
@@ -31,7 +28,7 @@ std::vector<unsigned int> MetaballGeometry::getIndices(unsigned int size) const 
 std::vector<unsigned int> MetaballGeometry::getIndices() const {
     std::vector<unsigned int> metaballIndices;
 
-    for (unsigned int i = 0; i < positions.size(); i++) {
+    for (unsigned int i = 0; i < nMetaballs; i++) {
         metaballIndices.push_back(i);
     }
 
@@ -44,14 +41,13 @@ MetaballGeometry& MetaballGeometry::operator=(const MetaballGeometry& geometry) 
     }
 
     Geometry::operator=(geometry);
-    this->positions = geometry.positions;
+    this->nMetaballs = geometry.nMetaballs;
 
     return *this;
 }
 
 void MetaballGeometry::draw() {
     vao.Bind();
-    positionBuffer->Bind(1);
-    glDrawArrays(GL_POINTS, 0, positions.size());
+    glDrawArrays(GL_POINTS, 0, nMetaballs);
     vao.Unbind();
 }

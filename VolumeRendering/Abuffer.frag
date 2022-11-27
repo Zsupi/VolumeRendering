@@ -32,16 +32,16 @@ void main() {
     uint pixelCount = atomicCounterIncrement(counter);
 
     uint previousElement = screen[pixelId];
-    //atomicExchange(screen[pixelId], pixelCount);
+    atomicExchange(screen[pixelId], pixelCount);
     
     
     uvec2 newElement;
     newElement.x = previousElement;
     newElement.y = vertex.metaballId;
 
-    //element[pixelCount] = newElement;
+    element[pixelCount] = newElement;
 
-    //vec3 color = vec3(0, 1.0f, float(previousElement));
-    vec3 color = vec3(0, 1.0f, 1.0f);
+    vec3 color = vec3(0, 1.0f, float(element[pixelCount]));
+    //vec3 color = vec3(0, 1.0f, 1.0f);
     fragmentColor = vec4(color, 1.0f);
 }
