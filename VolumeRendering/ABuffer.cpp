@@ -1,13 +1,7 @@
 #include "ABuffer.h"
 
 ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::resetScreenBuffer() {
-	std::vector<SSBO::uint_element> data;
-	for (unsigned int i = 0; i < screenBufferSize; i++) {
-		SSBO::uint_element element;
-		data.push_back(element);
-	}
-
-	screenBuffer->LoadData(data, screenBufferSize * sizeof(SSBO::uint_element));
+	screenBuffer->LoadData(zeroScreenBuffer, screenBufferSize * sizeof(SSBO::uint_element));
 	return *this;
 }
 
@@ -26,6 +20,11 @@ ABufferBuilder::ABufferObject::ABufferObject() {
 	atomicCounterBuffer = std::make_shared<ACB>();
 	atomicCounterBuffer->Create();
 	stage = Stage::CREATE;
+
+	for (unsigned int i = 0; i < linkedListBufferSize; i++) {
+		SSBO::uvec2_element element;
+		zeroScreenBuffer.push_back(element);
+	}
 }
 
 ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::bind() {
@@ -61,7 +60,7 @@ ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::changeProgram() {
 }
 
 ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::resetBuffers() {
-	resetLinkedListBuffer();
+	//resetLinkedListBuffer();
 	resetScreenBuffer();
 	return *this;
 }

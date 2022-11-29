@@ -1,5 +1,4 @@
 #version 430
-#define MAX_METABALL 216
 precision highp float;
 
 struct Metaball{
@@ -53,7 +52,7 @@ out vec4 fragmentColor;
 Metaball createMetaball(vec4 position) {
 	Metaball metaball;
 	metaball.center = position.xyz;
-	metaball.radius = 0.25f;
+	metaball.radius = 0.2f;
 	metaball.color = abs(position.xyz);
 	return metaball;
 }
@@ -104,7 +103,7 @@ float ABuffer_WyvillMetaballScene(vec3 p, out vec3 color) {
 		float f = wyvillMetaballTest(p, position[metaballId], color);
 		fSum += f;
 	}
-	const float A = 0.9f;
+	const float A = 0.7f;
 	return -A + fSum;
 }
 

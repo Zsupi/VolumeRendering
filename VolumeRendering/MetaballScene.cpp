@@ -9,14 +9,14 @@ MetaballScene::MetaballScene() {
 }
 
 Scene& MetaballScene::update(float dt, float t) {
-    glDepthFunc(GL_ALWAYS);
+    glDisable(GL_DEPTH_TEST);
     aBuffer->changeProgram();
     aBuffer->resetCounter();
     aBuffer->resetBuffers();
     aBuffer->bind();
     getMesh("abuffer")->draw(camera);
-    glDepthFunc(GL_LESS);
 
+    glEnable(GL_DEPTH_TEST);
     aBuffer->changeProgram();
     aBuffer->bind();
     getMesh("rayMarch")->draw(camera);
@@ -25,7 +25,7 @@ Scene& MetaballScene::update(float dt, float t) {
 }
 
 Scene& MetaballScene::onInitialization() {
-    std::vector<glm::vec4> metaballs = generateMetaballs(glm::vec3(6, 6, 6));
+    std::vector<glm::vec4> metaballs = generateMetaballs(metaballDimension);
 
 #pragma region A-Buffer Program
     std::shared_ptr<Program> aBufferProgram = std::make_shared<Program>();
@@ -63,7 +63,7 @@ Scene& MetaballScene::onInitialization() {
         .setCreationProgram(aBufferProgram)
         .setDrawProgram(rayMarchingProgram)
         .setMetaballData(metaballs)
-        .setListSize(MetaballScene::metaballNumber * MetaballScene::pixelPerMetaball)
+        .setListSize(metaballNumber * MetaballScene::pixelPerMetaball)
         .setPixelNumber(GlutApplication::windowHeight * GlutApplication::windowWidth)
         .build();
 #pragma endregion

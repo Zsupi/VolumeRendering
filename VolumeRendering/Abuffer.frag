@@ -44,7 +44,7 @@ void main() {
         element[pixelCount].element.x = previousElement;
         element[pixelCount].element.y = id;
         
-        vec3 color = vec3(id/216.0f, 1.0f, 1.0f);
-        fragmentColor = vec4(color, 1.0f);
+        //vec3 color = vec3(id/216.0f, 1.0f, 1.0f);
+        //fragmentColor = vec4(color, 1.0f);
     }
 }

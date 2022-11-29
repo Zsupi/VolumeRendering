@@ -13,7 +13,7 @@ flat out uint id;
 void main() {
     vec4 center = gl_in[0].gl_Position * viewProjMatrix;
 
-    float metaballSize = 0.2f;
+    float metaballSize = 0.3f;
     id = metaballId[0];
 
     gl_Position = center;

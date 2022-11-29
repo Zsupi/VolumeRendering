@@ -31,6 +31,8 @@ public:
 
 		Stage stage;
 
+		std::vector<SSBO::uvec2_element> zeroScreenBuffer;
+
 		ABufferObject& resetScreenBuffer();
 		ABufferObject& resetLinkedListBuffer();
 
