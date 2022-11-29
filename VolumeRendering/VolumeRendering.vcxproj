@@ -178,6 +178,7 @@
     <None Include="Abuffer.frag" />
     <None Include="Abuffer.geom" />
     <None Include="Abuffer.vert" />
+    <None Include="ABufferRayMarch.frag" />
     <None Include="defaultVS.vert" />
     <None Include="fullScreenVS.vert" />
     <None Include="lightFS.frag" />

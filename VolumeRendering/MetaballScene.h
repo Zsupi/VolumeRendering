@@ -4,7 +4,7 @@
 
 class MetaballScene : public Scene {
 	static const unsigned int metaballNumber = 6 * 6 * 6;
-	static const unsigned int pixelPerMetaball = 200;
+	static const unsigned int pixelPerMetaball = 1000;
 	float minStep = 0.04f;
 	glm::vec3 boundingCubePosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	
@@ -22,8 +22,6 @@ public:
 	Scene& onKeyboardUp(unsigned char key) override;
 
 private:
-	void generateSSBOs();
-	void bindSSBOs();
 	std::vector<glm::vec4> generateMetaballs(glm::vec3 dimension);
 };
 

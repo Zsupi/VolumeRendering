@@ -198,6 +198,7 @@
     <ClInclude Include="Textured3DCube.h" />
     <ClInclude Include="Textured3DGeometry.h" />
     <ClInclude Include="Uniform.h" />
+    <ClInclude Include="UVec2Uniform.h" />
     <ClInclude Include="VAO.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="Vec2Uniform.h" />

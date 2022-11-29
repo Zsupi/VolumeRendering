@@ -18,6 +18,9 @@ public:
 		std::shared_ptr<SSBO> positionBuffer;
 		std::shared_ptr<ACB> atomicCounterBuffer;
 
+		unsigned int linkedListBufferSize = 0;
+		unsigned int screenBufferSize = 0;
+
 		unsigned int positiobBufferLocation = 1;
 		unsigned int screenBufferLocation = 2;
 		unsigned int linkedListBufferLocation = 3;
@@ -28,6 +31,9 @@ public:
 
 		Stage stage;
 
+		ABufferObject& resetScreenBuffer();
+		ABufferObject& resetLinkedListBuffer();
+
 	public:
 		ABufferObject();
 
@@ -35,6 +41,7 @@ public:
 		ABufferObject& unbind();
 		ABufferObject& resetCounter();
 		ABufferObject& changeProgram();
+		ABufferObject& resetBuffers();
 	};
 
 private:

@@ -1,5 +1,27 @@
 #include "ABuffer.h"
 
+ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::resetScreenBuffer() {
+	std::vector<SSBO::uint_element> data;
+	for (unsigned int i = 0; i < screenBufferSize; i++) {
+		SSBO::uint_element element;
+		data.push_back(element);
+	}
+
+	screenBuffer->LoadData(data, screenBufferSize * sizeof(SSBO::uint_element));
+	return *this;
+}
+
+ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::resetLinkedListBuffer() {
+	std::vector<SSBO::uvec2_element> data;
+	for (unsigned int i = 0; i < linkedListBufferSize; i++) {
+		SSBO::uvec2_element element;
+		data.push_back(element);
+	}
+
+	linkedListBuffer->LoadData(data, linkedListBufferSize * sizeof(SSBO::uvec2_element));
+	return *this;
+}
+
 ABufferBuilder::ABufferObject::ABufferObject() {
 	atomicCounterBuffer = std::make_shared<ACB>();
 	atomicCounterBuffer->Create();
@@ -38,6 +60,12 @@ ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::changeProgram() {
 	return *this;
 }
 
+ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::resetBuffers() {
+	resetLinkedListBuffer();
+	resetScreenBuffer();
+	return *this;
+}
+
 ABufferBuilder::ABufferBuilder() {
 	aBuffer = std::make_shared<ABufferBuilder::ABufferObject>();
 }
@@ -53,28 +81,16 @@ ABufferBuilder& ABufferBuilder::setDrawProgram(std::shared_ptr<Program> program)
 }
 
 ABufferBuilder& ABufferBuilder::setListSize(unsigned int size) {
+	aBuffer->linkedListBufferSize = size;
 	aBuffer->linkedListBuffer = std::make_shared<SSBO>();
-	
-	std::vector<SSBO::uvec2_element> data;
-	for (unsigned int i = 0; i < size; i++) {
-		SSBO::uvec2_element element;
-		data.push_back(element);
-	}
-	
-	aBuffer->linkedListBuffer->LoadData(data, size * sizeof(SSBO::uvec2_element));
+	aBuffer->resetLinkedListBuffer();
 	return *this;
 }
 
 ABufferBuilder& ABufferBuilder::setPixelNumber(unsigned int size) {
+	aBuffer->screenBufferSize = size;
 	aBuffer->screenBuffer = std::make_shared<SSBO>();
-
-	std::vector<SSBO::uint_element> data;
- 	for (unsigned int i = 0; i < size; i++) {
-		SSBO::uint_element element;
-		data.push_back(element);
-	}
-
-	aBuffer->linkedListBuffer->LoadData(data, size * sizeof(SSBO::uint_element));
+	aBuffer->resetScreenBuffer();
 	return *this;
 }
 

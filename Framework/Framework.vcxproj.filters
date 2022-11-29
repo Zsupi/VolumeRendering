@@ -233,6 +233,9 @@
     <ClInclude Include="ACB.h">
       <Filter>Header Files\Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="UVec2Uniform.h">
+      <Filter>Header Files\Uniform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

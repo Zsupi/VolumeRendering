@@ -2,46 +2,49 @@
 
 precision highp float;
 
+struct Screen {
+    uint pixel;
+    float padding[3];
+};
+
+struct LinkedListElement {
+    uvec2 element;
+    float padding[2];
+};
+
 // holds the index of the first element of the linked list
 layout(std430, binding = 2) buffer screenBuffer {
-    uint screen[];
+    Screen screen[];
 };
 
 // element.x stands for the index of the previous element
 // element.y stands for the metaballId
 layout(std430, binding = 3) buffer linkedListBuffer {
-    uvec2 element[];
+    LinkedListElement element[];
 };
 
 // counter for new linked list elements
 layout(binding = 0, offset = 0) uniform atomic_uint counter;
 
+uniform uvec2 windowSize = uvec2(600, 600);
 
-uniform uvec2 windowSize;
-
-in Vertex {
-    flat uint metaballId;
-    vec4 position;
-}vertex;
+flat in uint id;
 
 out vec4 fragmentColor;
 
 void main() {
-    uint pixelId = uint(vertex.position.y) * windowSize.x + uint(vertex.position.x);
-    
+    uint pixelId = uint(gl_FragCoord.y) * (windowSize.x-1) + uint(gl_FragCoord.x);
+
     uint pixelCount = atomicCounterIncrement(counter);
 
-    uint previousElement = screen[pixelId];
-    atomicExchange(screen[pixelId], pixelCount);
-    
-    
-    uvec2 newElement;
-    newElement.x = previousElement;
-    newElement.y = vertex.metaballId;
+    if (pixelCount < element.length()-1) {
+        uint previousElement = screen[pixelId].pixel;
+        atomicExchange(screen[pixelId].pixel, pixelCount);
 
-    element[pixelCount] = newElement;
-
-    vec3 color = vec3(0, 1.0f, float(element[pixelCount]));
-    //vec3 color = vec3(0, 1.0f, 1.0f);
-    fragmentColor = vec4(color, 1.0f);
+        element[pixelCount].element.x = previousElement;
+        element[pixelCount].element.y = id;
+        
+        vec3 color = vec3(id/216.0f, 1.0f, 1.0f);
+        fragmentColor = vec4(color, 1.0f);
+    }
 }

@@ -2,6 +2,7 @@
 #include "MetaballGeometry.h"
 #include <FloatUniform.h>
 #include <FullScreenQuad.h>
+#include <UVec2Uniform.h>
 
 MetaballScene::MetaballScene() {
     drawMesh(false);
@@ -9,7 +10,9 @@ MetaballScene::MetaballScene() {
 
 Scene& MetaballScene::update(float dt, float t) {
     glDepthFunc(GL_ALWAYS);
+    aBuffer->changeProgram();
     aBuffer->resetCounter();
+    aBuffer->resetBuffers();
     aBuffer->bind();
     getMesh("abuffer")->draw(camera);
     glDepthFunc(GL_LESS);
@@ -32,6 +35,7 @@ Scene& MetaballScene::onInitialization() {
         .linkProgram();
 
     std::shared_ptr<Material> aBufferMaterial = std::make_shared<Material>(aBufferProgram);
+    aBufferMaterial->addUniform(std::make_shared<UVec2Uniform>(glm::uvec2(GlutApplication::windowWidth, GlutApplication::windowHeight), "windowSize"));
     std::shared_ptr<MetaballGeometry> aBufferGeometry = std::make_shared<MetaballGeometry>(metaballs.size());
     
     Mesh aBufferMetaball = Mesh(aBufferMaterial, aBufferGeometry);
@@ -41,11 +45,12 @@ Scene& MetaballScene::onInitialization() {
 
 #pragma region RayMarching Program
     std::shared_ptr<Program> rayMarchingProgram = std::make_shared<Program>();
-    rayMarchingProgram->attachShader(CreateShader(GL_VERTEX_SHADER, "fullScreenVS.vert"))
-        .attachShader(CreateShader(GL_FRAGMENT_SHADER, "raymarchMetaball.frag"))
+    rayMarchingProgram->attachShader(CreateShader(GL_VERTEX_SHADER, "ABufferRayMarch.vert"))
+        .attachShader(CreateShader(GL_FRAGMENT_SHADER, "ABufferRayMarch.frag"))
         .linkProgram();
 
     std::shared_ptr<Material> rayMarchingMaterial = std::make_shared<Material>(rayMarchingProgram);
+    rayMarchingMaterial->addUniform(std::make_shared<UVec2Uniform>(glm::uvec2(GlutApplication::windowWidth, GlutApplication::windowHeight), "windowSize"));
     rayMarchingMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
     std::shared_ptr<FullScreenQuad> fullScreenQuad = std::make_shared< FullScreenQuad>();
     
@@ -89,7 +94,7 @@ std::vector<glm::vec4> MetaballScene::generateMetaballs(glm::vec3 dimension) {
     for (int i = 0; i < dimension.x; i++) {
         for (int j = 0; j < dimension.y; j++) {
             for (int k = 0; k < dimension.z; k++) {
-                positions.push_back(glm::vec4(i, j, k, 1.0f));
+                positions.push_back(glm::vec4(-i, -j, -k, 1.0f)/glm::vec4(dimension, 1.0f));
             }
         }
     }
