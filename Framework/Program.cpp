@@ -47,6 +47,12 @@ bool Program::setUniform(const glm::vec2& v, const std::string& name) {
 	return location >= 0;
 }
 
+bool Program::setUniform(const glm::uvec2& v, const std::string& name) {
+	int location = getUniformLocation(name);
+	if (location >= 0) glUniform2uiv(location, 1, &v.x);
+	return location >= 0;
+}
+
 bool Program::setUniform(const glm::vec3& v, const std::string& name) {
 	int location = getUniformLocation(name);
 	if (location >= 0) glUniform3fv(location, 1, &v.x);

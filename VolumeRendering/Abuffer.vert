@@ -6,11 +6,8 @@ layout(std430, binding = 1) buffer positionBuffer {
 };
 
 out uint metaballId;
-out vec4 pos;
-
 
 void main () {
     metaballId = gl_VertexID;
-    pos = position[2];
     gl_Position = position[gl_VertexID];
 }

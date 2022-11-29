@@ -42,8 +42,4 @@ public:
 	Material& operator=(const Material& material);
 
 	virtual void draw();
-	
-
 };
-
-// todo: name a value elott legyen => az osszes uniformban is meg kene csinalni

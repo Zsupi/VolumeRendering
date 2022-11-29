@@ -26,6 +26,7 @@ public:
 	bool setUniform(float f, const std::string& name);
 	bool setUniform(int i, const std::string& name);
 	bool setUniform(const glm::vec2& v, const std::string& name);
+	bool setUniform(const glm::uvec2& v, const std::string& name);
 	bool setUniform(const glm::vec3& v, const std::string& name);
 	bool setUniform(const glm::vec4& v, const std::string& name);
 	bool setUniform(const glm::mat4& mat, const std::string& name);

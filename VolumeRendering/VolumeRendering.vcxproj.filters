@@ -30,10 +30,10 @@
     <ClCompile Include="MetaballGeometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MetaballMaterial.cpp">
+    <ClCompile Include="MetaballScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MetaballScene.cpp">
+    <ClCompile Include="ABuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -94,6 +94,9 @@
     <None Include="Abuffer.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="ABufferRayMarch.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RayMarchingScene.h">
@@ -102,10 +105,10 @@
     <ClInclude Include="MetaballGeometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MetaballMaterial.h">
+    <ClInclude Include="MetaballScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MetaballScene.h">
+    <ClInclude Include="ABuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

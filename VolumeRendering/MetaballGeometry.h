@@ -2,10 +2,9 @@
 #include <Geometry.h>
 #include <SSBO.h>
 class MetaballGeometry : public Geometry {
-	std::vector<glm::vec4> positions;
-	std::shared_ptr<SSBO> positionBuffer;
+	unsigned int nMetaballs;
 public:
-	MetaballGeometry(std::vector<glm::vec4> metaballPositions);
+	MetaballGeometry(unsigned int nMetaballs);
 	MetaballGeometry(const MetaballGeometry& geometry);
 
 	std::vector<unsigned int> getIndices(unsigned int size) const;

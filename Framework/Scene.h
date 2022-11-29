@@ -6,6 +6,7 @@
 class Scene : public GlutApplication::GlutAppInterface{
 	std::unordered_map<std::string, std::shared_ptr<Mesh>> meshes;
 	std::vector<Light> lights;
+	bool draw = true;
 
 	virtual void glutUpdate(float dt, float t) override final;
 	virtual void glutOnMouseMove(int pX, int pY) override final;
@@ -22,8 +23,10 @@ public:
 	Scene();
 	Scene(glm::vec3 cameraPosition, glm::vec3 lookatPoint);
 	
+	virtual Scene& drawMesh(bool draw) final;
 
 	virtual Scene& addMesh(const Mesh& mesh, std::string name) final;
+	virtual std::shared_ptr<Mesh> getMesh(const std::string name) final;
 	virtual Scene& update(float dt, float t) = 0;
 
 	virtual Scene& onInitialization() = 0;

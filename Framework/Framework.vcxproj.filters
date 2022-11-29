@@ -123,6 +123,9 @@
     <ClCompile Include="SSBO.cpp">
       <Filter>Source Files\Buffers</Filter>
     </ClCompile>
+    <ClCompile Include="ACB.cpp">
+      <Filter>Source Files\Buffers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Program.h">
@@ -226,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="SSBO.h">
       <Filter>Header Files\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="ACB.h">
+      <Filter>Header Files\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="UVec2Uniform.h">
+      <Filter>Header Files\Uniform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
