@@ -119,6 +119,11 @@ ABufferBuilder& ABufferBuilder::setCounterLocation(unsigned int location) {
 	return *this;
 }
 
+ABufferBuilder& ABufferBuilder::setPositionBuffer(std::shared_ptr<SSBO> positionBuffer) {
+	aBuffer->positionBuffer = positionBuffer;
+	return *this;
+}
+
 std::shared_ptr<ABufferBuilder::ABufferObject> ABufferBuilder::build() {
 	return aBuffer;
 }

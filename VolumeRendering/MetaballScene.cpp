@@ -9,12 +9,15 @@ MetaballScene::MetaballScene() {
 }
 
 Scene& MetaballScene::update(float dt, float t) {
+    metaballCreator->create();
+
     glDisable(GL_DEPTH_TEST);
     aBuffer->changeProgram();
     aBuffer->resetCounter();
     aBuffer->resetBuffers();
     aBuffer->bind();
     getMesh("abuffer")->draw(camera);
+
 
     glEnable(GL_DEPTH_TEST);
     aBuffer->changeProgram();
@@ -58,11 +61,20 @@ Scene& MetaballScene::onInitialization() {
     addMesh(rayTraceVolumeMesh, "rayMarch");
 #pragma endregion
 
+#pragma region Metaball Position
+    std::shared_ptr<Program> computeShaderProgram = std::make_shared<Program>();
+    computeShaderProgram->attachShader(CreateShader(GL_COMPUTE_SHADER, "MetaballPosition.comp"))
+        .linkProgram();
+    std::shared_ptr<Texture3D> volumeData = std::make_shared<Texture3D>("brain-at_4096.jpg");
+    metaballCreator = std::make_shared<MetaballCreator>(computeShaderProgram, volumeData, this->metaballDimension);
+#pragma endregion
+
+
 #pragma region A-Buffer 
     aBuffer = ABufferBuilder()
         .setCreationProgram(aBufferProgram)
         .setDrawProgram(rayMarchingProgram)
-        .setMetaballData(metaballs)
+        .setPositionBuffer(metaballCreator->getPositions())
         .setListSize(metaballNumber * MetaballScene::pixelPerMetaball)
         .setPixelNumber(GlutApplication::windowHeight * GlutApplication::windowWidth)
         .build();
