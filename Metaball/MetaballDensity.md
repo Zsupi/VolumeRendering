@@ -19,10 +19,6 @@
 
 * A piecewise polynomial.
 
-## RenderMan
-
-> ![image](./Pics/RenderManDensity.png)
-
 ## Hart
 
 > ![image](./Pics/HartDensity.png)
