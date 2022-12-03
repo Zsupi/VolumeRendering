@@ -38,12 +38,34 @@
 ## 4. Előzmények *(irodalomkutatás)* **(15 oldal)**
 
 * Volume rendering **(5 oldal)**
-    * Bevezetés:
+    * ✅ Bevezetés:
         * [Volume rendering felhasználás](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-39-volume-rendering-techniques)
-        * [VolumeRendering definíció](https://www3.cs.stonybrook.edu/~mueller/papers/volvisOverview.pdf)
-    * Teknikák (**[Összefoglaló *(2.1)*](./Docs/lacroute_thesis.pdf)**):
+        * Definíció:
+            * [pdf](https://www3.cs.stonybrook.edu/~mueller/papers/volvisOverview.pdf)
+            * [pdf](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=274942&tag=1)
+            * [pdf](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=267473)
+            * [pdf](./Docs/234313.234383.pdf)
+            * [pdf](./Docs/paper_jbcs_november2012.pdf)
+    * ✅ Teknikák (**[Összefoglaló *(2.1)*](./Docs/lacroute_thesis.pdf)**):
         * Marching cubes
             * [pdf](./Docs/paper_jbcs_november2012.pdf)
+                * A térfogati adatok minden voxele feldolgozásra kerül.
+                * Minden vertex elemre a mintavételezett adatot ellenőrizzük, ha az egy megadott *h* küszöb felett van, akkor az izo-felület külső, egyéb esetben belő elemének jelöljük.
+                * Ezután háromszögek generálásával közelítjük az izo-felületet
+                * Egy cellából a hároszögeket egy 15 elemű look-up table használatával generáljuk le.
+                * Az algoritmust az üres cellák kíszűrésével gyorsíthatjuk.
+            * [link](https://www.cs.carleton.edu/cs_comps/0405/shape/marching_cubes.html)
+                * A eredmény pontosságát növelhetjük a Marching Cube-ok számának növelésével vagy az kocka metszéspontjainak elmozdításával.
+            [link](https://code-specialist.com/python/marching-cubes-algorithm)
+                * Minden megvizsgált cellának 8 csúcsa a korábban említett 2 értéket veheti fel (belül, vagy kívül). Ez összesen 2^8 = 256 különböző esetet eredményezhet.
+                * A 256 eset közül viszont vannak, olyanok amelyek egymás szimetrikus megfelelői vagy komplemeterei. Így egy voxelhez összesen 15 különböző, egyedi esetet tudunk megfeleltetni.
+                * Minden esethez generálunk egy egyedi azonosítót az alapján, hogy az adott cella mely csúcspontja a 2 érték melyikét vette fel.
+                * Az eredmény pontosságát növelhetjük azal hogy az elkészített háromszög pontjait nem mintavételezett kocka éleinek középpontjába, hanem annak egy olyan pontjába, amely kellően közelíti a h határértéket.
+                * Az algoritmus könnyen párhuzamosítható, hiszen minden kocka független egységként kezelhető.
+            [pic](./Pics/Type-of-surface-combinations-for-the-marching-cube-algorithm-The-black-circles-means.png)
+                * [ref](https://www.researchgate.net/figure/Type-of-surface-combinations-for-the-marching-cube-algorithm-The-black-circles-means_fig2_282209849)
+            * Addition:
+                * Az eljárás alapját egymástól független elemek (kockák) adják, ennek köszönhetően könnyen párhuzamosítható amivel könnyedén segíthetjük az algoritmus teljesítményét, emellett az üres cellák kiszőrésével is sokat javíthatunk ezen.
         * Ray Casting
             * [pdf](./Docs/vis03-rc.pdf)
         * Raymarching
@@ -61,12 +83,23 @@
             * Utána nagyobb felyezet
 * Metaball **(5 oldal)**
     * Bevezetés:
+        * [pdf](./Docs/Image-Space_GPU_Metaballs_for_Time-Dependent_Parti.pdf)
     * Sűrűségfüggvények ([Összefoglaló](./Docs/master%20thesis.pdf)):
         * Blinn:
             * [ref](./Docs/357306.357310.pdf)
         * Wyvill:
             * [ref](https://www.academia.edu/5738656/Animating_soft_objects)
-* Optimalizálás **(5 oldal)**
+        * Nishiruma:
+            * >fi⁢(r)={1-3⁢(rRi)2 if (0≤r<R3)32⁢(1-(rRi))2 if (R3≤r≤Ri)(2)
+    * Optimalizálás **(5 oldal)**
+        *Bevezetés
+        * A-Buffer:
+            * [pdf](./Docs/tvcg-kbuffer.pdf)
+            * [link](https://www.geeksforgeeks.org/a-buffer-method/)
+        * S-Buffer:
+            * [pdf](./Docs/eg2012_s-buffer.pdf)
+        * Bezier görbe alapú megjelenítés:
+            * [pdf](./Docs/eg08_metaballs.pdf)
 
 ## 5. Tervezés **(22 oldal)**
 
