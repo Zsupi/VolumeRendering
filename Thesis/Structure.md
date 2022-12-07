@@ -13,13 +13,7 @@
 
 ## 2. Bevezetés **(1 oldal)**
 
-* Tervezés célja
-    * Orvosi térfogati adatok megjelenítése fizikailag egyszerűen szimulálható módon
-    * Valós időben
-* Feladat indokoltsága
-* Feladat felosztása:
-    * Szakdolgozat két jól elkülöníthető részre bontható, a fizikai reprodukcióra alkalmas megjelnítés és a térfogati adat szimulálása az anyag adott pontban mintavételezett sűrűsége alapján.
-    * Én feladatom az adatok vizuálása volt.
+[ref](https://www.flushinghospital.org/newsletter/history-of-medical-imaging-a-brief-overview/#:~:text=The%20concept%20of%20medical%20imaging,photosensitive%20plate%20placed%20behind%20it.)
 * Diplomaterv felépítése:
     * A továbbiakban a feladathoz szükséges forrásokat és kutatásokat szeretném bemutatni, majd utána az általam megvalósított módszerrel folyatni.
 
@@ -295,11 +289,19 @@
     * C++20
     * GLSL version 430
 * Átlag FPS mataballszámoktól függően
-* Memóriahasználat (visual studio profiler)
-* Komplexitás
-    * Bufferek inicializálásának ideje (mérd meg)
+
+* Eredmény:
+    * Az Orvosi térfogati adatok Metaballokkal történő kirajzolása fizikailag szimulálható állapotot eredményeznek. Kellően nagy Metaball-szám esetén az eredmény pontos és részletes képet tud adni.
+    * A továbbiakban megvizsgáljuk a Metaballok optimalizált mérési adatait.
+    *[kép]
+    * A mérési adatokból láthatjuk, hogy a teszteléshez használt laptop videókártyájának memóriája már 8000 Metaball esetén is szinte teljes kihasználás alatt van.
+    * A mért értékek jól prezentálják az A-Buffer algoritmus legnagyobb hátrányát, a túlzott memóriahasználatot. Már 8000 Metaball mellett is elérte a teszteléshez használt laptop videókártyá-memóriájának maximumát.
+    * A mérési adatokból láthatjuk, hogy 8000 Metaballt interakcióra képes állapotban tudunk megjeleníteni. Az A-Buffer struktúrált adatainak összeállítása a mérési adatok alapján eltérő Metaball-számokat vizsgálva elenyésző különbségeket tapasztalunk.
+    * Ezek alapján levonható a következtetés, hogy az algoritmus szűk keresztmetszetét a memóriából származó korlátok és a pixelenként nagyszámban eltárolt metaballok megjelenítése adja.
 
 ## 7. Továbbfejlesztési lehetőségek
+
+* Az előző fejezet végén elemzett problémák
 
 * RayMarching:
     * A megalkotott algoritmus szűk keresztmetszetét a sugárkövetés nagy számításigénye adja.
@@ -311,6 +313,10 @@
 * Framework:
     * Inkrementálisan vizualizált objektumok megjelenítése
 * Marching Cube
+
+* [szecsi]
+* [ref](./Docs/tvcg-kbuffer.pdf)
+* [ref](https://hu.weblogographic.com/difference-between-binary-search-and-linear-search-1730)
 
 ## 8. Összegzés **(1 oldal)**
 
