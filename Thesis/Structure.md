@@ -190,7 +190,7 @@
             * [pdf](http://cg.iit.bme.hu/~szecsi/cikkek/metaball12/meta.pdf)
                 * A késöbbiekben az algoritmuson L. Szécsi és D. Illés, az eljárás legköltségesebb aspektusának, a Bezier Clippingnek, köbös sűrűségfüggvény közelítéssel való lecserlésével gyorsítottak.
 
-## 5. Tervezés **(22 oldal)** **(jelenleg: 9 oldal)**
+## 5. Tervezés **(22 oldal)** **(jelenleg: 14 oldal)**
 
 * ✅Framework **(2 oldal)**
     * Bevezetés
@@ -265,41 +265,60 @@
         * GPU
             * SSBO-val
             * Kódrészlet
-* A-Buffer **(5 oldal)**
+* ✅A-Buffer **(5 oldal)**
     * Bevezetés
-        * Bufferek
-            * Pixel, Linked List SSBO
-            * ABuffer osztály
     * Felépítés
+        * Bevezetés
+            * Pixel, Linked List SSBO
+            * Az A-Buffer struktúrája három Shader Storage Bufferből és egy Atomic Counter Bufferből épül fel.
+            * A három SSBO a screenBuffer, a linkedListBuffer és positionBuffer nevekre hallgatnak. A linkedListBuffer elemei uvec2 típusúak, a és a láncolt lista egyes elemeit reprezentálják. Az elemek első adattagja tárolja a láncolt listában őt megelőző elem indexét, második eleme a láncolt listához tartozó metaball indexe. A screenBuffer előjel nélküli egész számok segítségével tárolja a pixelhez tartozó láncolt lista utolsó elemét. PositionBuffer a Compute Shader által elkészített Metaballok pozícióit tárolja.
+            * Az Atomic Counter Bufferre a Compute Shaderhez hasonlóan a láncolt lista bufferének megfelelő kezelése miatt van szükség.
+            * [kép a felépítésről]
+            * ABuffer osztály
+                * SSBO struktúra
+                * Az A-Bufferhez használt buffereket egy ABuffer osztályba struktúráltam.
+    * Feldolgozás
         * Billboardok
-        * ábra a felépítésről
+        * Adatok feldolgozása
+            * ábra a felépítésről
+    * Megjelenítés
+        * flow chart a technika mőködéséről
 
 ## 6. Értékelés **(4 oldal)**
 
+* Specifikáció:
+    * processzor: AMD Ryzen 9 5980HS 3.30 GHz
+    * Videókártya: AMD Radeon Graphics
+    * VRAM: 512 MB
+    * RAM: 32GB
+    * Windows 11
+    * C++20
+    * GLSL version 430
+* Átlag FPS mataballszámoktól függően
+* Memóriahasználat (visual studio profiler)
+* Komplexitás
+    * Bufferek inicializálásának ideje (mérd meg)
+
+## 7. Továbbfejlesztési lehetőségek
+
+* RayMarching:
+    * A megalkotott algoritmus szűk keresztmetszetét a sugárkövetés nagy számításigénye adja.
+    * Ennek megoldására a jövőben egy szécsi László polinomiális approximációját alkalmazni.
 * A-Buffer:
-    * Memóriahasználat (visual studio profiler)
-    * Komplexitás
-        * Bufferek inicializálásának ideje (mérd meg)
-    * Átlag FPS mataballszámoktól függően
-* Továbbfejlesztési lehetőségek:
-    * RayMarching:
-        * A megalkotott algoritmus szűk keresztmetszetét a sugárkövetés nagy számításigénye adja.
-        * Ennek megoldására a jövőben egy szécsi László polinomiális approximációját alkalmazni.
-    * A-Buffer:
-        * Bináris fa struktúra láncolt lista helyett
-        * //Bufferek inicializálása fix méretű tömbökkel//
-        * S-Bufferhez hasonlóan egy további renderelési ütemben szeretném az adott pixelhez tartozó maximális metaball számot meghatározni, melynek segítségével egy rendezett fa struktúrát szeretnék felépíteni. Ha az adott pixel elérte maximális elemszámat, akkor a legnagyobb elemet lecserélve adja hozzá az új metaball azonosítót.
-    * Framework:
-        * Inkrementálisan vizualizált objektumok megjelenítése
-    * Marching Cube
+    * Bináris fa struktúra láncolt lista helyett
+    * //Bufferek inicializálása fix méretű tömbökkel//
+    * S-Bufferhez hasonlóan egy további renderelési ütemben szeretném az adott pixelhez tartozó maximális metaball számot meghatározni, melynek segítségével egy rendezett fa struktúrát szeretnék felépíteni. Ha az adott pixel elérte maximális elemszámat, akkor a legnagyobb elemet lecserélve adja hozzá az új metaball azonosítót.
+* Framework:
+    * Inkrementálisan vizualizált objektumok megjelenítése
+* Marching Cube
 
-## 7. Összegzés **(1 oldal)**
+## 8. Összegzés **(1 oldal)**
 
-## 8. Köszönetnyilvánítás **(1 oldal)**
+## 9. Köszönetnyilvánítás **(1 oldal)**
 
-## 9. Irodalomjegyzék **(2 oldal)**
+## 10. Irodalomjegyzék **(2 oldal)**
 
-## 10. Függelék **(2 oldal)**
+## 11. Függelék **(2 oldal)**
 
 * UML diagram
 * Signed distance functions
