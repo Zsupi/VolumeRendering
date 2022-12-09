@@ -14,6 +14,7 @@
 ## 2. Bevezetés **(1 oldal)**
 
 [ref](https://www.flushinghospital.org/newsletter/history-of-medical-imaging-a-brief-overview/#:~:text=The%20concept%20of%20medical%20imaging,photosensitive%20plate%20placed%20behind%20it.)
+
 * Diplomaterv felépítése:
     * A továbbiakban a feladathoz szükséges forrásokat és kutatásokat szeretném bemutatni, majd utána az általam megvalósított módszerrel folyatni.
 
