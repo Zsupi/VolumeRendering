@@ -62,6 +62,7 @@ public:
 	ABufferBuilder& setLinkedListBufferLocation(unsigned int location);
 	ABufferBuilder& setPositionBufferLocation(unsigned int location);
 	ABufferBuilder& setCounterLocation(unsigned int location);
+	ABufferBuilder& setPositionBuffer(std::shared_ptr<SSBO> positionBuffer);
 	std::shared_ptr<ABufferObject> build();
 };
 

@@ -1,15 +1,19 @@
 #pragma once
 #include <Scene.h>
 #include "ABuffer.h"
+#include "MetaballCreator.h"
 
 class MetaballScene : public Scene {
-	static const unsigned int pixelPerMetaball = 10000;
-	float minStep = 0.04f;
+	static const unsigned int pixelPerMetaball = 3000;
+	float minStep = 0.02f;
 	glm::vec3 boundingCubePosition = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::uvec3 metaballDimension = glm::uvec3(6u, 6u, 6u);
+	//===README: if u change the dimension here u have to update in the computeshader too===
+	glm::uvec3 metaballDimension = glm::uvec3(20u, 20u, 20u);
 	unsigned int metaballNumber = metaballDimension.x * metaballDimension.y * metaballDimension.z;
 	
 	std::shared_ptr<ABufferBuilder::ABufferObject> aBuffer;
+
+	std::shared_ptr<MetaballCreator> metaballCreator;
 
 public:
 

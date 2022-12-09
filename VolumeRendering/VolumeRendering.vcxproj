@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="ABuffer.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MetaballCreator.cpp" />
     <ClCompile Include="MetaballGeometry.cpp" />
     <ClCompile Include="MetaballScene.cpp" />
     <ClCompile Include="RayMarchingScene.cpp" />
@@ -179,10 +180,12 @@
     <None Include="Abuffer.geom" />
     <None Include="Abuffer.vert" />
     <None Include="ABufferRayMarch.frag" />
+    <None Include="ClassDiagram.cd" />
     <None Include="defaultVS.vert" />
     <None Include="fullScreenVS.vert" />
     <None Include="lightFS.frag" />
     <None Include="lightVS.vert" />
+    <None Include="MetaballPosition.comp" />
     <None Include="raymarchBrain.frag" />
     <None Include="raymarchMetaball.frag" />
     <None Include="raytraceVolumeFS.frag" />
@@ -193,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABuffer.h" />
+    <ClInclude Include="MetaballCreator.h" />
     <ClInclude Include="MetaballGeometry.h" />
     <ClInclude Include="MetaballScene.h" />
     <ClInclude Include="RayMarchingScene.h" />

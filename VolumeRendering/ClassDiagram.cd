@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ABufferBuilder" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAIAAAABAAAIAAQgAEAAgAAAACAAAAOAAAAAIAAA=</HashCode>
+      <FileName>ABuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaballCreator" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAIAAAAAAAAAACAIABAAAAAAAEAAABAAAIEAAA=</HashCode>
+      <FileName>MetaballCreator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaballGeometry" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAABAgAAAAAAAAgBAAAAAA=</HashCode>
+      <FileName>MetaballGeometry.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaballScene" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAABCQAAIAAQAgAEAAgQAAOAAAAAgAAAAAEAAA=</HashCode>
+      <FileName>MetaballScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RayMarchingScene" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAABAQAAAAAAAAAEAEAAAAOAAAAAAAAAAAEABA=</HashCode>
+      <FileName>RayMarchingScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

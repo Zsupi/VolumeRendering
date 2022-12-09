@@ -16,14 +16,15 @@ Scene& RayMarchingScene::update(float dt, float t) {
 
 Scene& RayMarchingScene::onInitialization() {
     //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raytraceVolumeFS.frag");
-    //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raymarchBrain.frag");
-    std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raymarchMetaball.frag");
+    std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raymarchBrain.frag");
+    //std::shared_ptr<Program> rayTraceVolumeProgram = std::make_shared<Program>("fullScreenVS.vert", "raymarchMetaball.frag");
     rayTraceVolumeMaterial = std::make_shared<Material>(rayTraceVolumeProgram);
     rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
+    rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(treshold, "treshold"));
     //rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
     
-    //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("brain-at_4096.jpg"), "brainTexture");
-    rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("body-at_4096.jpg"), "brainTexture");
+    rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("brain-at_4096.jpg"), "brainTexture");
+    //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("body-at_4096.jpg"), "brainTexture");
     //rayTraceVolumeMaterial->addTexture(std::make_shared<Texture3D>("internals-at_4096.jpg"), "brainTexture");
     
     std::shared_ptr<FullScreenQuad> fullScreenQuad = std::make_shared< FullScreenQuad>();
@@ -45,12 +46,20 @@ Scene& RayMarchingScene::onMouseClick(int button, int state, int px, int py) {
 Scene& RayMarchingScene::onKeyboardDown(unsigned char key) {
     if (key == 'f') {
         if (minStep > 0.02)
-            minStep -= 0.01f;
+            minStep -= 0.001f;
         rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
     }
     if (key == 'g') {
-        minStep += 0.01f;
+        minStep += 0.001f;
         rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(minStep, "minStep"));
+    }
+    if (key == 'r') {
+        treshold -= 0.1f;
+        rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(treshold, "treshold"));
+    }
+    if (key == 't') {
+        treshold += 0.1f;
+        rayTraceVolumeMaterial->addUniform(std::make_shared<FloatUniform>(treshold, "treshold"));
     }
 
     /*if (key == GlutApplication::ARROW_UP_VALUE) {
@@ -67,14 +76,6 @@ Scene& RayMarchingScene::onKeyboardDown(unsigned char key) {
     }
     if (key == GlutApplication::ARROW_LEFT_VALUE) {
         boundingCubePosition.x -= 0.1f;
-        rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
-    }
-    if (key == 'r') {
-        boundingCubePosition.y += 0.1f;
-        rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
-    }
-    if (key == 't') {
-        boundingCubePosition.y -= 0.1f;
         rayTraceVolumeMaterial->addUniform(std::make_shared<Vec3Uniform>(boundingCubePosition, "cubePosition"));
     }
     std::cout << boundingCubePosition.x << " " << boundingCubePosition.y << " " << boundingCubePosition.z << std::endl;
