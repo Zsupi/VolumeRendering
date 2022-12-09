@@ -29,6 +29,12 @@ private:
 	std::shared_ptr<GlutAppInterface> scene;
 	ChronoTime timeAtFirstFrame;
 	ChronoTime timeAtLastFrame;
+
+	int prevTime = 0;
+	int crntTime = 0;
+	int timeDiff;
+	unsigned int frame = 0;
+
 	GlutApplication();
 
 public:

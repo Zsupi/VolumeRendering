@@ -14,6 +14,7 @@ struct Cube{
 uniform vec3 cameraPos;
 uniform sampler3D brainTexture;
 uniform float minStep;
+uniform float treshold;
 
 in vec4 rayDir;
 
@@ -53,7 +54,7 @@ void main(){
 	float t2 = (-5.0 - cameraPos.z) / ray.dir.z;
 	float tStart = max(min(t1, t2), 0.0f);
 	float tEnd = max(max(t1, t2), 0.0f);
-	int nSteps = 580;
+	int nSteps = 5800;
 
 	vec3 p = ray.start + ray.dir * tStart;
 	bool found = false;
@@ -65,9 +66,9 @@ void main(){
 
 		if (raymarchCube(p, cube) < 0.1f){
 			h = texture(brainTexture, p).r;
-			if (h > 0.3f){
+			if (h > treshold){
 				found = true;
-				color += vec4(h, h, h, 0.9f);
+				color += vec4(h, h, h, 1.0f);
 				break;
 			}
 			found = true;

@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Scene">
-    <Position X="20.25" Y="0.5" Width="1.5" />
+  <Class Name="Scene" Collapsed="true">
+    <Position X="22.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAABgAAASAggAAEEAAAAAIGAQAKABCAAAAEACA=</HashCode>
+      <HashCode>AAABAAAABgAAASAggQIEEAIAAAIGAQAKABCAAAAEACA=</HashCode>
       <FileName>Scene.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GlutApplication">
-    <Position X="22" Y="5.75" Width="1.5" />
+  <Class Name="GlutApplication" Collapsed="true">
+    <Position X="24.5" Y="0.5" Width="1.5" />
     <NestedTypes>
       <Class Name="GlutApplication::GlutAppInterface" Collapsed="true">
         <TypeIdentifier>
@@ -21,225 +21,253 @@
       <FileName>GlutApplication.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EBO">
-    <Position X="18.5" Y="0.5" Width="1.5" />
+  <Class Name="EBO" Collapsed="true">
+    <Position X="22.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAgAAAAAAAAAAAAAEAAAAAAAAEAAAAACA=</HashCode>
       <FileName>EBO.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="VAO">
-    <Position X="16.75" Y="1.25" Width="1.5" />
+  <Class Name="VAO" Collapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAggAAAAAAgAAAAAAAAAAAAAEAAAAAAAAkAACAAAA=</HashCode>
       <FileName>VAO.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="VBO">
-    <Position X="18.5" Y="2.75" Width="1.5" />
+  <Class Name="VBO" Collapsed="true">
+    <Position X="21" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAgAAAAAAAAAAAAAEAAAAAAAAEAAAEAAA=</HashCode>
       <FileName>VBO.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Cube">
-    <Position X="3" Y="12.5" Width="1.5" />
+    <Position X="3" Y="11.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAAAABAAAAACAAAAIIAAAAAAAAAAA=</HashCode>
       <FileName>Cube.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FullScreenQuad">
-    <Position X="5.25" Y="12.5" Width="1.5" />
+    <Position X="5.25" Y="11.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CRAAAAAAAAAAQAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
       <FileName>FullScreenQuad.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Geometry">
-    <Position X="4" Y="6.5" Width="1.5" />
+    <Position X="4" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAQIAAAAAAAAAAAAIAAAAAAAAAAAAAAABwAAAAgAA=</HashCode>
       <FileName>Geometry.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GroundPlane">
-    <Position X="7.5" Y="12.5" Width="1.5" />
+    <Position X="7.5" Y="11.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAABACAAAAAAAAACAABAAAAAAAAAAEAAAAAAAI=</HashCode>
       <FileName>GroundPlane.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Textured2DGeometry">
-    <Position X="5.25" Y="9.75" Width="1.75" />
+    <Position X="5.25" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAABIgAAAAAAA=</HashCode>
       <FileName>Textured2DGeometry.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Textured3DCube">
-    <Position X="0.75" Y="12.5" Width="1.5" />
+    <Position X="0.75" Y="11.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABAgAAACAAAAIIAAAAAAAAAAA=</HashCode>
       <FileName>Textured3DCube.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Textured3DGeometry">
-    <Position X="0.5" Y="9.75" Width="1.75" />
+    <Position X="0.5" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAABIgAAAAAAA=</HashCode>
       <FileName>Textured3DGeometry.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Light">
-    <Position X="14.75" Y="14.25" Width="1.5" />
+    <Position X="15.5" Y="11" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAIAAgAAAAAIAAAAAAAQCEAAAEA=</HashCode>
       <FileName>Light.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Material">
-    <Position X="16.75" Y="7.25" Width="1.5" />
+  <Class Name="Material" Collapsed="true">
+    <Position X="19.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAAgAAAAEAACAAFAAIAAAAAEAEAAAQAAAAgEAAFAAk=</HashCode>
+      <HashCode>AkAAgAAAAEAACAAFAAIAAAAAEAEAAAQAAAIgEAIEAAk=</HashCode>
       <FileName>Material.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Mesh">
-    <Position X="14.75" Y="9" Width="1.5" />
+    <Position X="15.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAIAAACAGAAAAAAAIQIAAiAAAgAAACAQAgAABABAA=</HashCode>
       <FileName>Mesh.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Texture">
-    <Position X="11.5" Y="6.5" Width="1.5" />
+    <Position X="11.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAIAAgAAAAAAAAAAAAAAAAEAAAAIAAAAABAA=</HashCode>
       <FileName>Texture.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Texture2D">
-    <Position X="10.25" Y="9.5" Width="1.5" />
+    <Position X="10.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAwAQAQAAAAAAAIAAAAAAAAAABAAAABCA=</HashCode>
       <FileName>Texture2D.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Texture3D">
-    <Position X="12.5" Y="9.5" Width="1.5" />
+    <Position X="12.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAwAQARAAAAAAAIAAAAAAAAAABIAAABAA=</HashCode>
       <FileName>Texture3D.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FloatUniform">
-    <Position X="7.5" Y="3.5" Width="1.5" />
+    <Position X="10" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAIAAAAAAIAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>FloatUniform.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IntUniform">
-    <Position X="12" Y="3.5" Width="1.5" />
+    <Position X="14.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAEAAAAAAAAAAAAAIAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>IntUniform.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Mat4Uniform">
-    <Position X="0.75" Y="3.5" Width="1.5" />
+    <Position X="1" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAIAAAAAAAAAACAAAACAAAAAAAA=</HashCode>
       <FileName>Mat4Uniform.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uniform">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+    <Position X="8.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAIAAAAAAAAEAAAAAAAEAgAAAgA=</HashCode>
       <FileName>Uniform.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vec2Uniform">
-    <Position X="3" Y="3.5" Width="1.5" />
+    <Position X="5.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAQAAAAAAAAIAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Vec2Uniform.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vec3ArrayUniform">
-    <Position X="5.25" Y="3.5" Width="1.5" />
+    <Position X="7.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAgAAAAAQAAIAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Vec3ArrayUniform.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vec3Uniform">
-    <Position X="9.75" Y="3.5" Width="1.5" />
+    <Position X="12.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAIAAAEAAAAAACAAAAAAAAAAAgA=</HashCode>
       <FileName>Vec3Uniform.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vec4Uniform">
-    <Position X="14.25" Y="3.5" Width="1.5" />
+    <Position X="16.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAABAAAAAAAAAIAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Vec4Uniform.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Camera" Collapsed="true">
-    <Position X="16.75" Y="0.5" Width="1.5" />
+    <Position X="21" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AJQLAABAYAQCXkAIQAAABRYAoBAkCwAEiQEAECAIwAA=</HashCode>
       <FileName>Camera.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Program">
-    <Position X="18.5" Y="5" Width="1.5" />
+  <Class Name="Program" Collapsed="true">
+    <Position X="21" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAQAAAIAAgAAAAAAAEAAAAAgAAEAAAAABEAAABAA=</HashCode>
+      <HashCode>AAAIAQAAAIAAgAAAAAAAFAAAgAgAAAAAAAABAAAABAA=</HashCode>
       <FileName>Program.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Struct Name="Vertex">
-    <Position X="16.75" Y="4" Width="1.5" />
+  <Class Name="ACB" Collapsed="true">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAhABAAAAAAAAAAAEAAEAAAAAEAAAAAAA=</HashCode>
+      <FileName>ACB.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SSBO" Collapsed="true">
+    <Position X="24.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAgAAAAAAQgAAAAAAAAAAAAAFAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>SSBO.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UVec2Uniform" Collapsed="true">
+    <Position X="3.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAIAAAAAAAAAACAAAAAAAAAQAAA=</HashCode>
+      <FileName>UVec2Uniform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Vertex" Collapsed="true">
+    <Position X="24.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VBO.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="LightData">
-    <Position X="22" Y="3.5" Width="1.5" />
+  <Struct Name="LightData" Collapsed="true">
+    <Position X="22.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAIAAAAAAAIAIAAAAAAAAAAAAAACBAAAA=</HashCode>
       <FileName>Light.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Illumination">
-    <Position X="16.75" Y="5.5" Width="1.5" />
+  <Struct Name="Illumination" Collapsed="true">
+    <Position X="19.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAABAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Material.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="IsPressed">
-    <Position X="22" Y="0.5" Width="1.5" />
+  <Struct Name="IsPressed" Collapsed="true">
+    <Position X="21" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAARABQAQAAAAAIAAg=</HashCode>
       <FileName>Camera.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Enum Name="CameraType">
-    <Position X="18.5" Y="8.25" Width="1.5" />
+  <Typedef Name="ChronoTime" Collapsed="true">
+    <Position X="19.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GlutApplication.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="CameraType" Collapsed="true">
+    <Position X="19.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Camera.h</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="KeyStatus">
-    <Position X="20.25" Y="5.75" Width="1.5" />
+  <Enum Name="KeyStatus" Collapsed="true">
+    <Position X="21" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Camera.h</FileName>

@@ -12,7 +12,7 @@ layout(std430, binding = 1) buffer positionBuffer {
 layout(binding = 0, offset = 0) uniform atomic_uint counter; 
 
 uniform sampler3D volumeData;
-uniform vec3 volumeDimension = vec3(13.0f, 13.0f, 13.0f);
+uniform vec3 volumeDimension = vec3(20.0f, 20.0f, 20.0f);
 
 void main() {
     //setup texel coordinates

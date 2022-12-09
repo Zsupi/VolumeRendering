@@ -22,7 +22,7 @@ MetaballCreator& MetaballCreator::create() {
         counter->Bind(0);
         positions->Bind(1);
         computeProgram->bind();
-        glDispatchCompute(dimension.x, dimension.y, dimension.z);
+        glDispatchCompute(20, 20, 20);
         glMemoryBarrier(GL_ALL_BARRIER_BITS);
         ran = true;
     }

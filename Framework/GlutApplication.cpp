@@ -24,6 +24,21 @@ void GlutApplication::onInitialization(std::shared_ptr<GlutAppInterface> scene) 
 void GlutApplication::onDisplay() {
 	glClearColor(0.13f, 0.20f, 0.29f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	crntTime = glutGet(GLUT_ELAPSED_TIME);
+	timeDiff = crntTime - prevTime;
+	frame++;
+
+	if (crntTime - prevTime > 1000) {
+
+		float fps = frame * 1000.0 / (crntTime - prevTime);
+
+		std::string FPS = std::to_string(fps);
+		std::string title = "VolumeRendering " + FPS + " FPS";
+		glutSetWindowTitle(title.c_str());
+		prevTime = crntTime;
+		frame = 0;
+	}
 
 	ChronoTime timeAtThisFrame = std::chrono::steady_clock::now();
 

@@ -13,28 +13,31 @@ flat out uint id;
 void main() {
     vec4 center = gl_in[0].gl_Position * viewProjMatrix;
 
-    float metaballSize = 0.3f;
+    float metaballSize = 0.2f;
     id = metaballId[0];
 
-    gl_Position = center;
-    gl_Position.x += metaballSize;
-    gl_Position.y += metaballSize;
-    EmitVertex();
+    if (center.x != 0 || center.y != 0 || center.z != 0 ) {
+        gl_Position = center;
+        gl_Position.x += metaballSize;
+        gl_Position.y += metaballSize;
+        EmitVertex();
 
-    gl_Position = center;
-    gl_Position.x += metaballSize;
-    gl_Position.y -= metaballSize;
-    EmitVertex();
+        gl_Position = center;
+        gl_Position.x += metaballSize;
+        gl_Position.y -= metaballSize;
+        EmitVertex();
 
-    gl_Position = center;
-    gl_Position.x -= metaballSize;
-    gl_Position.y += metaballSize;
-    EmitVertex();
+        gl_Position = center;
+        gl_Position.x -= metaballSize;
+        gl_Position.y += metaballSize;
+        EmitVertex();
 
-    gl_Position = center;
-    gl_Position.x -= metaballSize;
-    gl_Position.y -= metaballSize;
-    EmitVertex();
+        gl_Position = center;
+        gl_Position.x -= metaballSize;
+        gl_Position.y -= metaballSize;
+        EmitVertex();
 
-    EndPrimitive();
+        EndPrimitive();
+    }
+
 }

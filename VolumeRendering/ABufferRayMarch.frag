@@ -40,6 +40,7 @@ layout(std430, binding = 3) buffer linkedListBuffer {
 
 uniform vec3 cameraPos;
 uniform float minStep;
+uniform sampler3D volumeData;
 
 // holds the size of the window
 uniform uvec2 windowSize; 
@@ -52,8 +53,9 @@ out vec4 fragmentColor;
 Metaball createMetaball(vec4 position) {
 	Metaball metaball;
 	metaball.center = position.xyz;
-	metaball.radius = 0.2f;
-	metaball.color = abs(position.xyz);
+	metaball.radius = 0.12f;
+	//metaball.color = abs(position.xyz);
+	metaball.color = texture(volumeData, position.xyz).rrr;
 	return metaball;
 }
 
@@ -67,20 +69,6 @@ float wyvillMetaball(float distance, float radius) {
 	return fi;
 }
 
-float wyvillMetaballScene(vec3 p, out vec3 color) {
-	float fSum = 0.0f;
-	for (int i = 0; i < 216; i++){
-		Metaball metaball = createMetaball(position[i]);
-		float mannhattanistance = dot(p - metaball.center, p - metaball.center);
-		float f = wyvillMetaball(mannhattanistance, metaball.radius);
-		color += f * metaball.color;
-		fSum += f;
-	}
-
-	const float A = 0.1f;
-	return -A + fSum;
-}
-
 float wyvillMetaballTest(vec3 p, vec4 metaballCenter, out vec3 color) {
 	Metaball metaball = createMetaball(metaballCenter);
 
@@ -90,7 +78,12 @@ float wyvillMetaballTest(vec3 p, vec4 metaballCenter, out vec3 color) {
 	return f;
 }
 
-float ABuffer_WyvillMetaballScene(vec3 p, out vec3 color) {
+float sdSphere( vec3 p, vec3 center, float r )
+{
+  return length(p-center)-r;
+}
+
+float ABuffer_WyvillMetaballScene(vec3 p, out vec3 color, out float safeDistance) {
 	float fSum = 0.0f;
 	uint pixelId = uint(gl_FragCoord.y) * (windowSize.x-1) + uint(gl_FragCoord.x);
 
@@ -99,8 +92,14 @@ float ABuffer_WyvillMetaballScene(vec3 p, out vec3 color) {
 		uvec2 currentElement = element[pixelValue].element;
 		pixelValue = currentElement.x;
 		uint metaballId = currentElement.y;
+		vec4 metaballCenter = position[metaballId];
 
-		float f = wyvillMetaballTest(p, position[metaballId], color);
+		float tmpDistance = sdSphere(p, metaballCenter.xyz, 0.2f);
+		if (tmpDistance < safeDistance || safeDistance == -1.0f) {
+			safeDistance = tmpDistance;
+		}
+
+		float f = wyvillMetaballTest(p, metaballCenter, color);
 		fSum += f;
 	}
 	const float A = 0.7f;
@@ -125,19 +124,20 @@ void main(){
 	vec3 color;
 
 	//raymarch
-	vec3 step = ray.dir * min((tEnd-tStart)/float(nSteps), minStep);
+
+	float d = -1.0f;
 	for (int i = 0; i < nSteps; i++){
-		if (ABuffer_WyvillMetaballScene(p, color) > 0.0f){
+		if (ABuffer_WyvillMetaballScene(p, color, d) > 0.0f){
 			found = true;
 			break;
 		}
-		p = p + step;
+		p = p + ray.dir * max(d, minStep);
 	}
 
 	if (found){
 		fragmentColor = vec4(color, 1.0f);
 	}
 	else{
-		fragmentColor = vec4(0.1f, 0.1f, 0.1f, 1.0f);
+		fragmentColor = vec4(0.1, 0.1f, 0.1f, 1.0f);
 	}
 }

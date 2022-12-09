@@ -4,11 +4,11 @@
 #include "MetaballCreator.h"
 
 class MetaballScene : public Scene {
-	static const unsigned int pixelPerMetaball = 4000;
-	float minStep = 0.04f;
+	static const unsigned int pixelPerMetaball = 3000;
+	float minStep = 0.02f;
 	glm::vec3 boundingCubePosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	//===README: if u change the dimension here u have to update in the computeshader too===
-	glm::uvec3 metaballDimension = glm::uvec3(15u, 15u, 15u);
+	glm::uvec3 metaballDimension = glm::uvec3(20u, 20u, 20u);
 	unsigned int metaballNumber = metaballDimension.x * metaballDimension.y * metaballDimension.z;
 	
 	std::shared_ptr<ABufferBuilder::ABufferObject> aBuffer;

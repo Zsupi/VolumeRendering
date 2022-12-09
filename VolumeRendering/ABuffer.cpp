@@ -6,12 +6,7 @@ ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::resetScreenBuffer(
 }
 
 ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::resetLinkedListBuffer() {
-	std::vector<SSBO::uvec2_element> data;
-	for (unsigned int i = 0; i < linkedListBufferSize; i++) {
-		SSBO::uvec2_element element;
-		data.push_back(element);
-	}
-
+	std::vector<SSBO::uvec2_element> data(linkedListBufferSize);
 	linkedListBuffer->LoadData(data, linkedListBufferSize * sizeof(SSBO::uvec2_element));
 	return *this;
 }
@@ -20,11 +15,6 @@ ABufferBuilder::ABufferObject::ABufferObject() {
 	atomicCounterBuffer = std::make_shared<ACB>();
 	atomicCounterBuffer->Create();
 	stage = Stage::CREATE;
-
-	for (unsigned int i = 0; i < linkedListBufferSize; i++) {
-		SSBO::uvec2_element element;
-		zeroScreenBuffer.push_back(element);
-	}
 }
 
 ABufferBuilder::ABufferObject& ABufferBuilder::ABufferObject::bind() {
